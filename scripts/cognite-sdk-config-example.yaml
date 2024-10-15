@@ -1,0 +1,13 @@
+client:
+  project: "publicdata"
+  client_name: "OID-Api"
+  base_url: "https://api.cognitedata.com"
+  credentials:
+    client_credentials:
+      token_url: "https://login.microsoftonline.com/48d5043c-cf70-4c49-881c-c638f5796997/oauth2/v2.0/token"
+      client_id: "1b90ede3-271e-401b-81a0-a4d52bea3273"
+      client_secret: "" # get secret at https://hub.cognite.com/open-industrial-data-211 (select "Other" and click Create Client Secret top right)
+      scopes: ["https://api.cognitedata.com/.default"]
+global:
+  max_retries: 10
+  max_retry_backoff: 10
