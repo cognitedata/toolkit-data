@@ -1,0 +1,29 @@
+name: Upload to GCP Bucket
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
+    workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  upload-to-gcp:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout repository
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # Step 2: Authenticate with GCP
+    - name: Set up GCP authentication
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.APPS_CDN_SERVICE_ACCOUNT_CREDENTIALS }}
+
+    # Step 3: Upload files to GCP bucket
+    - name: Upload to GCP Bucket
+      uses: google-github-actions/upload-cloud-storage@v1
+      with:
+        path: './data/*'  # Updated source path
+        destination: 'gs://apps-cdn-bucket-cognitedata-production/toolkit-data/' # Updated bucket and path
