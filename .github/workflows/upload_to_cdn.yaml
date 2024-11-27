@@ -19,7 +19,7 @@ jobs:
     - name: Set up GCP authentication
       uses: google-github-actions/auth@v1
       with:
-        credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+        credentials_json: ${{ secrets.APPS_CDN_SERVICE_ACCOUNT_CREDENTIALS }}
 
     # Step 3: Upload files to GCP bucket
     - name: Upload to GCP Bucket
