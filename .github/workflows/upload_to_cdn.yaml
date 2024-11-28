@@ -32,3 +32,4 @@ jobs:
         parent: false # Whether the parent directory should be included in GCS destination path.
         headers: |-
           cache-control: 'public, max-age=31536000'
+        process_gcloudignore: false
