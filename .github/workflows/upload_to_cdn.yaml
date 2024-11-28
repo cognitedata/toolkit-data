@@ -9,6 +9,7 @@ on:
 jobs:
   upload-to-gcp:
     runs-on: ubuntu-latest
+    environment: CD
 
     steps:
     # Step 1: Checkout repository
@@ -22,8 +23,12 @@ jobs:
         credentials_json: ${{ secrets.APPS_CDN_SERVICE_ACCOUNT_CREDENTIALS }}
 
     # Step 3: Upload files to GCP bucket
-    - name: Upload to GCP Bucket
+    - name: Upload to GCP CDN Bucket
       uses: google-github-actions/upload-cloud-storage@v1
       with:
-        path: './data/*'  # Updated source path
-        destination: 'gs://apps-cdn-bucket-cognitedata-production/toolkit-data/' # Updated bucket and path
+        path: 'data'  # Updated source path
+        destination: 'apps-cdn-bucket-cognitedata-production/toolkit' # The destination for the file/folder in the form bucket-name or with an optional prefix in the form bucket-name/prefix
+        concurrency: '10' # Optional: Number of concurrent uploads
+        parent: false # Whether the parent directory should be included in GCS destination path.
+        headers: |-
+          cache-control: 'public, max-age=31536000'

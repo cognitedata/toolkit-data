@@ -29,7 +29,7 @@ Using data directly from GitHub will be rate limited. Instead, use the CDN link 
 **CDN location:**
 
 ```html  
-https://apps-cdn.cogniteapp.com/toolkit-data/<directory>/<filename>
+https://apps-cdn.cogniteapp.com/toolkit/<directory>/<filename>
 ```
 
 ## Upload to CDN
