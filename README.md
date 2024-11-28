@@ -47,14 +47,11 @@ gs://apps-cdn-bucket-cognitedata-production/toolkit/publicdata/assets.Table.csv
 
 ```html  
 https://apps-cdn.cogniteapp.com/toolkit/<directory>/<filename>
-<<<<<<< HEAD
 
 for example
 
 https://apps-cdn.cogniteapp.com/toolkit/publicdata/assets.Table.csv
 
-=======
->>>>>>> bf34751d1226f2f6adba49ac84541f0090a53774
 ```
 
 ## Upload to CDN
