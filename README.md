@@ -24,12 +24,34 @@ Using data directly from GitHub will be rate limited. Instead, use the CDN link 
 
 ```html  
 ./data/<directory>/<filename>
+
+for example
+
+./data/publicdata/assets.Table.csv
+
 ```
 
-**CDN location:**
+**storage bucket location:**
+
+```html
+
+gs://apps-cdn-bucket-cognitedata-production/toolkit/<directory>/<filename>
+
+for example
+
+gs://apps-cdn-bucket-cognitedata-production/toolkit/publicdata/assets.Table.csv
+
+```
+
+**Download location:**
 
 ```html  
 https://apps-cdn.cogniteapp.com/toolkit/<directory>/<filename>
+
+for example
+
+https://apps-cdn.cogniteapp.com/toolkit/publicdata/assets.Table.csv
+
 ```
 
 ## Upload to CDN
