@@ -1,4 +1,4 @@
-ame: Upload to GCP Bucket
+name: Upload to GCP Bucket
 
 on:
   push:
