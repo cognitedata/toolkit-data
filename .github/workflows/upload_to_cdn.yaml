@@ -27,7 +27,6 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-
       - name: Run Python script
         env:
           APPS_CDN_SERVICE_ACCOUNT_CREDENTIALS: ${{ secrets.APPS_CDN_SERVICE_ACCOUNT_CREDENTIALS }}
