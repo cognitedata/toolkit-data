@@ -1,6 +1,7 @@
 # toolkit-data
 
-This repository contains static demo data for the [Toolkit](https://github.com/cognitedata/toolkit) project.
+This repository contains static demo data for the  
+[Toolkit](https://github.com/cognitedata/toolkit) project.
 
 It is organized as follows:
 
@@ -14,11 +15,15 @@ It is organized as follows:
  ┗ 📜README.md - This file
 ```
 
-The datasets in this repository should be treated as read-only (immutable). If you need to modify the data, make a copy of the dataset, give it a new descriptive name, and modify the copy.
+The datasets in this repository should be treated as read-only (immutable).
+
+If you need to modify the data, make a copy of the dataset, give it a new  
+descriptive name, and modify the copy.
 
 ## Use the CDN
 
-Using data directly from GitHub will be rate limited. Instead, use the CDN link pattern below to access the data:
+Using data directly from GitHub will be rate limited. Instead, use  
+the CDN link pattern below to access the data:
 
 **location in repository:**
 
@@ -56,5 +61,6 @@ https://apps-cdn.cogniteapp.com/toolkit/publicdata/assets.Table.csv
 
 ## Upload to CDN
 
-Data in `./data` is automatically uploaded when it is merged to `main` using the GitHub Actions workflow in `.github/workflows/upload-to-cdn.yaml`.
+Data in `./data` is automatically uploaded when it is merged to `main`  
+using the GitHub Actions workflow in `.github/workflows/upload-to-cdn.yaml`.
 This repository contains data for the [Cognite Toolkit](https://docs.cognite.com/cdf/deploy/cdf_toolkit/)
