@@ -19,13 +19,23 @@ jobs:
         uses: 'google-github-actions/setup-gcloud@v1'
         with:
           project_id: 'cognitedata-production'
-      - name: Upload to GCP CDN Bucket
-        uses: google-github-actions/upload-cloud-storage@v1
-        with:
-          path: 'data'  # Updated source path
-          destination: 'apps-cdn-bucket-cognitedata-production/toolkit' # The destination for the file/folder in the form bucket-name or with an optional prefix in the form bucket-name/prefix
-          concurrency: '10' # Optional: Number of concurrent uploads
-          parent: false # Whether the parent directory should be included in GCS destination path.
-          headers: |-
-            cache-control: 'public, max-age=31536000'
-          process_gcloudignore: false
+      - name: Upload files if not present in GCS
+        run: |
+          BUCKET_NAME="apps-cdn-bucket-cognitedata-production"
+          DEST_PREFIX="toolkit"
+          SOURCE_DIR="data"
+
+          # Navigate to the source directory
+          cd "$SOURCE_DIR"
+
+          # Find and process all files in the source directory
+          for FILE in $(find . -type f); do
+            # Remove leading './' from the file path
+            RELATIVE_PATH=${FILE#./}
+
+            # Full destination path in GCS
+            DEST_PATH="gs://${BUCKET_NAME}/${DEST_PREFIX}/${RELATIVE_PATH}"
+
+            echo "Uploading $FILE to $DEST_PATH"
+            gsutil -m cp -c "$FILE" "$DEST_PATH"
+          done
