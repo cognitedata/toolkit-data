@@ -54,7 +54,7 @@ def upload_file(file_path: Path, dest_prefix: str, client: storage.Client):
     #    blob.upload_from_filename(str(file_path))
 
 
-def sync_local_to_gcs(local_dir: str, bucket_name: str, dest_prefix: str):
+def sync_local_to_gcs(local_dir: str, dest_prefix: str):
     local_path = Path(local_dir)
 
     if not local_path.is_dir():
@@ -75,4 +75,4 @@ def sync_local_to_gcs(local_dir: str, bucket_name: str, dest_prefix: str):
 
 
 if __name__ == "__main__":
-    sync_local_to_gcs(LOCAL_DIR, BUCKET_NAME, DEST_PREFIX)
+    sync_local_to_gcs(LOCAL_DIR, DEST_PREFIX)
