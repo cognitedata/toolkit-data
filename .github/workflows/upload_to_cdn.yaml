@@ -36,6 +36,6 @@ jobs:
             # Full destination path in GCS
             DEST_PATH="gs://${BUCKET_NAME}/${DEST_PREFIX}/${RELATIVE_PATH}"
 
-            echo "Uploading $FILE to $DEST_PATH" if they don't exist in the bucket"
+            echo "Uploading $FILE to $DEST_PATH"
             gsutil cp -n "$FILE" "$DEST_PATH"
           done
