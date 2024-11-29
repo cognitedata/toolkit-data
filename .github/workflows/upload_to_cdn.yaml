@@ -16,10 +16,11 @@ jobs:
         uses: actions/checkout@v3
 
       # Step 2: Authenticate with GCP
-      - name: Authenticate with GCP
+      - name: Set up GCP authentication
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          credentials_json: ${{ secrets.APPS_CDN_SERVICE_ACCOUNT_CREDENTIALS }}
+
 
       # Step 3: Install Google Cloud SDK
       - name: Install Google Cloud SDK
