@@ -1,4 +1,4 @@
-name: Upload to GCP Bucket
+ame: Upload to GCP Bucket
 
 on:
   push:
@@ -12,24 +12,19 @@ jobs:
     environment: CD
 
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Authenticate with GCP
       - name: Set up GCP authentication
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.APPS_CDN_SERVICE_ACCOUNT_CREDENTIALS }}
 
+     - name: 'Set up Cloud SDK'
+       uses: 'google-github-actions/setup-gcloud@v1'
+       with:
+         project_id: 'cognitedata-production'
 
-      # Step 3: Install Google Cloud SDK
-      - name: Install Google Cloud SDK
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y google-cloud-sdk
-
-      # Step 4: Check and upload files preserving relative paths
       - name: Upload files if not present in GCS
         run: |
           BUCKET_NAME="apps-cdn-bucket-cognitedata-production"
