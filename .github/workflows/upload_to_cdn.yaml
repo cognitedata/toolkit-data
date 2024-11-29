@@ -32,10 +32,11 @@ jobs:
           for FILE in $(find . -type f); do
             # Remove leading './' from the file path
             RELATIVE_PATH=${FILE#./}
-
-            # Full destination path in GCS
             DEST_PATH="gs://${BUCKET_NAME}/${DEST_PREFIX}/${RELATIVE_PATH}"
-
-            echo "Uploading $FILE to $DEST_PATH"
-            gsutil -m cp -c "$FILE" "$DEST_PATH"
+            
+            curl -X POST \
+              -H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
+              -H "Content-Type: application/octet-stream" \
+              --data-binary @"$FILE" \
+              "https://storage.googleapis.com/upload/storage/v1/b/<BUCKET_NAME>/o?uploadType=media&name=<DESTINATION_PATH>"
           done
