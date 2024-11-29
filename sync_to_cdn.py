@@ -51,7 +51,7 @@ def upload_file(file_path: Path, dest_prefix: str, client: storage.Client):
 
     # Upload the file
     print(f"Uploading {file_path} to {blob_name}...")
-        blob.upload_from_filename(str(file_path))
+    blob.upload_from_filename(str(file_path))
 
 
 def sync_local_to_gcs(local_dir: str, dest_prefix: str):
