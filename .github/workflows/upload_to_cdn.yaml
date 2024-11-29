@@ -22,8 +22,6 @@ jobs:
 
       - name: Install required libraries
         run: |
-           name: Install Python dependencies
-        run: |
           pip install --upgrade pip
           pip install -r requirements.txt
 
