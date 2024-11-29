@@ -1,35 +1,46 @@
 name: Upload to GCP Bucket
-
 on:
   push:
     branches:
-      - main  # Trigger on push to the main branch
-  workflow_dispatch:  # Allows manual triggering
-
+      - main # Trigger on push to the main branch
+  workflow_dispatch: # Allows manual triggering
 jobs:
   upload-to-gcp:
     runs-on: ubuntu-latest
     environment: CD
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Set up GCP authentication
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.APPS_CDN_SERVICE_ACCOUNT_CREDENTIALS }}
-      
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
         with:
-         project_id: 'cognitedata-production'
-
+          project_id: 'cognitedata-production'
       - name: Upload files if not present in GCS
         run: |
           BUCKET_NAME="apps-cdn-bucket-cognitedata-production"
           DEST_PREFIX="toolkit"
           SOURCE_DIR="data"
 
-          # Upload all files, skipping already existing ones
-          gsutil -m rsync -n -r -d "$SOURCE_DIR" "gs://${BUCKET_NAME}/${DEST_PREFIX}/"
+          # Navigate to the source directory
+          cd "$SOURCE_DIR"
+
+          # Find and process all files in the source directory
+          for FILE in $(find . -type f); do
+            # Remove leading './' from the file path
+            RELATIVE_PATH=${FILE#./}
+
+            # Full destination path in GCS
+            DEST_PATH="gs://${BUCKET_NAME}/${DEST_PREFIX}/${RELATIVE_PATH}"
+
+            # Check if the file exists in the bucket
+            if ! gsutil -q stat "$DEST_PATH"; then
+              echo "Uploading $FILE to $DEST_PATH"
+              gsutil cp "$FILE" "$DEST_PATH"
+            else
+              echo "File $RELATIVE_PATH already exists in the bucket. Skipping upload."
+            fi
+          done
