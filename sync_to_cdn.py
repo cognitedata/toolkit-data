@@ -13,15 +13,6 @@ SOURCE_DIR = "data"
 
 
 def authenticate_with_service_account(credentials_json: str):
-    """
-    Authenticate using a service account JSON key.
-
-    Args:
-        credentials_json (str): The JSON string for the service account credentials.
-
-    Returns:
-        google.cloud.storage.Client: Authenticated GCS client.
-    """
     # Parse the JSON string into a dictionary
     credentials_dict = json.loads(credentials_json)
 
@@ -32,26 +23,6 @@ def authenticate_with_service_account(credentials_json: str):
 
     # Initialize the Storage client with the credentials
     return storage.Client(credentials=credentials)
-
-
-def upload_file(file_path: Path, dest_prefix: str, client: storage.Client):
-    # Construct the destination path in GCS
-    relative_path = file_path.relative_to(
-        file_path.parents[1]
-    )  # Adjust relative path logic if needed
-    blob_name = f"{dest_prefix}/{relative_path}"
-
-    bucket = client.bucket(BUCKET_NAME)
-    blob = bucket.blob(blob_name)
-
-    # Check if the file already exists in GCS
-    if blob.exists():
-        print(f"Skipping {file_path}, already exists in bucket as {blob_name}.")
-        return
-
-    # Upload the file
-    print(f"Uploading {file_path} to {blob_name}...")
-    blob.upload_from_filename(str(file_path))
 
 
 def sync_local_to_gcs(local_dir: str, dest_prefix: str):
@@ -67,11 +38,20 @@ def sync_local_to_gcs(local_dir: str, dest_prefix: str):
 
     # Authenticate and initialize the client
     client = authenticate_with_service_account(credentials_json)
+    bucket = client.bucket(BUCKET_NAME)
 
     # Traverse through all files in the local directory
-    for file_path in local_path.rglob("*"):
-        if file_path.is_file():  # Only process files
-            upload_file(file_path, dest_prefix, client)
+    for source in local_path.rglob("*"):
+        if source.is_file():  # Only process files
+            destination = Path(dest_prefix) / source.relative_to(local_path)
+            blob = bucket.blob(str(destination))
+            if blob.exists():
+                print(
+                    f"Skipping {source}, already exists in bucket as {destination!s}."
+                )
+                continue
+            print(f"Uploading {source} to {destination!s}...")
+            blob.upload_from_filename(str(source))
 
 
 if __name__ == "__main__":
