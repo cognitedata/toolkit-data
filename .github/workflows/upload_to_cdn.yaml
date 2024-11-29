@@ -19,10 +19,10 @@ jobs:
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.APPS_CDN_SERVICE_ACCOUNT_CREDENTIALS }}
-
-     - name: 'Set up Cloud SDK'
-       uses: 'google-github-actions/setup-gcloud@v1'
-       with:
+      
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+        with:
          project_id: 'cognitedata-production'
 
       - name: Upload files if not present in GCS
