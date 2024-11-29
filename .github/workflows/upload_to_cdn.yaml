@@ -15,21 +15,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up GCP authentication
-        uses: google-github-actions/auth@v1
+      - name: Set up Python and install dependencies
+        uses: actions/setup-python@v4
         with:
-          credentials_json: ${{ secrets.APPS_CDN_SERVICE_ACCOUNT_CREDENTIALS }}
-      
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v1'
-        with:
-         project_id: 'cognitedata-production'
+          python-version: "3.9"
 
-      - name: Upload files if not present in GCS
+      - name: Install required libraries
         run: |
-          BUCKET_NAME="apps-cdn-bucket-cognitedata-production"
-          DEST_PREFIX="toolkit"
-          SOURCE_DIR="data"
+          pip install google-cloud-storage
 
-          # Upload all files, skipping already existing ones
-          gsutil -m rsync -n -r -d "$SOURCE_DIR" "gs://${BUCKET_NAME}/${DEST_PREFIX}/"
+      - name: Run Python script
+        env:
+          APPS_CDN_SERVICE_ACCOUNT_CREDENTIALS: ${{ secrets.APPS_CDN_SERVICE_ACCOUNT_CREDENTIALS }}
+        run: |
+          python sync_to_cdn.py
