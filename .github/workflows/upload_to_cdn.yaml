@@ -9,6 +9,7 @@ on:
 jobs:
   upload-to-gcp:
     runs-on: ubuntu-latest
+    environment: CD
 
     steps:
       # Step 1: Checkout the repository
