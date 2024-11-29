@@ -1,10 +1,10 @@
-ame: Upload to GCP Bucket
+name: Upload to GCP Bucket
 
 on:
   push:
     branches:
       - main  # Trigger on push to the main branch
-    workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   upload-to-gcp:
