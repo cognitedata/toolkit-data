@@ -1,6 +1,6 @@
 # toolkit-data
 
-This repository contains static demo data for the  
+This ric demo data for the  
 [Toolkit](https://github.com/cognitedata/toolkit) project.
 
 It is organized as follows:
