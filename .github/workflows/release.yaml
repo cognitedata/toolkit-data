@@ -1,0 +1,123 @@
+name: Zip, Checksum, and Update README on Main Merge
+
+on:
+  push:
+    branches:
+      - librarian
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        path: 
+          - 'path/to/your/first/directory'
+          - 'path/to/another/folder'
+          - 'docs'
+          - 'src/important_assets'
+    outputs:
+      zip_name: ${{ steps.file_names.outputs.zip_name }}
+      checksum: ${{ steps.checksum.outputs.sha256_hash }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Generate a dynamic zip file name
+        id: file_names
+        run: |
+          ZIP_NAME=$(echo "${{ matrix.path }}" | tr '/' '-')
+          echo "zip_name=${ZIP_NAME}.zip" >> $GITHUB_OUTPUT
+
+      - name: Create Zip File
+        run: zip -r ${{ steps.file_names.outputs.zip_name }} ${{ matrix.path }}
+
+      - name: Generate SHA256 Checksum
+        id: checksum
+        run: |
+          checksum_value=$(sha256sum ${{ steps.file_names.outputs.zip_name }} | awk '{ print $1 }')
+          echo "sha256_hash=${checksum_value}" >> $GITHUB_OUTPUT
+
+      - name: Upload Zip as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.file_names.outputs.zip_name }}
+          path: ${{ steps.file_names.outputs.zip_name }}
+
+      - name: Save checksum and filename for README job
+        # This creates a file containing the metadata for the update-readme job
+        run: |
+          echo "${{ steps.file_names.outputs.zip_name }},sha256:${{ steps.checksum.outputs.sha256_hash }}" >> checksum_data.txt
+
+      - name: Upload metadata for README job
+        # This artifact is temporary and will be used by the next job
+        uses: actions/upload-artifact@v4
+        with:
+          name: metadata-${{ matrix.path }}
+          path: checksum_data.txt
+
+  update-readme:
+    # This job runs only after all 'build' matrix jobs have succeeded
+    needs: build
+    runs-on: ubuntu-latest
+
+    # Grant permissions for the action to write to the repository
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          # Use a token with write permissions to push the commit
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download all metadata artifacts
+        uses: actions/download-artifact@v4
+        with:
+          # The pattern will download all artifacts starting with 'metadata-'
+          pattern: metadata-*
+          # Merge all artifacts into a single directory
+          merge-multiple: true
+
+      - name: Update README.md
+        id: readme
+        run: |
+          # Construct the permalink to the artifacts page for this specific workflow run
+          ARTIFACT_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+          # Start the markdown table
+          MARKDOWN_TABLE="| File | SHA256 Checksum | Download Link |\n|---|---|---|\n"
+
+          # Read each line from the downloaded metadata files and add a row to the table
+          while IFS= read -r line; do
+            # The line is in format "filename.zip,sha256:hash"
+            FILENAME=$(echo "$line" | cut -d',' -f1)
+            CHECKSUM=$(echo "$line" | cut -d',' -f2)
+            MARKDOWN_TABLE+="| $FILENAME | \`$CHECKSUM\` | [Link]($ARTIFACT_URL) |\n"
+          done < <(cat *.txt)
+
+          # Use an awk script to replace the content between the placeholder comments
+          # This is safer than sed for multiline replacements
+          awk -v replacement="$MARKDOWN_TABLE" '
+            BEGIN {p=1} 
+            // {print; print replacement; p=0} 
+            // {p=1} 
+            p {print}
+          ' README.md > README.md.tmp && mv README.md.tmp README.md
+
+          echo "README.md has been updated."
+      
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          # Check if there are any changes to commit
+          if ! git diff --quiet README.md; then
+            git add README.md
+            git commit -m "docs: Update artifact checksums and links"
+            git push
+            echo "Pushed README.md changes to the repository."
+          else
+            echo "No changes to README.md needed."
+          fi
