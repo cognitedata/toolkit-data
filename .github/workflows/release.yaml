@@ -4,14 +4,11 @@ on:
   push:
     branches:
       - librarian
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        path: 
-          - 'modules/bootcamp/'
     outputs:
       zip_name: ${{ steps.file_names.outputs.zip_name }}
       checksum: ${{ steps.checksum.outputs.sha256_hash }}
@@ -23,11 +20,11 @@ jobs:
       - name: Generate a dynamic zip file name
         id: file_names
         run: |
-          ZIP_NAME=$(echo "${{ matrix.path }}" | tr '/' '-')
+          ZIP_NAME=$(echo "modules" | tr '/' '-')
           echo "zip_name=${ZIP_NAME}.zip" >> $GITHUB_OUTPUT
 
       - name: Create Zip File
-        run: zip -r ${{ steps.file_names.outputs.zip_name }} ${{ matrix.path }}
+        run: zip -r ${{ steps.file_names.outputs.zip_name }} modules/
 
       - name: Generate SHA256 Checksum
         id: checksum
@@ -50,7 +47,7 @@ jobs:
         # This artifact is temporary and will be used by the next job
         uses: actions/upload-artifact@v4
         with:
-          name: metadata-${{ matrix.path }}
+          name: metadata-modules
           path: checksum_data.txt
 
   update-readme:
