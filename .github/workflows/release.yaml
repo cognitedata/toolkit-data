@@ -131,6 +131,14 @@ jobs:
           NEW_PATCH=$((PATCH + 1))
           NEW_TAG="v${MAJOR}.${MINOR}.${NEW_PATCH}"
           
+          # Check if this tag already exists in GitHub releases
+          if curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+             "https://api.github.com/repos/${{ github.repository }}/releases/tags/$NEW_TAG" | grep -q '"id"'; then
+            echo "Tag $NEW_TAG already exists, incrementing patch version"
+            NEW_PATCH=$((NEW_PATCH + 1))
+            NEW_TAG="v${MAJOR}.${MINOR}.${NEW_PATCH}"
+          fi
+          
           echo "tag=$NEW_TAG" >> $GITHUB_OUTPUT
           echo "Generated tag: $NEW_TAG"
 
