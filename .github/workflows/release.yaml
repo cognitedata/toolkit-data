@@ -76,31 +76,34 @@ jobs:
       - name: Generate packages list
         id: packages_list
         run: |
-          # Read packages.toml and extract package information
-          PACKAGES_CONTENT=""
-          
-          # Use awk to parse the packages.toml file and extract package names and descriptions
-          while IFS= read -r line; do
-            if [[ $line =~ ^\[packages\.([^\]]+)\] ]]; then
-              PACKAGE_NAME="${BASH_REMATCH[1]}"
-              # Read the next few lines to get title and description
-              TITLE=""
-              DESCRIPTION=""
-              while IFS= read -r next_line; do
-                if [[ $next_line =~ ^\[ ]]; then
-                  break
-                fi
-                if [[ $next_line =~ ^title\s*=\s*\"([^\"]+)\" ]]; then
-                  TITLE="${BASH_REMATCH[1]}"
-                fi
-                if [[ $next_line =~ ^description\s*=\s*\"([^\"]+)\" ]]; then
-                  DESCRIPTION="${BASH_REMATCH[1]}"
-                fi
-              done < <(tail -n +$(( $(grep -n "^\[packages\.$PACKAGE_NAME\]" modules/packages.toml | cut -d: -f1) + 1 )) modules/packages.toml | head -10)
-              
-              PACKAGES_CONTENT+="- **$PACKAGE_NAME**: $TITLE - $DESCRIPTION"$'\n'
-            fi
-          done < modules/packages.toml
+          # Use awk to parse packages.toml and extract package information
+          PACKAGES_CONTENT=$(awk '
+            /^\[packages\./ {
+              # Extract package name from [packages.name]
+              gsub(/^\[packages\./, "", $0)
+              gsub(/\]$/, "", $0)
+              package_name = $0
+              title = ""
+              description = ""
+              next
+            }
+            /^title\s*=\s*"/ {
+              # Extract title
+              gsub(/^title\s*=\s*"/, "", $0)
+              gsub(/"$/, "", $0)
+              title = $0
+            }
+            /^description\s*=\s*"/ {
+              # Extract description
+              gsub(/^description\s*=\s*"/, "", $0)
+              gsub(/"$/, "", $0)
+              description = $0
+              # Print the complete package info when we have all fields
+              if (package_name && title && description) {
+                printf "- **%s**: %s - %s\n", package_name, title, description
+              }
+            }
+          ' modules/packages.toml)
           
           echo "content<<EOF" >> $GITHUB_OUTPUT
           echo "$PACKAGES_CONTENT" >> $GITHUB_OUTPUT
@@ -131,6 +134,30 @@ jobs:
           echo "tag=$NEW_TAG" >> $GITHUB_OUTPUT
           echo "Generated tag: $NEW_TAG"
 
+      - name: Generate release body
+        id: release_body
+        run: |
+          cat > release_body.md << EOF
+          ## Usage:
+          
+          \`\`\`cdf.toml
+          
+          [libraries.toolkit-data]
+          url = "https://github.com/${{ github.repository }}/releases/download/${{ steps.tag.outputs.tag }}/${{ needs.build.outputs.zip_name }}"
+          sha256 = "sha256:${{ needs.build.outputs.checksum }}"
+          \`\`\`
+          
+          ## Content:
+          
+          This release contains the following packages:
+          
+          ${{ steps.packages_list.outputs.content }}
+          EOF
+          
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          cat release_body.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -138,24 +165,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.tag.outputs.tag }}
-          release_name: "Modules Release ${{ steps.tag.outputs.tag }}"
-          body: |
-            ## Usage:
-            
-            ```cdf.toml
-
-            [libraries.toolkit-data]
-            url = "https://github.com/cdf-dev/toolkit-data/releases/download/{{ steps.tag.outputs.tag }}/${{ needs.build.outputs.zip_name }}"
-            sha256 = "sha256:${{ needs.build.outputs.checksum }}"
-            ```
-
-            ## Content:
-            
-            This release contains the following packages:
-            
-            ${{ steps.packages_list.outputs.content }}
-
-
+          release_name: "${{ steps.tag.outputs.tag }}"
+          body: ${{ steps.release_body.outputs.body }}
           draft: false
           prerelease: false
 
