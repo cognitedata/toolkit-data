@@ -70,12 +70,66 @@ jobs:
         with:
           name: metadata-modules
 
+      - name: Check out repository for packages.toml
+        uses: actions/checkout@v4
+
+      - name: Generate packages list
+        id: packages_list
+        run: |
+          # Read packages.toml and extract package information
+          PACKAGES_CONTENT=""
+          
+          # Use awk to parse the packages.toml file and extract package names and descriptions
+          while IFS= read -r line; do
+            if [[ $line =~ ^\[packages\.([^\]]+)\] ]]; then
+              PACKAGE_NAME="${BASH_REMATCH[1]}"
+              # Read the next few lines to get title and description
+              TITLE=""
+              DESCRIPTION=""
+              while IFS= read -r next_line; do
+                if [[ $next_line =~ ^\[ ]]; then
+                  break
+                fi
+                if [[ $next_line =~ ^title\s*=\s*\"([^\"]+)\" ]]; then
+                  TITLE="${BASH_REMATCH[1]}"
+                fi
+                if [[ $next_line =~ ^description\s*=\s*\"([^\"]+)\" ]]; then
+                  DESCRIPTION="${BASH_REMATCH[1]}"
+                fi
+              done < <(tail -n +$(( $(grep -n "^\[packages\.$PACKAGE_NAME\]" modules/packages.toml | cut -d: -f1) + 1 )) modules/packages.toml | head -10)
+              
+              PACKAGES_CONTENT+="- **$PACKAGE_NAME**: $TITLE - $DESCRIPTION"$'\n'
+            fi
+          done < modules/packages.toml
+          
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$PACKAGES_CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Generate release tag
         id: tag
         run: |
-          # Generate a timestamp-based tag
-          TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
-          echo "tag=v$TIMESTAMP" >> $GITHUB_OUTPUT
+          # Get the latest release tag to determine the next patch version
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          
+          # Extract the version numbers
+          if [[ $LATEST_TAG =~ v([0-9]+)\.([0-9]+)\.([0-9]+) ]]; then
+            MAJOR=${BASH_REMATCH[1]}
+            MINOR=${BASH_REMATCH[2]}
+            PATCH=${BASH_REMATCH[3]}
+          else
+            # Default to 1.0.0 if no valid tag found
+            MAJOR=1
+            MINOR=0
+            PATCH=0
+          fi
+          
+          # Increment patch version
+          NEW_PATCH=$((PATCH + 1))
+          NEW_TAG="v${MAJOR}.${MINOR}.${NEW_PATCH}"
+          
+          echo "tag=$NEW_TAG" >> $GITHUB_OUTPUT
+          echo "Generated tag: $NEW_TAG"
 
       - name: Create Release
         id: create_release
@@ -86,25 +140,22 @@ jobs:
           tag_name: ${{ steps.tag.outputs.tag }}
           release_name: "Modules Release ${{ steps.tag.outputs.tag }}"
           body: |
-            ## Modules Package
+            ## Usage:
             
-            This release contains the complete modules package for the toolkit-data repository.
-            
-            ### Files Included:
-            - **${{ needs.build.outputs.zip_name }}** - Complete modules package
-            
-            ### SHA256 Checksum:
+            ```cdf.toml
+
+            [libraries.toolkit-data]
+            url = "https://github.com/cdf-dev/toolkit-data/releases/download/{{ steps.tag.outputs.tag }}/${{ needs.build.outputs.zip_name }}"
+            sha256 = "sha256:${{ needs.build.outputs.checksum }}"
             ```
-            sha256:${{ needs.build.outputs.checksum }}
-            ```
+
+            ## Content:
             
-            ### What's Included:
-            - All modules and submodules
-            - Configuration files
-            - Documentation
+            This release contains the following packages:
             
-            ### Installation:
-            Download and extract the zip file to access the modules.
+            ${{ steps.packages_list.outputs.content }}
+
+
           draft: false
           prerelease: false
 
