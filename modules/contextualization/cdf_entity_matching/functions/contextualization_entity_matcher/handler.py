@@ -34,9 +34,7 @@ def handle(data: dict, client: CogniteClient) -> dict:
         execute(data, client)
     except Exception as e:
         tb = traceback.extract_tb(e.__traceback__)
-        last_entry_this_file = next(
-            (entry for entry in reversed(tb) if entry.filename == __file__), None
-        )
+        last_entry_this_file = next((entry for entry in reversed(tb) if entry.filename == __file__), None)
         suffix = ""
         if last_entry_this_file:
             suffix = f" in function {last_entry_this_file.name} on line {last_entry_this_file.lineno}: {last_entry_this_file.line}"
@@ -47,20 +45,14 @@ def handle(data: dict, client: CogniteClient) -> dict:
         error_msg = f'"{e!s}"'
         message = prefix + error_msg + suffix
         if len(message) >= EXTRACTION_RUN_MESSAGE_LIMIT:
-            error_msg = error_msg[
-                : EXTRACTION_RUN_MESSAGE_LIMIT - len(prefix) - len(suffix) - 3 - 1
-            ]
+            error_msg = error_msg[: EXTRACTION_RUN_MESSAGE_LIMIT - len(prefix) - len(suffix) - 3 - 1]
             message = prefix + error_msg + '..."' + suffix
     else:
         status = "success"
         message = FUNCTION_ID
 
     client.extraction_pipelines.runs.create(
-        ExtractionPipelineRunWrite(
-            extpipe_external_id=EXTRACTION_PIPELINE_EXTERNAL_ID,
-            status=status,
-            message=message,
-        )
+        ExtractionPipelineRunWrite(extpipe_external_id=EXTRACTION_PIPELINE_EXTERNAL_ID, status=status, message=message)
     )
     return {"status": status, "message": message}
 
@@ -73,12 +65,7 @@ class Parameters(BaseModel, alias_generator=to_camel):
     auto_approval_threshold: float = Field(gt=0.0, le=1.0)
     auto_reject_threshold: float = Field(gt=0.0, le=1.0)
     feature_type: Literal[
-        "simple",
-        "insensitive",
-        "bigram",
-        "frequencyweightedbigram",
-        "bigramextratokenizers",
-        "bigramcombo",
+        "simple", "insensitive", "bigram", "frequencyweightedbigram", "bigramextratokenizers", "bigramcombo"
     ]
 
 
@@ -89,9 +76,7 @@ class ViewProperties(BaseModel, alias_generator=to_camel):
     properties: list[str]
 
     def as_view_id(self) -> dm.ViewId:
-        return dm.ViewId(
-            space=self.space, external_id=self.external_id, version=self.version
-        )
+        return dm.ViewId(space=self.space, external_id=self.external_id, version=self.version)
 
 
 class MatchingJobConfig(BaseModel, alias_generator=to_camel):
@@ -140,9 +125,7 @@ class Cursors:
         self._cursor_by_key[key] = cursor
 
     def _lookup_cursor(self, key: str) -> str | None:
-        row = self._client.raw.rows.retrieve(
-            db_name=self._raw_database, table_name=self._raw_table, key=key
-        )
+        row = self._client.raw.rows.retrieve(db_name=self._raw_database, table_name=self._raw_table, key=key)
         if row is None or row.columns is None:
             return None
         return row.columns.get("cursor")
@@ -230,9 +213,7 @@ class EntityList(list, MutableSequence[Entity]):
         return set().union(*[entity.standardized_properties.keys() for entity in self])
 
     @classmethod
-    def from_nodes(
-        cls, nodes: Sequence[dm.Node], properties: list[str]
-    ) -> "EntityList":
+    def from_nodes(cls, nodes: Sequence[dm.Node], properties: list[str]) -> "EntityList":
         return cls([Entity.from_node(node, properties) for node in nodes])
 
     def dump(self) -> list[dict[str, Any]]:
@@ -240,10 +221,7 @@ class EntityList(list, MutableSequence[Entity]):
 
     def property_product(self, other: "EntityList") -> list[tuple[str, str]]:
         return [
-            (source, target)
-            for source, target in itertools.product(
-                self.unique_properties, other.unique_properties
-            )
+            (source, target) for source, target in itertools.product(self.unique_properties, other.unique_properties)
         ]
 
 
@@ -258,9 +236,7 @@ class MatchResult(BaseModel, alias_generator=to_camel):
 
     @property
     def best_match(self) -> MatchItem | None:
-        return (
-            max(self.matches, key=lambda match: match.score) if self.matches else None
-        )
+        return max(self.matches, key=lambda match: match.score) if self.matches else None
 
     @classmethod
     def load(cls, data: dict[str, Any]) -> "MatchResult":
@@ -269,9 +245,7 @@ class MatchResult(BaseModel, alias_generator=to_camel):
 
 # Logger using print
 class CogniteFunctionLogger:
-    def __init__(
-        self, log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
-    ):
+    def __init__(self, log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"):
         self.log_level = log_level.upper()
 
     def _print(self, prefix: str, message: str) -> None:
@@ -320,16 +294,10 @@ def execute(data: dict, client: CogniteClient) -> None:
     annotation_count = 0
     for completed_job in wait_for_completion(jobs, logger):
         if completed_job.error_message:
-            logger.error(
-                f"Job {completed_job.job_id} entity matching failed: \n  - {completed_job.error_message}"
-            )
+            logger.error(f"Job {completed_job.job_id} entity matching failed: \n  - {completed_job.error_message}")
             continue
         annotation_list = create_annotations(
-            completed_job,
-            config.data.annotation_space,
-            config.source_system,
-            config.parameters,
-            logger,
+            completed_job, config.data.annotation_space, config.source_system, config.parameters, logger
         )
         write_annotations(annotation_list, client, completed_job.job_id or 0, logger)
         annotation_count += len(annotation_list)
@@ -340,10 +308,7 @@ def execute(data: dict, client: CogniteClient) -> None:
 
 
 def trigger_matching_jobs(
-    client: CogniteClient,
-    cursors: Cursors,
-    config: Config,
-    logger: CogniteFunctionLogger,
+    client: CogniteClient, cursors: Cursors, config: Config, logger: CogniteFunctionLogger
 ) -> dict[str, ContextualizationJob]:
     instance_spaces = config.data.instance_spaces
     jobs: dict[str, ContextualizationJob] = {}
@@ -357,22 +322,16 @@ def trigger_matching_jobs(
                 space=instance_spaces,
                 limit=-1,
             )
-            target_entities.extend(
-                EntityList.from_nodes(target_nodes, target_view.properties)
-            )
+            target_entities.extend(EntityList.from_nodes(target_nodes, target_view.properties))
 
         last_cursor = cursors.get_cursor(job_name)
 
-        query = _create_query(
-            job_config.source_view, instance_spaces, last_cursor, job_name
-        )
+        query = _create_query(job_config.source_view, instance_spaces, last_cursor, job_name)
         query_result = client.data_modeling.instances.sync(query)
         cursors.set_cursor(job_name, query_result.cursors[job_name])
         source_nodes = query_result.get_nodes(job_name)
 
-        source_entities = EntityList.from_nodes(
-            source_nodes, job_config.source_view.properties
-        )
+        source_entities = EntityList.from_nodes(source_nodes, job_config.source_view.properties)
         combinations = source_entities.property_product(target_entities)
         unsupervised_model = client.entity_matching.fit(
             sources=source_entities.dump(),
@@ -387,9 +346,7 @@ def trigger_matching_jobs(
             score_threshold=config.parameters.auto_reject_threshold,
         )
         jobs[job_name] = job
-        logger.debug(
-            f"Triggered matching job {job_name} with {len(source_entities)} entities"
-        )
+        logger.debug(f"Triggered matching job {job_name} with {len(source_entities)} entities")
     return jobs
 
 
@@ -408,11 +365,7 @@ def _create_query(
                 limit=1000,
             )
         },
-        select={
-            name: dm.query.Select(
-                [dm.query.SourceSelector(source=view_id, properties=view.properties)]
-            )
-        },
+        select={name: dm.query.Select([dm.query.SourceSelector(source=view_id, properties=view.properties)])},
         cursors={name: last_cursor},
     )
 
@@ -474,12 +427,7 @@ def create_annotations(
             source_updated_time=now,
             source_created_user=FUNCTION_ID,
             source_updated_user=FUNCTION_ID,
-            source_context=json.dumps(
-                {
-                    "end": best_match.target.view.dump(),
-                    "start": match.source.view.dump(),
-                }
-            ),
+            source_context=json.dumps({"end": best_match.target.view.dump(), "start": match.source.view.dump()}),
         )
         annotation_list.append(annotation)
     return annotation_list
@@ -494,18 +442,10 @@ def write_annotations(
     created = client.data_modeling.instances.apply(edges=annotation_list).edges
 
     create_count = sum(
-        [
-            1
-            for result in created
-            if result.was_modified and result.created_time == result.last_updated_time
-        ]
+        [1 for result in created if result.was_modified and result.created_time == result.last_updated_time]
     )
     update_count = sum(
-        [
-            1
-            for result in created
-            if result.was_modified and result.created_time != result.last_updated_time
-        ]
+        [1 for result in created if result.was_modified and result.created_time != result.last_updated_time]
     )
     unchanged_count = len(created) - create_count - update_count
     logger.info(
@@ -526,9 +466,7 @@ def create_annotation_id(start: dm.NodeId, end: dm.NodeId, type: str) -> str:
 
 
 def load_config(client: CogniteClient, logger: CogniteFunctionLogger) -> Config:
-    raw_config = client.extraction_pipelines.config.retrieve(
-        EXTRACTION_PIPELINE_EXTERNAL_ID
-    )
+    raw_config = client.extraction_pipelines.config.retrieve(EXTRACTION_PIPELINE_EXTERNAL_ID)
     if raw_config.config is None:
         raise ValueError("No config found for extraction pipeline")
     try:

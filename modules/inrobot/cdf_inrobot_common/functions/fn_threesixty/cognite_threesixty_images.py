@@ -32,9 +32,7 @@ class VectorXYZ:
         return f"{self.x:.4f}, {self.y:.4f}, {self.z:.4f}"
 
 
-def translation_to_mm_str_with_offset(
-    translation: VectorXYZ, translation_offset_mm: VectorXYZ, translation_unit: str
-):
+def translation_to_mm_str_with_offset(translation: VectorXYZ, translation_offset_mm: VectorXYZ, translation_unit: str):
     """Transfrom translation to string in to mm with offset."""
     unit_clean = translation_unit.lower().replace(" ", "")
     if unit_clean == "m":
@@ -45,8 +43,7 @@ def translation_to_mm_str_with_offset(
         scale = 1
     else:
         raise ValueError(
-            f"Translaiton unit not recognized: {translation_unit}. "
-            'Translation unit should be "m", "cm" or "mm".'
+            f"Translaiton unit not recognized: {translation_unit}. " 'Translation unit should be "m", "cm" or "mm".'
         )
 
     return VectorXYZ(
@@ -151,13 +148,9 @@ class CogniteThreeSixtyImageExtractor:
                 site_id=site_id,
                 site_name=site_name,
                 station_name=site_name + " " + station_number,
-                rotation_angle=convert_rotation_angle(
-                    rotation_angle, rotation_angle_unit
-                ),
+                rotation_angle=convert_rotation_angle(rotation_angle, rotation_angle_unit),
                 rotation_axis=rotation_axis.to_string(),
-                translation=translation_to_mm_str_with_offset(
-                    translation, translation_offset_mm, translation_unit
-                ),
+                translation=translation_to_mm_str_with_offset(translation, translation_offset_mm, translation_unit),
                 station_id=site_id + "-" + station_number,
                 timestamp=timestamp,
             ),
@@ -179,9 +172,7 @@ class CogniteThreeSixtyImageExtractor:
         )
         event.metadata = asdict(three_sixty_image.threesixty_image_metadata)
         event.data_set_id = self.data_set_id
-        event.description = (
-            "Scan position " + three_sixty_image.threesixty_image_metadata.station_name
-        )
+        event.description = "Scan position " + three_sixty_image.threesixty_image_metadata.station_name
         event.type = EVENT_TYPE
         event.subtype = EVENT_SUB_TYPE
         event.start_time = three_sixty_image.threesixty_image_metadata.timestamp
@@ -214,21 +205,11 @@ class CogniteThreeSixtyImageExtractor:
                 )
                 file_metadata.labels = self.labels
                 metadata = {}
-                metadata["site_id"] = (
-                    three_sixty_image.threesixty_image_metadata.site_id
-                )
-                metadata["site_name"] = (
-                    three_sixty_image.threesixty_image_metadata.site_name
-                )
-                metadata["station_id"] = (
-                    three_sixty_image.threesixty_image_metadata.station_id
-                )
-                metadata["station_name"] = (
-                    three_sixty_image.threesixty_image_metadata.station_name
-                )
-                metadata["timestamp"] = str(
-                    three_sixty_image.threesixty_image_metadata.timestamp
-                )
+                metadata["site_id"] = three_sixty_image.threesixty_image_metadata.site_id
+                metadata["site_name"] = three_sixty_image.threesixty_image_metadata.site_name
+                metadata["station_id"] = three_sixty_image.threesixty_image_metadata.station_id
+                metadata["station_name"] = three_sixty_image.threesixty_image_metadata.station_name
+                metadata["timestamp"] = str(three_sixty_image.threesixty_image_metadata.timestamp)
                 metadata["image_type"] = "cubemap"
                 metadata["image_resolution"] = str(resolution)
                 metadata["face"] = face.name
@@ -237,9 +218,7 @@ class CogniteThreeSixtyImageExtractor:
                 file_metadata.name = (
                     three_sixty_image.threesixty_image_metadata.station_name
                     + "-"
-                    + str(
-                        three_sixty_image.threesixty_image_metadata.timestamp
-                    )  # For avoiding duplicate filenames
+                    + str(three_sixty_image.threesixty_image_metadata.timestamp)  # For avoiding duplicate filenames
                     + "-"
                     + face.name
                     + ".jpg"
@@ -248,9 +227,7 @@ class CogniteThreeSixtyImageExtractor:
                 file_metadata.data_set_id = self.data_set_id
                 cubemap_img = three_sixty_image.images[face.name]
                 content = self._image_to_byte_array(Image.fromarray(cubemap_img))
-                files.append(
-                    ImageWithFileMetadata(content=content, file_metadata=file_metadata)
-                )
+                files.append(ImageWithFileMetadata(content=content, file_metadata=file_metadata))
         else:
             logger.error("No station ID found.")
         return files
@@ -266,9 +243,7 @@ class CogniteThreeSixtyImageExtractor:
             cube_h[:, (i * w) : (i + 1) * w] = face
         return cube_h
 
-    def _get_cubemap_images(
-        self, content: Union[str, np.ndarray]
-    ) -> Union[dict[str, str], dict[str, np.ndarray]]:
+    def _get_cubemap_images(self, content: Union[str, np.ndarray]) -> Union[dict[str, str], dict[str, np.ndarray]]:
         """Create cubemap dict from equirectangular image.
 
         Args:
@@ -305,7 +280,5 @@ class CogniteThreeSixtyImageExtractor:
             for key, im in cube_dict.items():
                 cubemaps[dice_map[key]] = cube_dict[key]
         except Exception as e:
-            raise Exception(
-                f"Failed to create cubemap image from equirectangular image: {e}."
-            )
+            raise Exception(f"Failed to create cubemap image from equirectangular image: {e}.")
         return cubemaps

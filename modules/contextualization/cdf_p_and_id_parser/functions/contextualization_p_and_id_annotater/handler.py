@@ -18,9 +18,7 @@ from cognite.client import CogniteClient
 from cognite.client import data_modeling as dm
 from cognite.client.data_classes import ExtractionPipelineRunWrite
 from cognite.client.data_classes.contextualization import DiagramDetectResults
-from cognite.client.data_classes.data_modeling.cdm.v1 import (
-    CogniteDiagramAnnotationApply,
-)
+from cognite.client.data_classes.data_modeling.cdm.v1 import CogniteDiagramAnnotationApply
 from pydantic import BaseModel, Field, field_validator
 from pydantic.alias_generators import to_camel
 
@@ -36,9 +34,7 @@ def handle(data: dict, client: CogniteClient) -> dict:
         annotation_count = execute(data, client)
     except Exception as e:
         tb = traceback.extract_tb(e.__traceback__)
-        last_entry_this_file = next(
-            (entry for entry in reversed(tb) if entry.filename == __file__), None
-        )
+        last_entry_this_file = next((entry for entry in reversed(tb) if entry.filename == __file__), None)
         suffix = ""
         if last_entry_this_file:
             suffix = f" in function {last_entry_this_file.name} on line {last_entry_this_file.lineno}: {last_entry_this_file.line}"
@@ -49,20 +45,14 @@ def handle(data: dict, client: CogniteClient) -> dict:
         error_msg = f'"{e!s}"'
         message = prefix + error_msg + suffix
         if len(message) >= EXTRACTION_RUN_MESSAGE_LIMIT:
-            error_msg = error_msg[
-                : EXTRACTION_RUN_MESSAGE_LIMIT - len(prefix) - len(suffix) - 3 - 1
-            ]
+            error_msg = error_msg[: EXTRACTION_RUN_MESSAGE_LIMIT - len(prefix) - len(suffix) - 3 - 1]
             message = prefix + error_msg + '..."' + suffix
     else:
         status = "success"
         message = f"{FUNCTION_ID} created {annotation_count} annotations"
 
     client.extraction_pipelines.runs.create(
-        ExtractionPipelineRunWrite(
-            extpipe_external_id=EXTRACTION_PIPELINE_EXTERNAL_ID,
-            status=status,
-            message=message,
-        )
+        ExtractionPipelineRunWrite(extpipe_external_id=EXTRACTION_PIPELINE_EXTERNAL_ID, status=status, message=message)
     )
     return {"status": status, "message": message}
 
@@ -84,9 +74,7 @@ class ViewProperty(BaseModel, alias_generator=to_camel):
     search_property: str = "name"
 
     def as_view_id(self) -> dm.ViewId:
-        return dm.ViewId(
-            space=self.space, external_id=self.external_id, version=self.version
-        )
+        return dm.ViewId(space=self.space, external_id=self.external_id, version=self.version)
 
 
 class AnnotationJobConfig(BaseModel, alias_generator=to_camel):
@@ -115,9 +103,7 @@ class Config(BaseModel, alias_generator=to_camel):
 
 # Logger using print
 class CogniteFunctionLogger:
-    def __init__(
-        self, log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
-    ):
+    def __init__(self, log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"):
         self.log_level = log_level.upper()
 
     def _print(self, prefix: str, message: str) -> None:
@@ -181,9 +167,7 @@ class Entity(BaseModel, alias_generator=to_camel, extra="allow", populate_by_nam
 
         name = properties[search_property]
         if not isinstance(name, str):
-            raise ValueError(
-                f"Expected {search_property} to be a string, but got {type(name)}"
-            )
+            raise ValueError(f"Expected {search_property} to be a string, but got {type(name)}")
 
         return cls(
             node_id=node.as_id(),
@@ -217,17 +201,10 @@ def execute(data: dict, client: CogniteClient) -> int:
     for result in wait_for_completion(jobs, logger):
         if result.errors:
             errors_str = "\n  - ".join(sorted(set(result.errors)))
-            logger.error(
-                f"Job {result.job_id} {len(result.errors)} files failed: \n  - {errors_str}"
-            )
+            logger.error(f"Job {result.job_id} {len(result.errors)} files failed: \n  - {errors_str}")
             continue
         annotations = write_annotations(
-            result,
-            client,
-            config.data.annotation_space,
-            config.source_system,
-            config.parameters,
-            logger,
+            result, client, config.data.annotation_space, config.source_system, config.parameters, logger
         )
         annotation_count += len(annotations)
 
@@ -245,29 +222,19 @@ def trigger_diagram_detection_jobs(
         is_view = dm.filters.HasData(views=[file_view])
         is_uploaded = dm.filters.Equals(file_view.as_property_ref("isUploaded"), True)
         is_file_type = dm.filters.In(
-            file_view.as_property_ref("mimeType"),
-            ["application/pdf", "image/jpeg", "image/png", "image/tiff"],
+            file_view.as_property_ref("mimeType"), ["application/pdf", "image/jpeg", "image/png", "image/tiff"]
         )
-        is_instance_space = dm.filters.SpaceFilter(
-            config.data.instance_spaces, instance_type="node"
-        )
-        is_selected = dm.filters.And(
-            is_view, is_uploaded, is_file_type, is_instance_space
-        )
+        is_instance_space = dm.filters.SpaceFilter(config.data.instance_spaces, instance_type="node")
+        is_selected = dm.filters.And(is_view, is_uploaded, is_file_type, is_instance_space)
 
         entities = get_entities(client, job_config, instance_spaces, logger)
         if not entities:
             logger.warning(f"No entities found for {job_config.file_view.external_id}")
             continue
-        logger.debug(
-            f"Triggering diagram detection for {len(entities)} entities in {job_config.file_view.external_id}"
-        )
+        logger.debug(f"Triggering diagram detection for {len(entities)} entities in {job_config.file_view.external_id}")
 
         for file_list in client.data_modeling.instances(
-            instance_type="node",
-            space=instance_spaces,
-            filter=is_selected,
-            chunk_size=MAX_FILES_PER_JOB,
+            instance_type="node", space=instance_spaces, filter=is_selected, chunk_size=MAX_FILES_PER_JOB
         ):
             file_ids = file_list.as_ids()
             try:
@@ -277,15 +244,12 @@ def trigger_diagram_detection_jobs(
                 # We don't have access to the files, so we can't check if they are uploaded
                 ...
             else:
-                classic_file_by_node_id = {
-                    file.instance_id: file for file in classic_files
-                }
+                classic_file_by_node_id = {file.instance_id: file for file in classic_files}
                 # This is because the client.diagrams detect method uses the classical file
                 file_ids = [
                     file_id
                     for file_id in file_ids
-                    if file_id in classic_file_by_node_id
-                    and classic_file_by_node_id[file_id].uploaded
+                    if file_id in classic_file_by_node_id and classic_file_by_node_id[file_id].uploaded
                 ]
 
             diagram_result = client.diagrams.detect(
@@ -300,30 +264,17 @@ def trigger_diagram_detection_jobs(
 
 
 def get_entities(
-    client: CogniteClient,
-    job_config: AnnotationJobConfig,
-    instance_spaces: list[str],
-    logger: CogniteFunctionLogger,
+    client: CogniteClient, job_config: AnnotationJobConfig, instance_spaces: list[str], logger: CogniteFunctionLogger
 ) -> list[Entity]:
     entity_list: list[Entity] = []
     for entity_view in job_config.entity_views:
         for node_list in client.data_modeling.instances(
-            chunk_size=1_000,
-            instance_type="node",
-            space=instance_spaces,
-            sources=[entity_view.as_view_id()],
+            chunk_size=1_000, instance_type="node", space=instance_spaces, sources=[entity_view.as_view_id()]
         ):
             entity_list.extend(
-                Entity.from_nodes(
-                    node_list,
-                    job_config.file_view,
-                    entity_view.type,
-                    entity_view.search_property,
-                )
+                Entity.from_nodes(node_list, job_config.file_view, entity_view.type, entity_view.search_property)
             )
-    logger.debug(
-        f"Found {len(entity_list)} entities for {job_config.file_view.external_id}"
-    )
+    logger.debug(f"Found {len(entity_list)} entities for {job_config.file_view.external_id}")
     return entity_list
 
 
@@ -363,31 +314,16 @@ def write_annotations(
             for entity in entities:
                 if detection.file_instance_id is not None:
                     file_id = dm.NodeId.load(detection.file_instance_id)
-                    annotation = load_annotation(
-                        raw_annotation,
-                        entity,
-                        file_id,
-                        annotation_space,
-                        source,
-                        parameter,
-                    )
+                    annotation = load_annotation(raw_annotation, entity, file_id, annotation_space, source, parameter)
                     annotation_list.append(annotation)
 
     created = client.data_modeling.instances.apply(edges=annotation_list).edges
 
     create_count = sum(
-        [
-            1
-            for result in created
-            if result.was_modified and result.created_time == result.last_updated_time
-        ]
+        [1 for result in created if result.was_modified and result.created_time == result.last_updated_time]
     )
     update_count = sum(
-        [
-            1
-            for result in created
-            if result.was_modified and result.created_time != result.last_updated_time
-        ]
+        [1 for result in created if result.was_modified and result.created_time != result.last_updated_time]
     )
     unchanged_count = len(created) - create_count - update_count
     logger.info(
@@ -406,9 +342,7 @@ def load_annotation(
 ) -> CogniteDiagramAnnotationApply:
     text = raw_annotation["text"]
     external_id = create_annotation_id(file_id, entity.node_id, text, raw_annotation)
-    confidence = (
-        raw_annotation["confidence"] if "confidence" in raw_annotation else None
-    )
+    confidence = raw_annotation["confidence"] if "confidence" in raw_annotation else None
     status: Literal["Approved", "Suggested", "Rejected"] = "Suggested"
     if confidence is not None and confidence >= parameters.auto_approval_threshold:
         status = "Approved"
@@ -444,15 +378,11 @@ def load_annotation(
         source_updated_time=now,
         source_created_user=FUNCTION_ID,
         source_updated_user=FUNCTION_ID,
-        source_context=json.dumps(
-            {"end": entity.start_view.dump(), "start": entity.end_view.dump()}
-        ),
+        source_context=json.dumps({"end": entity.start_view.dump(), "start": entity.end_view.dump()}),
     )
 
 
-def create_annotation_id(
-    file_id: dm.NodeId, node_id: dm.NodeId, text: str, raw_annotation: dict[str, Any]
-) -> str:
+def create_annotation_id(file_id: dm.NodeId, node_id: dm.NodeId, text: str, raw_annotation: dict[str, Any]) -> str:
     hash_ = sha256(json.dumps(raw_annotation, sort_keys=True).encode()).hexdigest()[:10]
     naive = f"{file_id.space}:{file_id.external_id}:{node_id.space}:{node_id.external_id}:{text}:{hash_}"
     if len(naive) < EXTERNAL_ID_LIMIT:
@@ -465,9 +395,7 @@ def create_annotation_id(
 
 
 def load_config(client: CogniteClient, logger: CogniteFunctionLogger) -> Config:
-    raw_config = client.extraction_pipelines.config.retrieve(
-        EXTRACTION_PIPELINE_EXTERNAL_ID
-    )
+    raw_config = client.extraction_pipelines.config.retrieve(EXTRACTION_PIPELINE_EXTERNAL_ID)
     if raw_config.config is None:
         raise ValueError("No config found for extraction pipeline")
     try:

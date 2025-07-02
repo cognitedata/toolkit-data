@@ -57,9 +57,7 @@ def create_apm_observation_from_reading(
     elif isinstance(timestamp, datetime):
         timestamp_dt = timestamp
     else:
-        raise ValueError(
-            f"Timestamp is of type {type(timestamp)}, needs to be either `int` or `datetime`."
-        )
+        raise ValueError(f"Timestamp is of type {type(timestamp)}, needs to be either `int` or `datetime`.")
 
     apm_measurement_external_id = f"measurement_{timeseries_external_id}_{timestamp}"
     apm_measurement = {
@@ -149,10 +147,7 @@ def create_apm_observation_from_reading(
             "instanceType": "edge",
             "space": space_id,
             "externalId": f"{apm_checklistitem_external_id}.observations_{apm_observation_external_id}",
-            "startNode": {
-                "externalId": apm_checklistitem_external_id,
-                "space": space_id,
-            },
+            "startNode": {"externalId": apm_checklistitem_external_id, "space": space_id},
             "endNode": {"externalId": apm_observation_external_id, "space": space_id},
             "type": {"externalId": "APM_ChecklistItem.observations", "space": space_id},
         }
@@ -161,41 +156,26 @@ def create_apm_observation_from_reading(
     logger.debug(f"Creating instances request: {json.dumps(instances, indent=2)}")
 
     response = client.post(
-        f"/api/v1/projects/{client.config.project}/models/instances",
-        json={"items": instances},
+        f"/api/v1/projects/{client.config.project}/models/instances", json={"items": instances}
     ).json()
 
     logger.debug(f"Creating instances response: {json.dumps(response, indent=2)}")
 
 
 def _get_views(
-    client: CogniteClient,
-    space: str,
-    datamodel_id: str,
-    datamodel_version: Optional[str] = None,
-    view_ids=list[str],
+    client: CogniteClient, space: str, datamodel_id: str, datamodel_version: Optional[str] = None, view_ids=list[str]
 ) -> list[dict[str, Any]]:
     response = client.post(
         f"/api/v1/projects/{client.config.project}/models/datamodels/byids",
         json={
-            "items": [
-                {
-                    "space": space,
-                    "externalId": datamodel_id,
-                    "version": datamodel_version,
-                }
-            ],
+            "items": [{"space": space, "externalId": datamodel_id, "version": datamodel_version}],
         },
     ).json()
 
     # get latest datamodel, if no version is specified
-    datamodel = max(
-        response["items"], key=lambda item: item["createdTime"], default=None
-    )
+    datamodel = max(response["items"], key=lambda item: item["createdTime"], default=None)
     if datamodel is None:
-        raise ValueError(
-            f"No datamodels with id {datamodel_id} found with version {datamodel_version}."
-        )
+        raise ValueError(f"No datamodels with id {datamodel_id} found with version {datamodel_version}.")
 
     views = datamodel.get("views")
     if views is None or views == []:
@@ -204,20 +184,14 @@ def _get_views(
     available_views = {view.get("externalId"): view.get("version") for view in views}
 
     items = [
-        {
-            "space": space,
-            "externalId": requested_view_id,
-            "version": available_views.get(requested_view_id),
-        }
+        {"space": space, "externalId": requested_view_id, "version": available_views.get(requested_view_id)}
         for requested_view_id in view_ids
         if available_views.get(requested_view_id) is not None
     ]
 
     if len(items) != len(view_ids):
         missing_views = set(view_ids) - set([item["externalId"] for item in items])
-        raise ValueError(
-            f"Views {', '.join(missing_views)} not found in datamodel {datamodel_id}."
-        )
+        raise ValueError(f"Views {', '.join(missing_views)} not found in datamodel {datamodel_id}.")
 
     views = client.post(
         f"/api/v1/projects/{client.config.project}/models/views/byids",
@@ -229,22 +203,16 @@ def _get_views(
     return views["items"]
 
 
-def _get_apm_config(
-    client: CogniteClient, config_external_id: str
-) -> Optional[dict[str, Any]]:
+def _get_apm_config(client: CogniteClient, config_external_id: str) -> Optional[dict[str, Any]]:
     space = "APM_Config"
     datamodel_id = "APM_Config"
     view_id = "APM_Config"
     instance_external_ids = [config_external_id, "default-config"]
 
-    views = _get_views(
-        client=client, space=space, datamodel_id=datamodel_id, view_ids=[view_id]
-    )
+    views = _get_views(client=client, space=space, datamodel_id=datamodel_id, view_ids=[view_id])
 
     if len(views) != 1:
-        raise ValueError(
-            f"Expected to find exactly one view for {view_id}, found {len(views)}."
-        )
+        raise ValueError(f"Expected to find exactly one view for {view_id}, found {len(views)}.")
 
     view = views[0]
 
@@ -269,41 +237,19 @@ def _get_apm_config(
     ).json()
 
     if response.get("items") == []:
-        logger.error(
-            "Could not find APM config, not upserting any APM_Observations now."
-        )
+        logger.error("Could not find APM config, not upserting any APM_Observations now.")
         return None
 
     # Try to find the first item with "externalId" == config_external_id
-    apm_config = next(
-        (
-            item
-            for item in response["items"]
-            if item["externalId"] == config_external_id
-        ),
-        None,
-    )
+    apm_config = next((item for item in response["items"] if item["externalId"] == config_external_id), None)
 
     # If no such item is found, try to find the first item with "externalId" == "default"
     if apm_config is None:
-        apm_config = next(
-            (
-                item
-                for item in response["items"]
-                if item["externalId"] == "default-config"
-            ),
-            None,
-        )
+        apm_config = next((item for item in response["items"] if item["externalId"] == "default-config"), None)
         if apm_config is None:
-            raise ValueError(
-                f"Could not find APM config with externalId {config_external_id} or `default-config`."
-            )
+            raise ValueError(f"Could not find APM config with externalId {config_external_id} or `default-config`.")
 
-    apm_config = (
-        apm_config.get("properties")
-        .get(space)
-        .get(f"{view.get('externalId')}/{view.get('version')}")
-    )
+    apm_config = apm_config.get("properties").get(space).get(f"{view.get('externalId')}/{view.get('version')}")
 
     return apm_config
 

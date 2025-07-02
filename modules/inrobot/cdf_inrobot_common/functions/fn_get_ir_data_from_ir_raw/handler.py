@@ -39,13 +39,7 @@ def get_asset(client, file):
         return client.assets.retrieve(asset_id)
 
 
-def handle_failed_upload(
-    client: CogniteClient,
-    id: int,
-    error_message: str,
-    data: dict,
-    metadata: dict | None = None,
-):
+def handle_failed_upload(client: CogniteClient, id: int, error_message: str, data: dict, metadata: dict | None = None):
     """Log error message and update a file that has failed."""
     print(error_message)
 
@@ -54,9 +48,7 @@ def handle_failed_upload(
         .labels.remove(data["input_label"])
         .labels.add([data["output_label"], data["failed_label"]])
         .metadata.add(
-            {"error_message": error_message, **metadata}
-            if metadata is not None
-            else {"error_message": error_message}
+            {"error_message": error_message, **metadata} if metadata is not None else {"error_message": error_message}
         )
     )
 
@@ -64,16 +56,7 @@ def handle_failed_upload(
 def handle(data, client):
     print("Start extracting data from the IR raw file.")
 
-    if (
-        not {
-            "input_label",
-            "output_label",
-            "success_label",
-            "failed_label",
-            "data_set_external_id",
-        }
-        <= data.keys()
-    ):
+    if not {"input_label", "output_label", "success_label", "failed_label", "data_set_external_id"} <= data.keys():
         raise RuntimeError(
             "Data should contain all keys: 'input_label', 'output_label', 'success_label', 'failed_label', 'data_set_external_id'."
         )
@@ -86,14 +69,9 @@ def handle(data, client):
         uploaded=True,
     )
 
-    print(
-        f"Number of files to process with label: {data['input_label']}: {len(files)}."
-    )
+    print(f"Number of files to process with label: {data['input_label']}: {len(files)}.")
 
-    create_missing_labels(
-        client=client,
-        label_ids=[data["output_label"], data["success_label"], data["failed_label"]],
-    )
+    create_missing_labels(client=client, label_ids=[data["output_label"], data["success_label"], data["failed_label"]])
 
     upload_queue = TimeSeriesUploadQueue(
         client,
@@ -122,14 +100,10 @@ def handle(data, client):
             client.files.download_to_path(path=ir_raw_path, id=file.id)
 
             # Extract temperatures from the raw file
-            temperatures_decikelvin = np.fromfile(
-                file=ir_raw_path, dtype=np.uint16
-            ).byteswap()
+            temperatures_decikelvin = np.fromfile(file=ir_raw_path, dtype=np.uint16).byteswap()
 
             # Reshape the raw temperature array
-            temperatures_decikelvin = temperatures_decikelvin.reshape(
-                (IMAGE_HEIGHT, IMAGE_WIDTH)
-            )
+            temperatures_decikelvin = temperatures_decikelvin.reshape((IMAGE_HEIGHT, IMAGE_WIDTH))
 
             # Convert degrees decikelvin to degrees celsius
             temperatures_celsius = ((temperatures_decikelvin) / 10) - 273.15
@@ -155,19 +129,11 @@ def handle(data, client):
                         "raw_file_name": file.name,
                     },
                 )
-                file_update = FileMetadataUpdate(id=file.id).metadata.add(
-                    {"ir_image_id": res_image.id}
-                )
+                file_update = FileMetadataUpdate(id=file.id).metadata.add({"ir_image_id": res_image.id})
                 client.files.update(file_update)
 
             except Exception as e:
-                handle_failed_upload(
-                    client=client,
-                    id=file.id,
-                    error_message=str(e),
-                    data=data,
-                    metadata=file.metadata,
-                )
+                handle_failed_upload(client=client, id=file.id, error_message=str(e), data=data, metadata=file.metadata)
                 continue
 
             print(f"Uploaded IR image with ID: {res_image.id}.")
@@ -186,19 +152,11 @@ def handle(data, client):
                         "raw_file_name": file.name,
                     },
                 )
-                file_update = FileMetadataUpdate(id=file.id).metadata.add(
-                    {"ir_temp_csv_id": res_csv.id}
-                )
+                file_update = FileMetadataUpdate(id=file.id).metadata.add({"ir_temp_csv_id": res_csv.id})
                 client.files.update(file_update)
 
             except Exception as e:
-                handle_failed_upload(
-                    client=client,
-                    id=file.id,
-                    error_message=str(e),
-                    data=data,
-                    metadata=file.metadata,
-                )
+                handle_failed_upload(client=client, id=file.id, error_message=str(e), data=data, metadata=file.metadata)
                 continue
 
             print(f"Uploaded temperature file with ID: {res_csv.id}.")
@@ -209,26 +167,16 @@ def handle(data, client):
 
             # if "ts_external_id" in file.metadata:
             if any("ts_external_id" in key for key in file.metadata):
-                ts_external_ids = list(
-                    value
-                    for key, value in file.metadata.items()
-                    if "ts_external_id" in key
-                )
+                ts_external_ids = list(value for key, value in file.metadata.items() if "ts_external_id" in key)
                 ts_external_ids = sorted(ts_external_ids)
 
                 timestamp = int(get_timestamp(file))
 
                 for ts_eid in ts_external_ids:
-                    temp = (
-                        maximum_temperature
-                        if ts_eid.endswith("max")
-                        else minimum_temperature
-                    )
+                    temp = maximum_temperature if ts_eid.endswith("max") else minimum_temperature
                     eid = ts_eid
 
-                    print(
-                        f"Datapoint {temp} at timestamp {timestamp} written to timeseries {ts_eid}."
-                    )
+                    print(f"Datapoint {temp} at timestamp {timestamp} written to timeseries {ts_eid}.")
 
                     upload_queue.add_to_upload_queue(
                         datapoints=[(timestamp, temp)],
@@ -241,9 +189,7 @@ def handle(data, client):
             .labels.add([data["output_label"], data["success_label"]])
         )
 
-        print(
-            f"IR reading completed successfully for file with external id: {file.external_id}, and id: {file.id}."
-        )
+        print(f"IR reading completed successfully for file with external id: {file.external_id}, and id: {file.id}.")
 
     upload_queue.upload()
     return {}

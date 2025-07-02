@@ -59,9 +59,7 @@ def create_annotations(
     bounding_box_label: str,
     keypoint_label: str,
 ):
-    annotations = gauge_reading_result["items"][0]["predictions"][
-        gauge_type + "GaugePredictions"
-    ]
+    annotations = gauge_reading_result["items"][0]["predictions"][gauge_type + "GaugePredictions"]
     annotations_list = []
 
     for annotation in annotations:

@@ -11,10 +11,7 @@ jobs:
     strategy:
       matrix:
         path: 
-          - 'path/to/your/first/directory'
-          - 'path/to/another/folder'
-          - 'docs'
-          - 'src/important_assets'
+          - 'modules/bootcamp/'
     outputs:
       zip_name: ${{ steps.file_names.outputs.zip_name }}
       checksum: ${{ steps.checksum.outputs.sha256_hash }}

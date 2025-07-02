@@ -16,10 +16,7 @@ import yaml
 from cognite.client import CogniteClient
 from cognite.client import data_modeling as dm
 from cognite.client.data_classes import ExtractionPipelineRunWrite, RowWrite
-from cognite.client.data_classes.data_modeling.cdm.v1 import (
-    CogniteDiagramAnnotation,
-    CogniteDiagramAnnotationApply,
-)
+from cognite.client.data_classes.data_modeling.cdm.v1 import CogniteDiagramAnnotation, CogniteDiagramAnnotationApply
 from pydantic import BaseModel, model_validator
 from pydantic.alias_generators import to_camel
 
@@ -40,9 +37,7 @@ def handle(data: dict, client: CogniteClient) -> dict:
         connection_count = execute(data, client)
     except Exception as e:
         tb = traceback.extract_tb(e.__traceback__)
-        last_entry_this_file = next(
-            (entry for entry in reversed(tb) if entry.filename == __file__), None
-        )
+        last_entry_this_file = next((entry for entry in reversed(tb) if entry.filename == __file__), None)
         suffix = ""
         if last_entry_this_file:
             suffix = f" in function {last_entry_this_file.name} on line {last_entry_this_file.lineno}: {last_entry_this_file.line}"
@@ -53,20 +48,14 @@ def handle(data: dict, client: CogniteClient) -> dict:
         error_msg = f'"{e!s}"'
         message = prefix + error_msg + suffix
         if len(message) >= EXTRACTION_RUN_MESSAGE_LIMIT:
-            error_msg = error_msg[
-                : EXTRACTION_RUN_MESSAGE_LIMIT - len(prefix) - len(suffix) - 3 - 1
-            ]
+            error_msg = error_msg[: EXTRACTION_RUN_MESSAGE_LIMIT - len(prefix) - len(suffix) - 3 - 1]
             message = prefix + error_msg + '..."' + suffix
     else:
         status = "success"
         message = f"{FUNCTION_ID} executed successfully. Created {connection_count} connections"
 
     client.extraction_pipelines.runs.create(
-        ExtractionPipelineRunWrite(
-            extpipe_external_id=EXTRACTION_PIPELINE_EXTERNAL_ID,
-            status=status,
-            message=message,
-        )
+        ExtractionPipelineRunWrite(extpipe_external_id=EXTRACTION_PIPELINE_EXTERNAL_ID, status=status, message=message)
     )
     # Need to run at least daily or the sync endpoint will forget the cursors
     # (max time is 3 days).
@@ -78,9 +67,7 @@ def handle(data: dict, client: CogniteClient) -> dict:
 
 # Logger using print
 class CogniteFunctionLogger:
-    def __init__(
-        self, log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
-    ):
+    def __init__(self, log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"):
         self.log_level = log_level.upper()
 
     def _print(self, prefix: str, message: str) -> None:
@@ -116,9 +103,7 @@ class ViewProperty(BaseModel, alias_generator=to_camel):
     direct_relation_property: str | None = None
 
     def as_view_id(self) -> dm.ViewId:
-        return dm.ViewId(
-            space=self.space, external_id=self.external_id, version=self.version
-        )
+        return dm.ViewId(space=self.space, external_id=self.external_id, version=self.version)
 
 
 class DirectRelationMapping(BaseModel, alias_generator=to_camel):
@@ -130,17 +115,12 @@ class DirectRelationMapping(BaseModel, alias_generator=to_camel):
         if (
             sum(
                 1
-                for prop in (
-                    self.start_node_view.direct_relation_property,
-                    self.end_node_view.direct_relation_property,
-                )
+                for prop in (self.start_node_view.direct_relation_property, self.end_node_view.direct_relation_property)
                 if prop is not None
             )
             != 1
         ):
-            raise ValueError(
-                "You must set 'directRelationProperty' for at either of 'startNode' or 'endNode'"
-            )
+            raise ValueError("You must set 'directRelationProperty' for at either of 'startNode' or 'endNode'")
         return self
 
 
@@ -165,9 +145,7 @@ class State(BaseModel):
 
     @classmethod
     def from_cdf(cls, client: CogniteClient, state: ConfigState) -> "State":
-        row = client.raw.rows.retrieve(
-            db_name=state.raw_database, table_name=state.raw_table, key=cls.key
-        )
+        row = client.raw.rows.retrieve(db_name=state.raw_database, table_name=state.raw_table, key=cls.key)
         if row is None:
             return cls()
         return cls.model_validate(row.columns)
@@ -197,9 +175,7 @@ def execute(data: dict, client: CogniteClient) -> int:
 
     state = State.from_cdf(client, config.state)
     connection_count = 0
-    for annotation_list in iterate_new_approved_annotations(
-        state, client, config.data.annotation_space, logger
-    ):
+    for annotation_list in iterate_new_approved_annotations(state, client, config.data.annotation_space, logger):
         annotation_by_source_by_node = to_direct_relations_by_source_by_node(
             annotation_list, config.data.direct_relation_mappings, logger
         )
@@ -220,11 +196,7 @@ def chunker(items: Sequence[T], chunk_size: int) -> Iterable[Sequence[T]]:
 
 
 def iterate_new_approved_annotations(
-    state: State,
-    client: CogniteClient,
-    annotation_space: str,
-    logger: CogniteFunctionLogger,
-    chunk_size: int = 1000,
+    state: State, client: CogniteClient, annotation_space: str, logger: CogniteFunctionLogger, chunk_size: int = 1000
 ) -> Iterable[list[CogniteDiagramAnnotation]]:
     query = create_query(state.last_cursor, annotation_space)
     try:
@@ -253,36 +225,22 @@ def write_connections(
 ) -> int:
     connection_count = 0
     updated_nodes: list[dm.NodeApply] = []
-    for (
-        view_id,
-        annotation_by_source_by_property,
-    ) in annotation_by_source_by_property_by_view.items():
+    for view_id, annotation_by_source_by_property in annotation_by_source_by_property_by_view.items():
         node_ids = [node_id for node_id, _ in annotation_by_source_by_property.keys()]
-        existing_node_list = client.data_modeling.instances.retrieve(
-            node_ids, sources=[view_id]
-        ).nodes
-        existing_node_by_id = {
-            node.as_id(): node.as_write() for node in existing_node_list
-        }
+        existing_node_list = client.data_modeling.instances.retrieve(node_ids, sources=[view_id]).nodes
+        existing_node_by_id = {node.as_id(): node.as_write() for node in existing_node_list}
 
-        for (
-            node_id,
-            direct_relation_property,
-        ), direct_relation_ids in annotation_by_source_by_property.items():
+        for (node_id, direct_relation_property), direct_relation_ids in annotation_by_source_by_property.items():
             existing_node = existing_node_by_id.get(node_id)
             if existing_node is None:
                 logger.warning(f"Node {node_id} not found in view {view_id}")
                 continue
             for entity_source in existing_node.sources:
                 if entity_source.source == view_id:
-                    existing_connections = cast(
-                        list[dict],
-                        entity_source.properties.get(direct_relation_property, []),
-                    )
+                    existing_connections = cast(list[dict], entity_source.properties.get(direct_relation_property, []))
                     before = len(existing_connections)
                     all_connections = {
-                        dm.DirectRelationReference.load(connection)
-                        for connection in existing_connections
+                        dm.DirectRelationReference.load(connection) for connection in existing_connections
                     } | set(direct_relation_ids)
                     after = len(all_connections)
                     entity_source.properties[direct_relation_property] = [  # type: ignore[index]
@@ -298,37 +256,25 @@ def write_connections(
 
 
 def to_direct_relations_by_source_by_node(
-    annotations: list[CogniteDiagramAnnotation],
-    mappings: list[DirectRelationMapping],
-    logger: CogniteFunctionLogger,
+    annotations: list[CogniteDiagramAnnotation], mappings: list[DirectRelationMapping], logger: CogniteFunctionLogger
 ) -> dict[dm.ViewId, dict[tuple[dm.NodeId, str], list[dm.DirectRelationReference]]]:
-    mapping_by_entity_source: dict[
-        tuple[dm.ViewId, dm.ViewId], DirectRelationMapping
-    ] = {
-        (
-            mapping.start_node_view.as_view_id(),
-            mapping.end_node_view.as_view_id(),
-        ): mapping
-        for mapping in mappings
+    mapping_by_entity_source: dict[tuple[dm.ViewId, dm.ViewId], DirectRelationMapping] = {
+        (mapping.start_node_view.as_view_id(), mapping.end_node_view.as_view_id()): mapping for mapping in mappings
     }
-    annotation_by_source_by_node: dict[
-        dm.ViewId, dict[tuple[dm.NodeId, str], list[dm.DirectRelationReference]]
-    ] = defaultdict(lambda: defaultdict(list))
+    annotation_by_source_by_node: dict[dm.ViewId, dict[tuple[dm.NodeId, str], list[dm.DirectRelationReference]]] = (
+        defaultdict(lambda: defaultdict(list))
+    )
     for annotation in annotations:
         try:
             source_context = json.loads(annotation.source_context)
         except json.JSONDecodeError:
-            logger.error(
-                f"Could not parse source context for annotation {annotation.external_id}"
-            )
+            logger.error(f"Could not parse source context for annotation {annotation.external_id}")
             continue
         try:
             start_view = dm.ViewId.load(source_context["start"])
             end_view = dm.ViewId.load(source_context["end"])
         except KeyError:
-            logger.error(
-                f"Missing start or end in source context for annotation {annotation.external_id}"
-            )
+            logger.error(f"Missing start or end in source context for annotation {annotation.external_id}")
             continue
         mapping = mapping_by_entity_source.get((start_view, end_view))
         if mapping is None:
@@ -376,8 +322,7 @@ def create_query(last_cursor: str | None, annotation_space: str) -> dm.query.Que
             "annotations": dm.query.Select(
                 [
                     dm.query.SourceSelector(
-                        source=CogniteDiagramAnnotationApply.get_source(),
-                        properties=["sourceContext"],
+                        source=CogniteDiagramAnnotationApply.get_source(), properties=["sourceContext"]
                     )
                 ]
             )
@@ -387,13 +332,9 @@ def create_query(last_cursor: str | None, annotation_space: str) -> dm.query.Que
 
 
 def load_config(client: CogniteClient, logger: CogniteFunctionLogger) -> Config:
-    raw_config = client.extraction_pipelines.config.retrieve(
-        EXTRACTION_PIPELINE_EXTERNAL_ID
-    )
+    raw_config = client.extraction_pipelines.config.retrieve(EXTRACTION_PIPELINE_EXTERNAL_ID)
     if raw_config.config is None:
-        raise ValueError(
-            f"Config for extraction pipeline {EXTRACTION_PIPELINE_EXTERNAL_ID} is empty"
-        )
+        raise ValueError(f"Config for extraction pipeline {EXTRACTION_PIPELINE_EXTERNAL_ID} is empty")
     try:
         return Config.model_validate(yaml.safe_load(raw_config.config))
     except ValueError as e:

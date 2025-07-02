@@ -1,20 +1,17 @@
 from concurrent.futures import ThreadPoolExecutor
-from datetime import timedelta
 from itertools import islice
+from datetime import timedelta
 from typing import Any, Dict
 
-import numpy as np
 from cognite.client import CogniteClient
-from cognite.client.config import global_config
 from cognite.client.data_classes.data_modeling import NodeId, ViewId
-from cognite.client.data_classes.data_modeling.cdm.v1 import (
-    CogniteAsset,
-    CogniteTimeSeries,
-    CogniteTimeSeriesApply,
-)
-from cognite.client.data_classes.filters import ContainsAny, Prefix
+from cognite.client.data_classes.data_modeling.cdm.v1 import CogniteAsset, CogniteTimeSeries, CogniteTimeSeriesApply
+from cognite.client.data_classes.filters import Prefix, ContainsAny
 from cognite.client.exceptions import CogniteNotFoundError
 
+import numpy as np
+
+from cognite.client.config import global_config
 global_config.disable_pypi_version_check = True
 
 
@@ -27,7 +24,8 @@ def batcher(iterable, batch_size):
 def get_time_series_for_site(client: CogniteClient, site, space):
     this_site = site.lower()
     sub_tree_root = client.data_modeling.instances.retrieve_nodes(
-        NodeId(space, this_site), node_cls=CogniteAsset
+        NodeId(space, this_site),
+        node_cls=CogniteAsset
     )
 
     if not sub_tree_root:
@@ -39,10 +37,8 @@ def get_time_series_for_site(client: CogniteClient, site, space):
 
     sub_tree_nodes = client.data_modeling.instances.list(
         instance_type=CogniteAsset,
-        filter=Prefix(
-            property=["cdf_cdm", "CogniteAsset/v1", "path"], value=sub_tree_root.path
-        ),
-        limit=None,
+        filter=Prefix(property=["cdf_cdm", "CogniteAsset/v1", "path"], value=sub_tree_root.path),
+        limit=None
     )
 
     if not sub_tree_nodes:
@@ -52,19 +48,15 @@ def get_time_series_for_site(client: CogniteClient, site, space):
         )
         return
 
-    value_list = [
-        {"space": node.space, "externalId": node.external_id} for node in sub_tree_nodes
-    ]
+    value_list = [{"space": node.space, "externalId": node.external_id} for node in sub_tree_nodes]
 
     time_series = [
         client.data_modeling.instances.search(
             view=ViewId("cdf_cdm", "CogniteTimeSeries", "v1"),
             instance_type=CogniteTimeSeries,
             space=space,
-            filter=ContainsAny(
-                property=["cdf_cdm", "CogniteTimeSeries/v1", "assets"], values=batch
-            ),
-            limit=None,
+            filter=ContainsAny(property=["cdf_cdm", "CogniteTimeSeries/v1", "assets"], values=batch),
+            limit=None
         )
         for batch in batcher(value_list, 20)
     ]
@@ -77,15 +69,12 @@ def get_time_series_for_site(client: CogniteClient, site, space):
 
     return time_series
 
-
 def handle(client: CogniteClient, data: Dict[str, Any] = {}) -> None:
     lookback_minutes = None
     sites = None
 
     if data:
-        lookback_minutes = (
-            timedelta(minutes=data.get("lookback_minutes", 60)).total_seconds() * 1000
-        )
+        lookback_minutes = timedelta(minutes=data.get("lookback_minutes", 60)).total_seconds() * 1000
         sites = data.get("sites")
 
     all_sites = [
@@ -106,13 +95,9 @@ def handle(client: CogniteClient, data: Dict[str, Any] = {}) -> None:
 
     print(f"Processing datapoints for these sites: {sites}")
     with ThreadPoolExecutor(max_workers=10) as executor:
-        futures = [
-            executor.submit(process_site, client, lookback_minutes, site)
-            for site in sites
-        ]
+        futures = [executor.submit(process_site, client, lookback_minutes, site) for site in sites]
         for f in futures:
             f.result()
-
 
 def process_site(client, lookback_minutes, site):
     oee_space = "oee_ts_space"
@@ -120,18 +105,12 @@ def process_site(client, lookback_minutes, site):
 
     timeseries = get_time_series_for_site(client, site, source_space)
     asset_eids = list(set([item.external_id.split(sep=":")[0] for item in timeseries]))
-    instance_ids = [
-        NodeId(space=source_space, external_id=ts.external_id) for ts in timeseries
-    ]
+    instance_ids = [NodeId(space=source_space, external_id=ts.external_id) for ts in timeseries]
     all_latest_dps = client.time_series.data.retrieve_latest(instance_id=instance_ids)
 
     # Organize latest datapoints by equipment for alignment
     assets_dps = {
-        external_id: [
-            latest_dp
-            for latest_dp in all_latest_dps
-            if external_id in latest_dp.instance_id.external_id
-        ]
+        external_id: [latest_dp for latest_dp in all_latest_dps if external_id in latest_dp.instance_id.external_id]
         for external_id in asset_eids
     }
 
@@ -142,10 +121,7 @@ def process_site(client, lookback_minutes, site):
         status_node = f"NodeId({source_space}, {asset}:status)"
         planned_status_node = f"NodeId({source_space}, {asset}:planned_status)"
 
-        end = min(
-            [dp.timestamp[0] for dp in latest_dps if latest_dps and dp.timestamp],
-            default=None,
-        )
+        end = min([dp.timestamp[0] for dp in latest_dps if latest_dps and dp.timestamp], default=None)
 
         if end:
             dps_df = client.time_series.data.retrieve_dataframe(
@@ -155,7 +131,7 @@ def process_site(client, lookback_minutes, site):
                 aggregates=["sum"],
                 granularity="1m",
                 include_aggregate_name=False,
-                limit=None,
+                limit=None
             )
 
             # Frontfill because "planned_status" and "status" only have datapoints when the value changes
@@ -163,22 +139,16 @@ def process_site(client, lookback_minutes, site):
 
             # Fill the rest with the opposite
             try:
-                first_valid_value = dps_df[planned_status_node].loc[
-                    dps_df[planned_status_node].first_valid_index()
-                ]
+                first_valid_value = dps_df[planned_status_node].loc[dps_df[planned_status_node].first_valid_index()]
             except Exception as e:
                 print(f"Failed to find datapoints for {planned_status_node}, {e}")
                 continue
 
             backfill_value = 1.0 if first_valid_value == 0.0 else 0.0
-            dps_df[planned_status_node] = dps_df[planned_status_node].fillna(
-                value=backfill_value
-            )
+            dps_df[planned_status_node] = dps_df[planned_status_node].fillna(value=backfill_value)
 
             # Same for status
-            first_valid_value = dps_df[status_node].loc[
-                dps_df[status_node].first_valid_index()
-            ]
+            first_valid_value = dps_df[status_node].loc[dps_df[status_node].first_valid_index()]
             backfill_value = 1.0 if first_valid_value == 0.0 else 0.0
             dps_df[status_node] = dps_df[status_node].fillna(value=backfill_value)
 
@@ -213,29 +183,19 @@ def process_site(client, lookback_minutes, site):
             dps_df[performance_node] = (count_dps / status_dps) / (60.0 / 3.0)
             dps_df[availability_node] = status_dps / planned_status_dps
 
-            dps_df[oee_node] = (
-                dps_df[quality_node]
-                * dps_df[performance_node]
-                * dps_df[availability_node]
-            )
+            dps_df[oee_node] = dps_df[quality_node] * dps_df[performance_node] * dps_df[availability_node]
 
             # Fill in the divide by zeros
             dps_df = dps_df.fillna(value=0.0)
             dps_df = dps_df.replace([np.inf, -np.inf], 0.0)
 
             # Drop input timeseries
-            dps_df = dps_df.drop(
-                columns=[count_node, good_node, status_node, planned_status_node]
-            )
+            dps_df = dps_df.drop(columns=[count_node, good_node, status_node, planned_status_node])
 
             to_insert = [
                 {
-                    "instance_id": NodeId(
-                        space="oee_ts_space", external_id=external_id
-                    ),
-                    "datapoints": list(
-                        zip(dps_df[external_id].index, dps_df[external_id])
-                    ),
+                    "instance_id": NodeId(space="oee_ts_space", external_id=external_id),
+                    "datapoints": list(zip(dps_df[external_id].index, dps_df[external_id]))
                 }
                 for external_id in dps_df.columns
             ]

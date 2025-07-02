@@ -9,12 +9,7 @@ from typing import Any, Optional
 import numpy as np
 from bosdyn.client.math_helpers import Quat, SE3Pose
 from cognite.client import CogniteClient, global_config
-from cognite.client.data_classes import (
-    FileMetadata,
-    FileMetadataList,
-    FileMetadataUpdate,
-    LabelFilter,
-)
+from cognite.client.data_classes import FileMetadata, FileMetadataList, FileMetadataUpdate, LabelFilter
 from cognite.client.exceptions import CogniteDuplicatedError
 from cognite_threesixty_images import CogniteThreeSixtyImageExtractor, VectorXYZ
 from PIL import Image
@@ -26,21 +21,15 @@ CUBEMAP_RESOLUTION = 1024
 global_config.disable_gzip = True
 
 
-def get_map_transform_from_map(
-    client: CogniteClient, map_external_id: str
-) -> Optional[dict]:
+def get_map_transform_from_map(client: CogniteClient, map_external_id: str) -> Optional[dict]:
     """Get the transform of a map in the current project based on mission. We asume the frame has the root frame as parent."""
     project = client._config.project
     map_request = {"items": [{"externalId": map_external_id}]}
 
-    res = client.post(
-        url=f"/api/v1/projects/{project}/robotics/maps/byids", json=map_request
-    ).json()
+    res = client.post(url=f"/api/v1/projects/{project}/robotics/maps/byids", json=map_request).json()
     for map in res["items"]:
         frame_external_id = map.get("frameExternalId")
-    assert (
-        frame_external_id
-    ), f"Map {map_external_id} does not have a frame associated with it."
+    assert frame_external_id, f"Map {map_external_id} does not have a frame associated with it."
     # Create mapping
     frame_request = {"items": [{"externalId": frame_external_id}]}
 
@@ -53,9 +42,7 @@ def get_map_transform_from_map(
 
     for item in res["items"]:
         if item.get("transform"):
-            print(
-                f"found translation {item.get('transform').get('orientation').get('w')}"
-            )
+            print(f"found translation {item.get('transform').get('orientation').get('w')}")
             return SE3Pose(
                 x=item.get("transform").get("translation").get("x"),
                 y=item.get("transform").get("translation").get("y"),
@@ -70,9 +57,7 @@ def get_map_transform_from_map(
     return None
 
 
-def convert_metadata_to_se3_pose(
-    external_id: str, metadata: dict[str, Any]
-) -> Optional[SE3Pose]:
+def convert_metadata_to_se3_pose(external_id: str, metadata: dict[str, Any]) -> Optional[SE3Pose]:
     """Convert metadata to SE3Pose."""
     x = metadata.get("waypoint_tform_body_x")
     y = metadata.get("waypoint_tform_body_x")
@@ -89,10 +74,7 @@ def convert_metadata_to_se3_pose(
         )
         return None
     waypoint_tform_body = SE3Pose(
-        x=float(x),
-        y=float(y),
-        z=float(z),
-        rot=Quat(w=float(qw), x=float(qx), y=float(qy), z=float(qz)),
+        x=float(x), y=float(y), z=float(z), rot=Quat(w=float(qw), x=float(qx), y=float(qy), z=float(qz))
     )
     return waypoint_tform_body
 
@@ -103,8 +85,7 @@ def get_waypoint_and_pose(
     """Get a waypoint from the robotics api and return the waypoint and pose."""
     get_waypoints_body = {"items": [{"externalId": waypoint_id}]}
     get_waypoints_response = client.post(
-        f"/api/v1/projects/{client.config.project}/robotics/waypoints/byids",
-        json=get_waypoints_body,
+        f"/api/v1/projects/{client.config.project}/robotics/waypoints/byids", json=get_waypoints_body
     )
     waypoint = json.loads(get_waypoints_response.content)["items"]
     if len(waypoint) != 1:
@@ -118,12 +99,7 @@ def get_waypoint_and_pose(
         x=waypoint_pos["x"],
         y=waypoint_pos["y"],
         z=waypoint_pos["z"],
-        rot=Quat(
-            w=waypoint_ori["w"],
-            x=waypoint_ori["x"],
-            y=waypoint_ori["y"],
-            z=waypoint_ori["z"],
-        ),
+        rot=Quat(w=waypoint_ori["w"], x=waypoint_ori["x"], y=waypoint_ori["y"], z=waypoint_ori["z"]),
     )
     return waypoint[0], ko_tform_waypoint
 
@@ -153,13 +129,9 @@ def create_and_upload_360_files(
         content=np.array(image),
         site_id=waypoint.get("mapExternalId", "default_location"),
         site_name=waypoint.get("mapExternalId", "default_location"),
-        station_number=waypoint.get(
-            "externalId"
-        ),  # TODO: make station id more readable
+        station_number=waypoint.get("externalId"),  # TODO: make station id more readable
         rotation_angle=str(rot_angle),
-        rotation_axis=VectorXYZ(
-            float(rot_vec[0]), float(rot_vec[1]), float(rot_vec[2])
-        ),
+        rotation_axis=VectorXYZ(float(rot_vec[0]), float(rot_vec[1]), float(rot_vec[2])),
         rotation_angle_unit="rad",
         translation=VectorXYZ(robot_pose.x, robot_pose.y, robot_pose.z),
         translation_unit="m",
@@ -172,9 +144,7 @@ def create_and_upload_360_files(
     try:
         cognite_client.events.create([event])
     except CogniteDuplicatedError:
-        logger.warning(
-            f"Event with external id {event.external_id} already exists. will update event."
-        )
+        logger.warning(f"Event with external id {event.external_id} already exists. will update event.")
         cognite_client.events.update([event])
 
     logger.info(f"Created event in CDF with external id {event.external_id}")
@@ -192,31 +162,21 @@ def create_and_upload_360_files(
             labels=file.file_metadata.labels,
             overwrite=True,
         )
-        logger.info(
-            f"Created file in CDF with external id {file.file_metadata.external_id}"
-        )
+        logger.info(f"Created file in CDF with external id {file.file_metadata.external_id}")
     logger.info("Completed uploading 360 image to CDF.")
 
 
-def process_threesixty_files(
-    files: FileMetadataList, client: CogniteClient, data_set_id: int
-):
+def process_threesixty_files(files: FileMetadataList, client: CogniteClient, data_set_id: int):
     """Process three sixty images."""
-    cognite_threesixty_image_extractor = CogniteThreeSixtyImageExtractor(
-        data_set_id=data_set_id
-    )
+    cognite_threesixty_image_extractor = CogniteThreeSixtyImageExtractor(data_set_id=data_set_id)
 
     file: FileMetadata
     for file in files:
         try:
             # Updating the file immediately so that the same file will not be processed again
-            client.files.update(
-                FileMetadataUpdate(id=file.id).labels.remove("threesixty")
-            )
+            client.files.update(FileMetadataUpdate(id=file.id).labels.remove("threesixty"))
 
-            logger.info(
-                f"Processing file with external id {file.external_id}, id {file.id}"
-            )
+            logger.info(f"Processing file with external id {file.external_id}, id {file.id}")
             if not file.uploaded:
                 logger.error(f"file not upload not completed {file.external_id}")
                 continue
@@ -225,23 +185,15 @@ def process_threesixty_files(
             waypoint_id = file.metadata.get("waypoint_id")
             print(f"Waypoint id: {waypoint_id}")
             if not waypoint_id:
-                client.files.update(
-                    FileMetadataUpdate(id=file.id).labels.remove("threesixty")
-                )
-                logger.error(
-                    f"Failed to process file {file.external_id}. No waypoint id in the metadata."
-                )
+                client.files.update(FileMetadataUpdate(id=file.id).labels.remove("threesixty"))
+                logger.error(f"Failed to process file {file.external_id}. No waypoint id in the metadata.")
                 continue
 
             # Calculate robot pose
-            waypoint_tform_body = convert_metadata_to_se3_pose(
-                file.external_id, file.metadata
-            )
+            waypoint_tform_body = convert_metadata_to_se3_pose(file.external_id, file.metadata)
             if waypoint_tform_body is None:
                 continue
-            waypoint, ko_tform_waypoint = get_waypoint_and_pose(
-                waypoint_id=waypoint_id, client=client
-            )
+            waypoint, ko_tform_waypoint = get_waypoint_and_pose(waypoint_id=waypoint_id, client=client)
             if waypoint_tform_body is None or waypoint is None:
                 continue
             robot_pose = ko_tform_waypoint * waypoint_tform_body
@@ -259,9 +211,7 @@ def process_threesixty_files(
             try:
                 image = Image.open(io.BytesIO(image_data))
             except Exception:
-                logger.error(
-                    f"This CDF File does not seem to be an image. File ID: {file.id}"
-                )
+                logger.error(f"This CDF File does not seem to be an image. File ID: {file.id}")
                 continue
 
             # If images don't have a timestamp metadata field, default to the created time of the image file

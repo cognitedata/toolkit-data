@@ -14,10 +14,7 @@ class IceCreamFactoryAPI:
         self.session.mount("https://", self.adapter)
 
     def get_response(
-        self,
-        headers: Dict[str, str],
-        url_suffix: str,
-        params: Dict[str, Union[str, int, float]] = {},
+        self, headers: Dict[str, str], url_suffix: str, params: Dict[str, Union[str, int, float]] = {}
     ) -> Response:
         """
         Get response from API.
@@ -28,18 +25,11 @@ class IceCreamFactoryAPI:
             params: query parameters
         """
 
-        response = self.session.get(
-            f"{self.base_url}/{url_suffix}", headers=headers, timeout=40, params=params
-        )
+        response = self.session.get(f"{self.base_url}/{url_suffix}", headers=headers, timeout=40, params=params)
         response.raise_for_status()
         return response
 
-    def get_datapoints(
-        self,
-        timeseries_ext_id: str,
-        start: Union[str, int, float],
-        end: Union[str, int, float],
-    ):
+    def get_datapoints(self, timeseries_ext_id: str, start: Union[str, int, float], end: Union[str, int, float]):
         """
         Get datapoints for a timeseries external id. This will also return datapoints for an associated timeseries
 
@@ -53,9 +43,7 @@ class IceCreamFactoryAPI:
             end: end for datapoints (UNIX timestamp (int, float) or string with format 'YYYY-MM-DD HH:MM')
         """
         params = {"start": start, "end": end, "external_id": timeseries_ext_id}
-        response = self.get_response(
-            headers={}, url_suffix="datapoints/oee", params=params
-        )
+        response = self.get_response(headers={}, url_suffix="datapoints/oee", params=params)
 
         response_dict = orjson.loads(response.content)
 
@@ -66,10 +54,8 @@ class IceCreamFactoryAPI:
                     # convert timestamp to ms (*1000) for CDF uploads
                     {"timestamp": dp[0] * 1000, "value": dp[1]}
                     for dp in dps
-                ],
-            }
-            for ts, dps in response_dict.items()
-            if len(dps) > 1
+                ]
+            } for ts, dps in response_dict.items() if len(dps) > 1
         ]
 
         return response_dict
