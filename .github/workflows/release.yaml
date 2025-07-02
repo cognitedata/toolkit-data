@@ -65,6 +65,12 @@ jobs:
         with:
           name: ${{ needs.build.outputs.zip_name }}
 
+      - name: Verify downloaded file checksum
+        run: |
+          echo "Original checksum from build job: ${{ needs.build.outputs.checksum }}"
+          echo "Downloaded file checksum: $(sha256sum ${{ needs.build.outputs.zip_name }} | awk '{ print $1 }')"
+          echo "File size: $(ls -lh ${{ needs.build.outputs.zip_name }})"
+
       - name: Download metadata artifact
         uses: actions/download-artifact@v4
         with:
@@ -155,6 +161,10 @@ jobs:
       - name: Generate release body
         id: release_body
         run: |
+          # Regenerate checksum from the actual downloaded file
+          ACTUAL_CHECKSUM=$(sha256sum ${{ needs.build.outputs.zip_name }} | awk '{ print $1 }')
+          echo "Using actual checksum: $ACTUAL_CHECKSUM"
+          
           cat > release_body.md << EOF
           ## Usage:
           
@@ -162,7 +172,7 @@ jobs:
           
           [library.toolkit-data]
           url = "https://github.com/${{ github.repository }}/releases/download/${{ steps.tag.outputs.tag }}/${{ needs.build.outputs.zip_name }}"
-          checksum = "sha256:${{ needs.build.outputs.checksum }}"
+          checksum = "sha256:$ACTUAL_CHECKSUM"
           \`\`\`
           
           ## Content:
