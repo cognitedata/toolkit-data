@@ -112,11 +112,29 @@ jobs:
       - name: Generate release tag
         id: tag
         run: |
-          # Get the latest release tag to determine the next patch version
-          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          # Get all existing release tags from GitHub API
+          echo "Fetching existing releases..."
+          EXISTING_TAGS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/releases" | \
+            grep '"tag_name"' | sed 's/.*"tag_name": "\([^"]*\)".*/\1/' | sort -V)
           
-          # Extract the version numbers
-          if [[ $LATEST_TAG =~ v([0-9]+)\.([0-9]+)\.([0-9]+) ]]; then
+          echo "Existing tags: $EXISTING_TAGS"
+          
+          # Find the highest semantic version
+          HIGHEST_TAG="v0.0.0"
+          while IFS= read -r tag; do
+            if [[ $tag =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+              # Compare with current highest
+              if [[ $tag > $HIGHEST_TAG ]]; then
+                HIGHEST_TAG=$tag
+              fi
+            fi
+          done <<< "$EXISTING_TAGS"
+          
+          echo "Highest existing tag: $HIGHEST_TAG"
+          
+          # Extract version numbers from highest tag
+          if [[ $HIGHEST_TAG =~ v([0-9]+)\.([0-9]+)\.([0-9]+) ]]; then
             MAJOR=${BASH_REMATCH[1]}
             MINOR=${BASH_REMATCH[2]}
             PATCH=${BASH_REMATCH[3]}
@@ -131,16 +149,8 @@ jobs:
           NEW_PATCH=$((PATCH + 1))
           NEW_TAG="v${MAJOR}.${MINOR}.${NEW_PATCH}"
           
-          # Check if this tag already exists in GitHub releases
-          if curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-             "https://api.github.com/repos/${{ github.repository }}/releases/tags/$NEW_TAG" | grep -q '"id"'; then
-            echo "Tag $NEW_TAG already exists, incrementing patch version"
-            NEW_PATCH=$((NEW_PATCH + 1))
-            NEW_TAG="v${MAJOR}.${MINOR}.${NEW_PATCH}"
-          fi
-          
-          echo "tag=$NEW_TAG" >> $GITHUB_OUTPUT
           echo "Generated tag: $NEW_TAG"
+          echo "tag=$NEW_TAG" >> $GITHUB_OUTPUT
 
       - name: Generate release body
         id: release_body
