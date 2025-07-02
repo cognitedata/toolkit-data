@@ -150,9 +150,9 @@ jobs:
           
           \`\`\`cdf.toml
           
-          [libraries.toolkit-data]
+          [library.toolkit-data]
           url = "https://github.com/${{ github.repository }}/releases/download/${{ steps.tag.outputs.tag }}/${{ needs.build.outputs.zip_name }}"
-          sha256 = "sha256:${{ needs.build.outputs.checksum }}"
+          checksum = "sha256:${{ needs.build.outputs.checksum }}"
           \`\`\`
           
           ## Content:
