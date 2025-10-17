@@ -1,5 +1,7 @@
 [module]
 title = "Sharepoint Files"
+id = "cdf_sharepoint"
+package_id = "tk:quickstart"
 
 [[data]]
 repoType = "http"

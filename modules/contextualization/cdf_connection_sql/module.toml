@@ -1,6 +1,8 @@
 [module]
 title = "Contextualisation direct relation transformation"
 is_selected_by_default = false
+id = "cdf_connection_sql"
+package_id = "tk:contextualization"
 
 [dependencies]
 modules = []

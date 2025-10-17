@@ -21,14 +21,3 @@ repos:
     hooks:
     - id: markdownlint
       exclude: ^modules/
-
-# Mypy must be run in the local system environment, not in the pre-commit environment.
-  - hooks:
-    - id: mypy
-      name: mypy
-      entry: dmypy run . 
-      files: ^.*.(py|pyi)$
-      language: system
-      pass_filenames: false
-      exclude: ^modules/
-    repo: local

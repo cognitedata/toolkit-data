@@ -1,6 +1,8 @@
 [module]
 title = "InRobot Common"
 is_selected_by_default = true
+id = "cdf_inrobot_common"
+package_id = "tk:inrobot"
 
 [dependencies]
 modules = ["cdf_apm_base"]

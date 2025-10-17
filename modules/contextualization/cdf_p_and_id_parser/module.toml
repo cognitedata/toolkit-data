@@ -1,5 +1,7 @@
 [module]
 title = "Contextualization P&ID Diagram Parser"
+id = "cdf_p_and_id_parser"
+package_id = "tk:contextualization"
 
 [[extra_resources]]
 location = "cdf_common/data_sets/demo.DataSet.yaml"

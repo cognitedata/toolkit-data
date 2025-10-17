@@ -1,5 +1,7 @@
 [module]
 title = "SAP Source System Asset/Equipment Metadata"
+id = "cdf_sap_assets"
+package_id = "tk:quickstart"
 
 [dependencies]
 modules = []

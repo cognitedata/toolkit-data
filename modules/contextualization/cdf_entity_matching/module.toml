@@ -1,5 +1,7 @@
 [module]
 title = "Contextualization Entity Matching"
+id = "cdf_entity_matching"
+package_id = "tk:contextualization"
 
 [[extra_resources]]
 location = "cdf_common/data_sets/demo.DataSet.yaml"

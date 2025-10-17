@@ -1,6 +1,8 @@
 [module]
 title = "OSIsoft/AVEVA PI Data Source"
 is_selected_by_default = false
+id = "cdf_pi"
+package_id = "tk:quickstart"
 
 [dependencies]
 modules = []

@@ -1,2 +1,4 @@
 [module]
 title = "Empty module"
+id = "my_module"
+package_id = "tk:custom"

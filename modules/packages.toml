@@ -1,102 +1,113 @@
 [library]
 title = "Built-in Cognite packages"
+description = "Built-in Cognite packages"
 
 [packages.quickstart]
 title = "Quickstart"
+id = "tk:quickstart"
 description = "Get started with Cognite Data Fusion in minutes."
 canCherryPick = false
 modules = [
-    "modules/cdf_ingestion",
-    "modules/sourcesystem/cdf_pi",
-    "modules/sourcesystem/cdf_sap_assets",
-    "modules/sourcesystem/cdf_sap_events",
-    "modules/sourcesystem/cdf_sharepoint",
-    "modules/models/cdf_process_industry_extension",
-    "modules/contextualization/cdf_connection_sql",
-    "modules/contextualization/cdf_p_and_id_parser",
-    "modules/industrial_tools/cdf_search"
+    "cdf_ingestion",
+    "sourcesystem/cdf_pi",
+    "sourcesystem/cdf_sap_assets",
+    "sourcesystem/cdf_sap_events",
+    "sourcesystem/cdf_sharepoint",
+    "models/cdf_process_industry_extension",
+    "contextualization/cdf_connection_sql",
+    "contextualization/cdf_p_and_id_parser",
+    "industrial_tools/cdf_search"
 ]
 
 [packages.infield]
 title = "InField"
+id = "tk:infield"
 description = "Put real-time data into the hands of every field worker."
 modules = [
-    "modules/infield/cdf_infield_location",
-    "modules/infield/cdf_infield_second_location",
-    "modules/infield/cdf_infield_common",
-    "modules/common/cdf_apm_base"
+    "infield/cdf_infield_location",
+    "infield/cdf_infield_second_location",
+    "infield/cdf_infield_common",
+    "common/cdf_apm_base"
 ]
 
 [packages.inrobot]
 title = "InRobot"
+id = "tk:inrobot"
 description = "Capture and integrate a broad spectrum of robotics inspection data with other IT and OT data through AI-assisted, optimized data management."
 modules = [
-    "modules/inrobot/cdf_inrobot_location",
-    "modules/inrobot/cdf_inrobot_common",
-    "modules/common/cdf_apm_base"
+    "inrobot/cdf_inrobot_location",
+    "inrobot/cdf_inrobot_common",
+    "common/cdf_apm_base"
 ]
 
 [packages.industrial_tools]
 title = "Industrial Tools"
+id = "tk:industrial_tools"
 description = "Data exploration and analytics"
 modules = [
-    "modules/industrial_tools/cdf_location_filter_datamodel_based",
-    "modules/industrial_tools/cdf_search",
-    "modules/industrial_tools/cdf_location_filter_asset_centric"
+    "industrial_tools/cdf_location_filter_datamodel_based",
+    "industrial_tools/cdf_search",
+    "industrial_tools/cdf_location_filter_asset_centric"
 ]
 
 [packages.bootcamp]
 title = "Bootcamp"
+id = "tk:bootcamp"
 description = "Initial toolkit configurations for the Cognite Data Fusion Bootcamp"
 canCherryPick = false
 modules = [
-    "modules/bootcamp/ice_cream_api",
-    "modules/bootcamp/use_cases/oee"
+    "bootcamp/ice_cream_api",
+    "bootcamp/use_cases/oee"
 ]
 
 [packages.sourcesystem]
 title = "SourceSystem"
+id = "tk:sourcesystem"
 description = "Module templates for setting up a data pipeline from a source system"
 modules = [
-    "modules/sourcesystem/cdf_pi",
-    "modules/sourcesystem/cdf_sap_assets",
-    "modules/sourcesystem/cdf_sap_events",
-    "modules/sourcesystem/cdf_sharepoint"
+    "sourcesystem/cdf_pi",
+    "sourcesystem/cdf_sap_assets",
+    "sourcesystem/cdf_sap_events",
+    "sourcesystem/cdf_sharepoint"
 ]
 
 [packages.contextualization]
 title = "Contextualization"
+id = "tk:contextualization"
 description = "Module templates for data contextualization"
 modules = [
-    "modules/contextualization/cdf_p_and_id_parser",
-    "modules/contextualization/cdf_connection_sql",
-    "modules/contextualization/cdf_entity_matching"
+    "contextualization/cdf_p_and_id_parser",
+    "contextualization/cdf_connection_sql",
+    "contextualization/cdf_entity_matching"
 ]
 
 [packages.models]
 title = "Models"
+id = "tk:models"
 description = "Module templates for data models"
 modules = [
-    "modules/models/cdf_cdm_extension",
-    "modules/models/cdf_process_industry_extension",
-    "modules/models/cdf_cdm_extension_full",
-    "modules/models/cdf_scene",
-    "modules/models/cdf_process_industry_extension_full"
+    "models/cdf_cdm_extension",
+    "models/cdf_process_industry_extension",
+    "models/cdf_cdm_extension_full",
+    "models/cdf_scene",
+    "models/cdf_process_industry_extension_full"
 ]
 
 [packages.custom]
 title = "None"
+id = "tk:custom"
 description = "start with an empty module"
 modules = [
-    "modules/custom/my_module",
-    "modules/common/cdf_auth_readwrite_all"
+    "custom/my_module",
+    "common/cdf_auth_readwrite_all"
 ]
 
 [packages.common]
 title = "Common"
+id = "tk:common"
 description = "Common modules used by other packages"
 modules = [
-    "modules/cdf_common",
-    "modules/common/cdf_apm_base",
-    "modules/common/cdf_auth_readwrite_all"
+    "cdf_common",
+    "common/cdf_apm_base",
+    "common/cdf_auth_readwrite_all"
 ] 

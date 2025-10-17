@@ -1,5 +1,7 @@
 [module]
 title = "SAP Source System Events"
+id = "cdf_sap_events"
+package_id = "tk:quickstart"
 
 [[data]]
 repoType = "http"
