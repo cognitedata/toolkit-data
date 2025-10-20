@@ -23,12 +23,12 @@ jobs:
         
     - name: Validate packages.toml
       run: |
-        python validate_packages.py
+        python scripts/validate_packages.py
         
     - name: Build packages
       id: build
       run: |
-        python build_packages.py > build_output.txt
+        python scripts/build_packages.py > build_output.txt
         cat build_output.txt
         HASH=$(grep "🔐 Hash:" build_output.txt | cut -d' ' -f3)
         echo "hash=$HASH" >> $GITHUB_OUTPUT
