@@ -1,15 +1,5 @@
 #!/usr/bin/env python3
 """
-Validation script for packages.toml file using Pydantic.
-
-This is a Pydantic-based alternative to validate_packages.py that provides:
-- Type-safe validation using Pydantic models
-- Automatic data validation and coercion
-- Better error messages with detailed field information
-- Self-documenting code through model definitions
-- Easier to extend and maintain with declarative validators
-- Compile-time type checking support
-
 Checks structure and validates that all module paths exist.
 Assumes "modules" as the base folder where packages.toml is located.
 """
