@@ -21,9 +21,11 @@ jobs:
       with:
         python-version: '3.11'
     
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
+    - name: Install required libraries
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
         
     - name: Validate packages.toml
       run: |
