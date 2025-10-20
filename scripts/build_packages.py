@@ -10,6 +10,8 @@ import sys
 import zipfile
 from pathlib import Path
 
+MODULES_DIR = Path("modules")
+
 
 def create_modules_zip(output_name: str | None = None) -> str:
     """
@@ -21,11 +23,10 @@ def create_modules_zip(output_name: str | None = None) -> str:
     Returns:
         Path to the created zip file
     """
-    modules_dir = Path("modules")
 
     # Check if modules directory exists
-    if not modules_dir.exists():
-        print(f"ERROR: {modules_dir} directory not found")
+    if not MODULES_DIR.exists():
+        print(f"ERROR: {MODULES_DIR} directory not found")
         sys.exit(1)
 
     # Use canonical name 'packages.zip' if no custom name provided
@@ -39,12 +40,12 @@ def create_modules_zip(output_name: str | None = None) -> str:
     output_path = Path(output_name)
 
     print(f"Creating zip archive: {output_path}")
-    print(f"Source directory: {modules_dir}")
+    print(f"Source directory: {MODULES_DIR}")
 
     try:
         with zipfile.ZipFile(output_path, "w", zipfile.ZIP_DEFLATED) as zipf:
             # Walk through the modules directory
-            for root, dirs, files in os.walk(modules_dir):
+            for root, dirs, files in os.walk(MODULES_DIR):
                 # Skip __pycache__ and other common Python cache directories
                 dirs[:] = [
                     d for d in dirs if d not in ["__pycache__", ".pytest_cache", ".git"]
@@ -54,7 +55,7 @@ def create_modules_zip(output_name: str | None = None) -> str:
                 for file in files:
                     file_path = Path(root) / file
                     # Calculate relative path for the zip (relative to modules directory)
-                    arcname = file_path.relative_to(modules_dir)
+                    arcname = file_path.relative_to(MODULES_DIR)
 
                     print(f"  Adding: {arcname}")
                     zipf.write(file_path, arcname)
@@ -74,7 +75,7 @@ def create_modules_zip(output_name: str | None = None) -> str:
         print(f"\n✅ Successfully created: {output_path}")
         print(f"📦 File size: {file_size_mb:.2f} MB ({file_size:,} bytes)")
         print(f"🔐 Hash: sha256:{hash_digest}")
-        print(f"📁 Source: {modules_dir}")
+        print(f"📁 Source: {MODULES_DIR}")
 
         return str(output_path)
 
