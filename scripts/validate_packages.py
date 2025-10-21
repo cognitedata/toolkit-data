@@ -151,8 +151,8 @@ class PackageValidator:
 
         # Validate module.toml structure using Pydantic
         try:
-            module_toml = ModuleToml(**module_data)
-        except Exception as e:
+            module_toml = ModuleToml.model_validate(module_data)
+        except ValueError as e:
             raise ValueError(
                 f"ERROR: Package '{package_name}' module '{module_path}' "
                 f"has invalid module.toml structure: {e}"
@@ -203,8 +203,8 @@ class PackageValidator:
 
         # Validate using Pydantic model
         try:
-            packages_toml = PackagesToml(**data)
-        except Exception as e:
+            packages_toml = PackagesToml.model_validate(data)
+        except ValueError as e:
             raise ValueError(f"ERROR: Invalid packages.toml structure: {e}") from e
 
         print("✓ [library] header validation passed")
