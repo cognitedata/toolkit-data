@@ -11,20 +11,23 @@ repos:
           - --select=E,W,F,I,T,RUF,TID,UP
           - --fixable=E,W,F,I,T,RUF,TID,UP
           - --target-version=py39
+        files: ^scripts/.*\.py$
       - id: ruff-format
+        files: ^scripts/.*\.py$
     rev: v0.8.0
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.11.2
+    hooks:
+      - id: mypy
+        files: ^scripts/.*\.py$
+        additional_dependencies:
+          - pydantic>=2.0.0
+        args:
+          - --strict
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.43.0
     hooks:
     - id: markdownlint
-
-# Mypy must be run in the local system environment, not in the pre-commit environment.
-  - hooks:
-    - id: mypy
-      name: mypy
-      entry: dmypy run . 
-      files: ^.*.(py|pyi)$
-      language: system
-      pass_filenames: false
-    repo: local
+      exclude: ^modules/

@@ -1,0 +1,5 @@
+[module]
+title = "InField Second Location"
+is_selected_by_default = false
+id = "cdf_infield_second_location"
+package_id = "tk:infield"

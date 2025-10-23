@@ -12,7 +12,7 @@ DEST_PREFIX = "toolkit"
 SOURCE_DIR = "data"
 
 
-def authenticate_with_service_account(credentials_json: str):
+def authenticate_with_service_account(credentials_json: str) -> storage.Client:
     # Parse the JSON string into a dictionary
     credentials_dict = json.loads(credentials_json)
 
@@ -25,7 +25,7 @@ def authenticate_with_service_account(credentials_json: str):
     return storage.Client(credentials=credentials)
 
 
-def sync_local_to_gcs(local_dir: str, dest_prefix: str):
+def sync_local_to_gcs(local_dir: str, dest_prefix: str) -> None:
     local_path = Path(local_dir)
 
     if not local_path.is_dir():

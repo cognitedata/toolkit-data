@@ -1,0 +1,4 @@
+[module]
+title = "Example location filter asset centric"
+id = "cdf_location_filter_asset_centric"
+package_id = "tk:industrial_tools"

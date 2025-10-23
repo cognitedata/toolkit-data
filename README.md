@@ -64,3 +64,14 @@ https://apps-cdn.cogniteapp.com/toolkit/publicdata/assets.Table.csv
 Data in `./data` is automatically uploaded when it is merged to `main`  
 using the GitHub Actions workflow in `.github/workflows/upload-to-cdn.yaml`.
 This repository contains data for the [Cognite Toolkit](https://docs.cognite.com/cdf/deploy/cdf_toolkit/)
+
+## Packages
+
+This is the original _builtin_modules pre v0.7 of the Toolkit,
+now provided in the deployment pack format.
+
+```toml
+[library.cognite]
+url = "https://github.com/cognitedata/library/releases/download/latest/packages.zip"
+checksum = "sha256:9eb177a092228157c7779b3e8d33ba49c17db732cbe2b36787ad67db0baeb49a"
+```
