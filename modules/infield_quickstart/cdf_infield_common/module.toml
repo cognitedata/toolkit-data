@@ -1,0 +1,5 @@
+[module]
+title = "InField Quickstart common"
+is_selected_by_default = true
+id = "cdf_infield_quickstart_common"
+package_id = "tk:infield_quickstart"
