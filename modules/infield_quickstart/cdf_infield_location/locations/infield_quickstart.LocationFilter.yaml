@@ -10,6 +10,9 @@ dataModels:
   - space: cdf_idm
     externalId: CogniteProcessIndustries
     version: v1 # should be latest version of the data model
+  - space: cdf_infield
+    externalId: InFieldOnCDM
+    version: v1 # should be latest version of the data model
 instanceSpaces: # InField only support getting data from 1 source space and the app space. Source space must be defined first in the list.
   - sp_asset_{{first_location}}_source
   - sp_infield_{{first_location}}_app_data
