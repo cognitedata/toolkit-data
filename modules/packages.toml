@@ -30,6 +30,15 @@ modules = [
     "common/cdf_apm_base"
 ]
 
+[packages.infield]
+title = "InField Quickstart"
+id = "tk:infield_quickstart"
+description = "Put real-time data into the hands of every field worker."
+modules = [
+    "infield_quickstart/cdf_infield_common",
+    "infield_quickstart/cdf_infield_location",
+]
+
 [packages.inrobot]
 title = "InRobot"
 id = "tk:inrobot"
