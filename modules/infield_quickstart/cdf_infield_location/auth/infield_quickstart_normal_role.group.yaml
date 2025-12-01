@@ -3,7 +3,7 @@
 name: "gp_infield_{{first_location}}_normal_users"
 sourceId: "{{infield_location_normal_users_source_id}}"
 metadata:
-  origin: "cdf-project-templates"
+  origin: "cognite-toolkit"
   module_version: "{{module_version}}"
 capabilities:
   # Groups - View user groups
@@ -12,7 +12,7 @@ capabilities:
         - READ
         - LIST
       scope:
-        all: {}
+        currentuserscope: {}
 
   # Data models - View and analyze the data created in InField
   - dataModelsAcl:
@@ -66,4 +66,4 @@ capabilities:
       scope:
         idScope:
           ids:
-            - ext_infield_{{first_location}}_config # this is an internal id, how can we set this? lets try with externalId
+            - ext_infield_{{first_location}}_config # toolkit will automatically replace this with an internalId

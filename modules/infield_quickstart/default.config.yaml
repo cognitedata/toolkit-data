@@ -1,1 +1,3 @@
+# Location identifier used as a template variable for naming location-specific resources.
+# Replace "oid" with your actual location identifier.
 first_location: oid
