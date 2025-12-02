@@ -1,0 +1,6 @@
+- Auth, 4 roles
+  - Check if all capabilities works as expected. eg uploading files, upserting timeseries
+- InFieldCDMLocationConfig
+- LocationFilters to match the infield config
+- Spaces
+- Test data

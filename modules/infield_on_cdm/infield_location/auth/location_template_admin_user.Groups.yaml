@@ -1,0 +1,63 @@
+# An exact copy of the write user.
+# Only used to group certain users that will get additional features toggled on in InField for Template management.
+
+name: "gp_infield_{{first_location}}_template_admin"
+sourceId: "{{infield_location_template_admin_users_source_id}}"
+metadata:
+  origin: "cognite-toolkit"
+  module_version: "{{module_version}}"
+capabilities:
+  # Groups - View user groups
+  - groupsAcl:
+      actions:
+        - READ
+        - LIST
+      scope:
+        currentuserscope: {}
+
+  # Data models
+  - dataModelsAcl:
+      actions:
+        - READ
+      scope:
+        spaceIdScope:
+          spaceIds:
+            - cdf_cdm
+            - cdf_idm
+            - cdf_infield
+            - cdf_apps_shared
+            # add any other spaces that are used for extention of core resources
+
+  # Data model instances - View and analyze the data in InField
+  - dataModelInstancesAcl:
+      actions:
+        - READ
+      scope:
+        spaceIdScope:
+          spaceIds:
+            - cognite_app_data
+            - sp_infield_{{first_location}}_config
+            - sp_infield_{{first_location}}_app_data
+            - sp_asset_{{first_location}}_source
+            - sp_file_{{first_location}}_source
+            - sp_ts_{{first_location}}_source
+            - sp_maint_{{first_location}}_source
+            - cdf_cdm_units
+
+  # Data model instances - Write access for infield generated data
+  - dataModelInstancesAcl:
+      actions:
+        - WRITE
+      scope:
+        spaceIdScope:
+          spaceIds:
+            - cognite_app_data # used to store user preferences
+            - sp_infield_{{first_location}}_app_data # used to store all infield created app data
+
+  - locationFiltersAcl: # Access to location filters in fusion search, not needed for the infield application
+      actions:
+        - READ
+      scope:
+        idScope:
+          ids:
+            - lf_infield_{{first_location}}_config # toolkit will automatically replace this with an internalId

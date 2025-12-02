@@ -1,0 +1,16 @@
+environment:
+  name: dev
+  project: <project>
+  validation-type: dev
+  selected:
+    - modules/infield_location
+
+variables:
+  modules:
+    infield_location:
+      - location: <change_me>
+        location_name: <change_me>
+        location_description: <change_me>
+
+        # subtree filtering
+        subtree_asset_externalId: <change_me>

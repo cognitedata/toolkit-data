@@ -1,0 +1,4 @@
+# Space were the location config is stored
+space: sp_infield_{{first_location}}_config
+name: sp:infield:{{first_location}}:config
+description: Space for {{first_location}} Infield Location location config

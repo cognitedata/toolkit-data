@@ -1,0 +1,110 @@
+# "dataFilters.resource.path" is pointing to an asset that InField do subtree filtering on when listing or searching for data
+# "instanceSpaces": InField only support one instance space for each resource type. The config takes an array for future extensibility for multiple spaces per resource.
+# "dataStorage.rootLocation": The root location of the location. When configured this will default contextualise template and checklists to this asset. When listing and searching templates and checklists, InField apply filter on rootLocation for this asset.
+
+# MANDATORY FIELDS:
+# - space, externalId and name of the location config.
+# - dataFilters.resource.instanceSpace: Only one instance space is supported for each resource type.
+# - dataStorage.appInstanceSpace: The space where the app data is stored.
+
+# Access control to location:
+# Since each location config can be stored in its own space, users can be limited to read locations and therefor only get a selection of location in the App.
+
+# This is an InField specific location, and is used only for InField.
+# If you want to have the same location in fusion search, set up a LocationFilter config that matches this one.
+# Look at the matching example: /modules/infield_on_cdm/infield_location/locations/infield_location.LocationFilter.yaml
+
+space: sp_infield_{{first_location}}_config
+externalId: { { location } }
+name: { { location_name } } # Displayed to the user in the InField app.
+description: { { location_description } }
+featureToggles:
+  threeD: true
+  trends: true
+  documents: true
+  workorders: true
+  notifications: true
+  media: true
+  templateChecklistFlow: true
+dataFilters:
+  assets:
+    path:
+      space: sp_asset_{{first_location}}_source
+      externalId: { { subtree_asset_externalId } }
+    instanceSpaces:
+      - sp_asset_{{first_location}}_source
+  files:
+    path:
+      space: sp_asset_{{first_location}}_source
+      externalId: { { subtree_asset_externalId } }
+    instanceSpaces:
+      - sp_file_{{first_location}}_source
+  timeSeries:
+    path:
+      space: sp_asset_{{first_location}}_source
+      externalId: { { subtree_asset_externalId } }
+    instanceSpaces:
+      - sp_ts_{{first_location}}_source
+  maintenanceOrders:
+    path:
+      space: sp_asset_{{first_location}}_source
+      externalId: { { subtree_asset_externalId } }
+    instanceSpaces:
+      - sp_maint_{{first_location}}_source
+  operations:
+    path:
+      space: sp_asset_{{first_location}}_source
+      externalId: { { subtree_asset_externalId } }
+    instanceSpaces:
+      - sp_maint_{{first_location}}_source
+  notifications:
+    path:
+      space: sp_asset_{{first_location}}_source
+      externalId: { { subtree_asset_externalId } }
+    instanceSpaces:
+      - sp_maint_{{first_location}}_source
+dataStorage:
+  rootLocation: # default template & checklist contextualization
+    space: sp_asset_{{first_location}}_source
+    externalId: { { subtree_asset_externalId } }
+  appInstanceSpace: sp_infield_{{first_location}}_app_data
+viewMappings: # replace with customer extention views or use CDM / IDM defaults
+  asset:
+    space: cdf_cdm
+    version: v1
+    externalId: CogniteAsset
+  operation:
+    space: cdf_idm
+    version: v1
+    externalId: CogniteOperation
+  notification:
+    space: cdf_idm
+    version: v1
+    externalId: CogniteNotification
+  maintenanceOrder:
+    space: cdf_idm
+    version: v1
+    externalId: CogniteMaintenanceOrder
+accessManagement: # list groups that will have template and checklist admin access. If not configured, all write users have this access.
+  templateAdmins:
+    - gp_infield_{{first_location}}_template_admin
+  checklistAdmins:
+    - gp_infield_{{first_location}}_checklist_admin
+disciplines:
+  - name: Automation
+    externalId: f84cf669-9e64-4aa4-972a-4f497359880f
+  - name: Electrical
+    externalId: 39061c6e-d45d-4735-b485-c7d0d0e5a7e3
+  - name: Mechanical
+    externalId: 550fe38b-b16e-4a47-8af0-86f51ed15696
+  - name: Process
+    externalId: 361683bf-f25d-450a-bceb-bd22c8a37553
+dataExplorationConfig:
+  assets:
+    documentCard:
+      title: name
+      description: description
+  documents:
+    type: type
+    title: name
+    description: description
