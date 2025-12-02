@@ -50,16 +50,6 @@ capabilities:
             - cognite_app_data # used to store user preferences
             - sp_infield_{{first_location}}_app_data # used for uploading images from infield
 
-  # Unsure if we need file capabilities to upload to blob storage
-  # - fileAcl:
-  #     actions:
-  #     - READ
-  #     - WRITE
-  #     scope:
-  #       spaceIdScope:
-  #         spaceIds:
-  #         - sp_infield_{{first_location}}_app_data # used for uploading images from infield
-
   - locationFiltersAcl:
       actions:
         - READ
