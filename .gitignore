@@ -1,3 +1,7 @@
+# Packages. Override with -f for testing.
+modules.zip
+packages.zip
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
