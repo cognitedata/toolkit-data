@@ -1,0 +1,30 @@
+# Note: Template variables must use double braces format without spaces
+# Do not auto-format this file as it will break template variable syntax
+externalId: loc_fltr_{{location}}
+name: InField - {{location_name}}
+description: Infield {{location_description}}
+dataModels:
+  - space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: InFieldOnCDM
+    version: v1 # should be latest version of the data model
+instanceSpaces:
+  - sp_infield_{{location}}_src_inst_1
+  - sp_infield_{{location}}_src_inst_2
+  - sp_infield_{{location}}_app_inst
+views:
+  - externalId: CogniteMaintenanceOrder
+    space: cdf_idm
+    version: v1
+    representsEntity: MAINTENANCE_ORDER
+  - externalId: CogniteOperation
+    space: cdf_idm
+    version: v1
+    representsEntity: OPERATION
+  - externalId: CogniteNotification
+    space: cdf_idm
+    version: v1
+    representsEntity: NOTIFICATION
+  - externalId: CogniteAsset
+    space: cdf_cdm
+    version: v1
+    representsEntity: ASSET

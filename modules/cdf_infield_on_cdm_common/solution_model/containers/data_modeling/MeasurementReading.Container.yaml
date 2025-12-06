@@ -1,0 +1,56 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: MeasurementReading
+usedFor: node
+properties:
+  type:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  order:
+    nullable: true
+    type:
+      list: false
+      type: int32
+  timeseries:
+    nullable: true
+    type:
+      type: direct
+      container:
+        type: container
+        space: cdf_cdm
+        externalId: CogniteTimeSeries
+      list: false
+  min:
+    nullable: true
+    type:
+      list: false
+      type: float64
+  max:
+    nullable: true
+    type:
+      list: false
+      type: float64
+  options:
+    nullable: true
+    type:
+      list: true
+      type: json
+  measuredAt:
+    nullable: true
+    type:
+      list: false
+      type: timestamp
+  numericReading:
+    nullable: true
+    type:
+      list: false
+      type: float64
+  stringReading:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+

@@ -1,0 +1,8 @@
+type: instanceSpace
+kind: Instances
+instanceSpace: oslo_refinery_source_instance_space_1
+instanceType: node
+view:
+  space: cdf_cdm
+  externalId: CogniteTimeSeries
+  version: v1

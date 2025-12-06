@@ -1,0 +1,241 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: InFieldOnCDM
+version: v1
+name: InField on CDM
+description: All views that are needed for InField to work on top of CDM
+views:
+  # InField-specific views
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: Asset
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: Template
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: TemplateItem
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: MeasurementReading
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: Schedule
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: ConditionalAction
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: Action
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: Condition
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: Checklist
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: ChecklistItem
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: FieldObservation
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: InFieldLocationConfig
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: DataExplorationConfig
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: ObservationConfig
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: CDF_InFieldUserPreferences
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: CDF_InFieldUser
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: InFieldCDMLocationConfig
+    version: v1
+  # CDF CDM views
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteAsset
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteActivity
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteFile
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteTimeSeries
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteSourceSystem
+    version: v1
+  # CDF Apps Shared views
+  - type: view
+    space: cdf_apps_shared
+    externalId: CDF_User
+    version: v1
+  - type: view
+    space: cdf_apps_shared
+    externalId: CDF_UserPreferences
+    version: v1
+  - type: view
+    space: cdf_apps_shared
+    externalId: CogniteSolutionTag
+    version: v1
+  - type: view
+    space: cdf_apps_shared
+    externalId: Creatable
+    version: v1
+  # CDM core views
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteDescribable
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteSourceable
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteSchedulable
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteVisualizable
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteAssetClass
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteAssetType
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteEquipment
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteEquipmentType
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteFileCategory
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteUnit
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteAnnotation
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteDiagramAnnotation
+    version: v1
+  # CDM 3D views
+  - type: view
+    space: cdf_cdm
+    externalId: Cognite3DTransformation
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteCubeMap
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: Cognite3DObject
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: Cognite3DModel
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteCADModel
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: Cognite3DRevision
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CognitePointCloudModel
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: Cognite360ImageModel
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteCADRevision
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CognitePointCloudRevision
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: Cognite360ImageCollection
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteCADNode
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CognitePointCloudVolume
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: Cognite360Image
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: Cognite360ImageStation
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: Cognite360ImageAnnotation
+    version: v1
+  # IDM views
+  - type: view
+    space: cdf_idm
+    externalId: CogniteMaintenanceOrder
+    version: v1
+  - type: view
+    space: cdf_idm
+    externalId: CogniteOperation
+    version: v1
+  - type: view
+    space: cdf_idm
+    externalId: CogniteNotification
+    version: v1
+

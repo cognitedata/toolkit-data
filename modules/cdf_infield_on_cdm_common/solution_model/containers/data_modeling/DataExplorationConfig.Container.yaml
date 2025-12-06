@@ -1,0 +1,30 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: DataExplorationConfig
+usedFor: node
+properties:
+  observations:
+    nullable: true
+    type:
+      list: false
+      type: json
+  activities:
+    nullable: true
+    type:
+      list: false
+      type: json
+  documents:
+    nullable: true
+    type:
+      list: false
+      type: json
+  notifications:
+    nullable: true
+    type:
+      list: false
+      type: json
+  assets:
+    nullable: true
+    type:
+      list: false
+      type: json
+

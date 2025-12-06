@@ -1,0 +1,16 @@
+location: oslo_refinery
+location_name: Oslo Refinery
+location_description: Oslo Refinery demo from toolkit
+infield_location_normal_users_source_id: 462a137a-eeb6-4e39-b431-b593513878ab
+module_version: "1"
+# location: phoenix_refinery
+# location_name: Phoenix Refinery
+# location_description: Phoenix Refinery demo from toolkit
+# infield_location_normal_users_source_id: 462a137a-eeb6-4e39-b431-b593513878ab
+# module_version: "1"
+
+# location: japan_refinery
+# location_name: Japan Refinery
+# location_description: Japan Refinery demo from toolkit
+# infield_location_normal_users_source_id: 462a137a-eeb6-4e39-b431-b593513878ab
+# module_version: "1"

@@ -1,0 +1,11 @@
+type: fileDataModelingTemplate
+kind: FileContent
+instanceSpace: oslo_refinery_source_instance_space_1
+file_directory: "sample_files/"
+view:
+  space: cdf_cdm
+  externalId: CogniteFile
+  version: v1
+template:
+  space: oslo_refinery_source_instance_space_1
+  external_id: "$FILENAME"

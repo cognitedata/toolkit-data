@@ -1,0 +1,82 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: FieldObservation
+usedFor: node
+properties:
+  files:
+    nullable: true
+    type:
+      type: direct
+      container:
+        type: container
+        space: cdf_cdm
+        externalId: CogniteFile
+      list: true
+  status:
+    nullable: true
+    type:
+      type: enum
+      values:
+        draft:
+          name: Draft
+          description: Draft
+        completed:
+          name: Completed
+          description: Completed
+  troubleshooting:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  priority:
+    nullable: true
+    type:
+      type: enum
+      values:
+        immediate:
+          name: "1: Immediate"
+          description: "1: Immediate"
+        within_2_weeks:
+          name: "2: Within 2 weeks"
+          description: "2: Within 2 weeks"
+        within_2_to_4_weeks:
+          name: "3: Within 2 to 4 weeks"
+          description: "3: Within 2 to 4 weeks"
+        within_4_to_8_weeks:
+          name: "4: Within 4 to 8 weeks"
+          description: "4: Within 4 to 8 weeks"
+        greater_than_8_weeks:
+          name: "5: Greater than 8 weeks"
+          description: "5: Greater than 8 weeks"
+        ta_sd_ppm_high:
+          name: "6: TA/SD/PPM High"
+          description: "6: TA/SD/PPM High"
+        ta_sd_ppm_medium:
+          name: "7: TA/SD/PPM Medium"
+          description: "7: TA/SD/PPM Medium"
+        ta_sd_ppm_low:
+          name: "8: TA/SD/PPM Low"
+          description: "8: TA/SD/PPM Low"
+  type:
+    nullable: true
+    type:
+      type: enum
+      values:
+        m1:
+          name: "M1: Non-Process Related"
+          description: "M1: Non-Process Related"
+        m2:
+          name: "M2: Process Related"
+          description: "M2: Process Related"
+        m4:
+          name: "M4: Safety/Regulatory"
+          description: "M4: Safety/Regulatory"
+        m5:
+          name: "M5: Non-ERV/Modific/Proj"
+          description: "M5: Non-ERV/Modific/Proj"
+        m8:
+          name: "M8: PM03 Corrective Repair"
+          description: "M8: PM03 Corrective Repair"
+        mp:
+          name: "MP: Predictive Maintenance"
+          description: "MP: Predictive Maintenance"

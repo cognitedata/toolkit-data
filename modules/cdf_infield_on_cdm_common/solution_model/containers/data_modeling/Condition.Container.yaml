@@ -1,0 +1,43 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: Condition
+usedFor: node
+properties:
+  conditionalAction:
+    nullable: true
+    type:
+      type: direct
+      container:
+        type: container
+        space: infield_cdm_source_desc_sche_asset_file_ts
+        externalId: ConditionalAction
+      list: false
+  source:
+    nullable: true
+    type:
+      type: direct
+      list: false
+  sourceView:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  field:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  operator:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  value:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+

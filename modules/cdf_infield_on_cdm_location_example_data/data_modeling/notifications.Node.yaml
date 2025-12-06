@@ -1,0 +1,26 @@
+# Notification 1 (Preventive Maintenance)
+- space: sp_infield_{{location}}_maintenance
+  externalId: {{location}}_notification_1
+  sources:
+    - source:
+        type: view
+        space: cdf_idm
+        externalId: CogniteNotification
+        version: v1
+      properties:
+        name: {{location_name}} - Notification 1
+        description: Preventive Maintenance notification for {{location_name}}
+        tags:
+          - notification
+          - preventive maintenance
+        type: PM01
+        status: Order Created
+        priority: 2
+        priorityDescription: Medium
+        scheduledStartTime: "2025-11-22T14:01:03.095+00:00"
+        asset:
+          space: sp_infield_{{location}}_assets
+          externalId: {{location}}_root_all_resources
+        maintenanceOrder:
+          space: sp_infield_{{location}}_maintenance
+          externalId: {{location}}_maintenance_order_1

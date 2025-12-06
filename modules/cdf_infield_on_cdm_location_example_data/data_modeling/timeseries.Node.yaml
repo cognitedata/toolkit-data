@@ -1,0 +1,75 @@
+# TimeSeries 1 - Pressure
+- space: sp_infield_{{location}}_timeseries
+  externalId: {{location}}_pressure
+  sources:
+    - source:
+        type: view
+        space: cdf_cdm
+        externalId: CogniteTimeSeries
+        version: v1
+      properties:
+        name: {{location_name}} - Pressure
+        description: Pressure sensor for {{location_name}}
+        sourceUnit: bar
+        isStep: false
+        tags:
+          - pressure
+          - sensor
+          - monitoring
+        type: numeric
+        assets:
+          - space: sp_infield_{{location}}_assets
+            externalId: {{location}}_root_all_resources
+          - space: sp_infield_{{location}}_assets
+            externalId: {{location}}_root_timeseries
+
+# TimeSeries 2 - Flow Rate
+- space: sp_infield_{{location}}_timeseries
+  externalId: {{location}}_flow_rate
+  sources:
+    - source:
+        type: view
+        space: cdf_cdm
+        externalId: CogniteTimeSeries
+        version: v1
+      properties:
+        name: {{location_name}} - Flow Rate
+        description: Flow rate sensor for {{location_name}}
+        sourceUnit: m3/h
+        isStep: false
+        tags:
+          - flow-rate
+          - sensor
+          - monitoring
+        type: numeric
+        assets:
+          - space: sp_infield_{{location}}_assets
+            externalId: {{location}}_root_all_resources
+          - space: sp_infield_{{location}}_assets
+            externalId: {{location}}_root_timeseries
+
+# TimeSeries 3 - Temperature (App Space)
+- space: sp_infield_{{location}}_app_inst
+  externalId: {{location}}_temperature_app
+  sources:
+    - source:
+        type: view
+        space: cdf_cdm
+        externalId: CogniteTimeSeries
+        version: v1
+      properties:
+        name: {{location_name}} - Temperature (App)
+        description: Temperature sensor for {{location_name}} in app data space
+        sourceUnit: "°C"
+        isStep: false
+        tags:
+          - temperature
+          - sensor
+          - monitoring
+          - app-data
+        type: numeric
+        assets:
+          - space: sp_infield_{{location}}_assets
+            externalId: {{location}}_root_all_resources
+          - space: sp_infield_{{location}}_assets
+            externalId: {{location}}_root_timeseries

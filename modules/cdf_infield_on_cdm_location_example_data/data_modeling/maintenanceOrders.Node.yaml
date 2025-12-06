@@ -1,0 +1,29 @@
+# Maintenance Order 1 (Preventive Maintenance)
+- space: sp_infield_{{location}}_maintenance
+  externalId: {{location}}_maintenance_order_1
+  sources:
+    - source:
+        type: view
+        space: cdf_idm
+        externalId: CogniteMaintenanceOrder
+        version: v1
+      properties:
+        name: {{location_name}} - Maintenance Order 1
+        description: Preventive Maintenance order for {{location_name}}
+        tags:
+          - maintenance-order
+          - preventive maintenance
+        type: PM01
+        status: In Progress
+        priority: 2
+        priorityDescription: Medium
+        scheduledStartTime: "2025-11-23T14:01:03.095+00:00"
+        scheduledEndTime: "2025-11-26T14:01:03.095+00:00"
+        mainAsset:
+          space: sp_infield_{{location}}_assets
+          externalId: {{location}}_root_all_resources
+        assets:
+          - space: sp_infield_{{location}}_assets
+            externalId: {{location}}_root_all_resources
+          - space: sp_infield_{{location}}_assets
+            externalId: {{location}}_root_maintenance_orders

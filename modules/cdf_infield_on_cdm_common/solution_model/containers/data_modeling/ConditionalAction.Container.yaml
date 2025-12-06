@@ -1,0 +1,16 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: ConditionalAction
+usedFor: node
+properties:
+  logic:
+    nullable: false
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  parentObject:
+    nullable: true
+    type:
+      type: direct
+      list: false
+

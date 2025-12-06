@@ -1,0 +1,52 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: DataExplorationConfig
+version: v1
+name: DataExplorationConfig
+implements: []
+filter:
+  hasData:
+    - type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: DataExplorationConfig
+properties:
+  observations:
+    name: observations
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: DataExplorationConfig
+    containerPropertyIdentifier: observations
+    description: ExternalId for the location this config is related too
+  activities:
+    name: activities
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: DataExplorationConfig
+    containerPropertyIdentifier: activities
+    description: Activity feature configuration
+  documents:
+    name: documents
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: DataExplorationConfig
+    containerPropertyIdentifier: documents
+    description: Document configuration
+  notifications:
+    name: notifications
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: DataExplorationConfig
+    containerPropertyIdentifier: notifications
+    description: Notification configuration
+  assets:
+    name: assets
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: DataExplorationConfig
+    containerPropertyIdentifier: assets
+    description: Asset (and asset page) configuration
+

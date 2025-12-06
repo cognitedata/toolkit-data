@@ -1,0 +1,41 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: Checklist
+usedFor: node
+properties:
+  type:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  status:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  rootLocation:
+    nullable: true
+    type:
+      type: direct
+      container:
+        type: container
+        space: cdf_cdm
+        externalId: CogniteAsset
+      list: false
+  assignedTo:
+    nullable: true
+    type:
+      list: true
+      collation: ucs_basic
+      type: text
+  solutionTags:
+    nullable: true
+    type:
+      type: direct
+      container:
+        type: container
+        space: cdf_apps_shared
+        externalId: CogniteSolutionTag
+      list: true
+
