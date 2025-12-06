@@ -1,0 +1,7 @@
+# Used to read source data from the customer, core resources or extentions
+# Each resource used by infield can have its own space for a given location.
+# Core Resources ( or extentions of them ): Assets, workorders, files, timeseries,
+# Process industry resources ( or extentions of them ): MaintenceOrders, Operations and Notifications.
+space: sp_maint_{{first_location}}_source
+name: sp:infield:{{first_location}}:maintenance:source
+description: Space for Maintenance Source Data to be used by infield app on {{first_location}}

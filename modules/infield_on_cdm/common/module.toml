@@ -1,0 +1,5 @@
+[module]
+title = "InField on CDM common"
+is_selected_by_default = true
+id = "cdf_infield_on_cdm_common"
+package_id = "tk:infield_on_cdm"
