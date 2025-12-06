@@ -1,0 +1,100 @@
+space: sp_infield_{{location}}_cfg_inst
+externalId: {{location}}
+name: {{location_name}}
+description: {{location_description}}
+featureToggles:
+  threeD: true
+  trends: true
+  documents: true
+  workorders: true
+  notifications: true
+  media: true
+  templateChecklistFlow: true
+dataFilters:
+  files:
+    path: # pointing to an asset that we do subtree filtering on from the .path field
+      space: sp_infield_{{location}}_src_inst_1
+      externalId: {{location}}_root
+    instanceSpaces:
+      - sp_infield_{{location}}_src_inst_1
+      - sp_infield_{{location}}_src_inst_2
+  assets:
+    path:
+      space: sp_infield_{{location}}_src_inst_1
+      externalId: {{location}}_root
+    instanceSpaces:
+      - sp_infield_{{location}}_src_inst_1
+      - sp_infield_{{location}}_src_inst_2
+  operations:
+    path:
+      space: sp_infield_{{location}}_src_inst_1
+      externalId: {{location}}_root
+    instanceSpaces:
+      - sp_infield_{{location}}_src_inst_1
+      - sp_infield_{{location}}_src_inst_2
+  timeSeries:
+    path:
+      space: sp_infield_{{location}}_src_inst_1
+      externalId: {{location}}_root
+    instanceSpaces:
+      - sp_infield_{{location}}_src_inst_1
+      - sp_infield_{{location}}_src_inst_2
+  notifications:
+    path:
+      space: sp_infield_{{location}}_src_inst_1
+      externalId: {{location}}_root
+    instanceSpaces:
+      - sp_infield_{{location}}_src_inst_1
+      - sp_infield_{{location}}_src_inst_2
+  maintenanceOrders:
+    path:
+      space: sp_infield_{{location}}_src_inst_1
+      externalId: {{location}}_root
+    instanceSpaces:
+      - sp_infield_{{location}}_src_inst_1
+      - sp_infield_{{location}}_src_inst_2
+dataStorage:
+  rootLocation: # default template & checklist contextualization
+    space: sp_infield_{{location}}_src_inst_1
+    externalId: {{location}}_root
+  appInstanceSpace: sp_infield_{{location}}_app_inst
+viewMappings: # replace with customer extention views or use CDM / IDM defaults
+  asset:
+    space: cdf_cdm
+    version: v1
+    externalId: CogniteAsset
+  operation:
+    space: cdf_idm
+    version: v1
+    externalId: CogniteOperation
+  notification:
+    space: cdf_idm
+    version: v1
+    externalId: CogniteNotification
+  maintenanceOrder:
+    space: cdf_idm
+    version: v1
+    externalId: CogniteMaintenanceOrder
+accessManagement: # list groups that will have template and checklist admin access
+  templateAdmins:
+  - gp_infield_{{location}}_template_admin_users
+  checklistAdmins:
+  - gp_infield_{{location}}_checklist_admin_users
+disciplines: # could be declared as a re-usable discipline list somewhere?
+  - name: Automation
+    externalId: f84cf669-9e64-4aa4-972a-4f497359880f
+  - name: Electrical
+    externalId: 39061c6e-d45d-4735-b485-c7d0d0e5a7e3
+  - name: Mechanical
+    externalId: 550fe38b-b16e-4a47-8af0-86f51ed15696
+  - name: Process
+    externalId: 361683bf-f25d-450a-bceb-bd22c8a37553
+dataExplorationConfig:
+  assets:
+    documentCard:
+      title: name
+      description: description
+  documents:
+    type: type
+    title: name
+    description: description

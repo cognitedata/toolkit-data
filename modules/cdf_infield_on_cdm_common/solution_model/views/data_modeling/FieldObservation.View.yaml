@@ -1,0 +1,150 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: FieldObservation
+version: v1
+name: FieldObservation
+implements: []
+properties:
+  files:
+    name: Files
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: FieldObservation
+    containerPropertyIdentifier: files
+    source:
+      type: view
+      space: cdf_cdm
+      externalId: CogniteFile
+      version: v1
+    description: The files related to the observation.
+  assets:
+    name: Assets
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteActivity
+    containerPropertyIdentifier: assets
+    source:
+      type: view
+      space: cdf_cdm
+      externalId: CogniteAsset
+      version: v1
+    description: The assets (functional locations) related to the observation
+  startTime:
+    name: Observed at
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSchedulable
+    containerPropertyIdentifier: startTime
+    description: The actual time of the observed event
+  name:
+    name: Observation name
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
+    containerPropertyIdentifier: name
+    description: Short title of the observation
+  description:
+    name: Observation details
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
+    containerPropertyIdentifier: description
+    description: Detailed description of the observation made
+  troubleshooting:
+    name: Troubleshooting steps
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: FieldObservation
+    containerPropertyIdentifier: troubleshooting
+    description: Troubleshooting description
+  priority:
+    name: Priority
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: FieldObservation
+    containerPropertyIdentifier: priority
+    description: Priority
+  type:
+    name: Type
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: FieldObservation
+    containerPropertyIdentifier: type
+    description: Type
+  status:
+    name: Status
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: FieldObservation
+    containerPropertyIdentifier: status
+    description: Status
+  sourceId:
+    name: Source id
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSourceable
+    containerPropertyIdentifier: sourceId
+    description: Identifier from the source system
+  sourceContext:
+    name: Source context
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSourceable
+    containerPropertyIdentifier: sourceContext
+    description: Context of the source id. For systems where the sourceId is globally unique, the sourceContext is expected to not be set.
+  source:
+    name: Source
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSourceable
+    containerPropertyIdentifier: source
+    source:
+      type: view
+      space: cdf_cdm
+      externalId: CogniteSourceSystem
+      version: v1
+    description: Direct relation to a source system
+  sourceCreatedTime:
+    name: Source created time
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSourceable
+    containerPropertyIdentifier: sourceCreatedTime
+    description: When the instance was created in source system (if available)
+  sourceUpdatedTime:
+    name: Source updated time
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSourceable
+    containerPropertyIdentifier: sourceUpdatedTime
+    description: When the instance was last updated in the source system (if available)
+  sourceCreatedUser:
+    name: Source created user
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSourceable
+    containerPropertyIdentifier: sourceCreatedUser
+    description: User identifier from the source system on who created the source data. This identifier is not guaranteed to match the user identifiers in CDF
+  sourceUpdatedUser:
+    name: Source updated user
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSourceable
+    containerPropertyIdentifier: sourceUpdatedUser
+    description: User identifier from the source system on who last updated the source data. This identifier is not guaranteed to match the user identifiers in CDF
+

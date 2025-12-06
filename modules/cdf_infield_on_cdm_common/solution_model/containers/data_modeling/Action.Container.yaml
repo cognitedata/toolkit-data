@@ -1,0 +1,36 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: Action
+usedFor: node
+properties:
+  conditionalAction:
+    nullable: true
+    type:
+      type: direct
+      container:
+        type: container
+        space: infield_cdm_source_desc_sche_asset_file_ts
+        externalId: ConditionalAction
+      list: false
+  target:
+    nullable: true
+    type:
+      type: direct
+      list: false
+  targetView:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  actionType:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  parameters:
+    nullable: true
+    type:
+      list: false
+      type: json
+

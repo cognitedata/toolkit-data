@@ -1,0 +1,59 @@
+# File 1 - Demo Document
+- space: sp_infield_{{location}}_src_inst_1
+  externalId: {{location}}_src1_file_1
+  name: demo_document.pdf
+  description: {{location_name}} - Demo document ( src 1 )
+  tags:
+    - file
+    - src1
+  assets:
+    - space: sp_infield_{{location}}_src_inst_1
+      externalId: {{location}}_root_all_resources
+    - space: sp_infield_{{location}}_src_inst_1
+      externalId: {{location}}_root_files
+  nodeSource:
+    type: view
+    space: cdf_cdm
+    externalId: CogniteFile
+    version: v1
+  mimeType: application/pdf
+
+# File 2 - Demo Document
+- space: sp_infield_{{location}}_src_inst_2
+  externalId: {{location}}_src1_file_2
+  name: demo_document.pdf
+  description: {{location_name}} - Demo document ( src 2 )
+  tags:
+    - file
+    - src1
+  assets:
+    - space: sp_infield_{{location}}_src_inst_1
+      externalId: {{location}}_root_all_resources
+    - space: sp_infield_{{location}}_src_inst_1
+      externalId: {{location}}_root_files
+  nodeSource:
+    type: view
+    space: cdf_cdm
+    externalId: CogniteFile
+    version: v1
+  mimeType: application/pdf
+
+# File 3 - image
+- space: sp_infield_{{location}}_app_inst
+  externalId: {{location}}_app_file
+  name: image.png
+  description: {{location_name}} - Image ( app )
+  tags:
+    - file
+    - src1
+  assets:
+    - space: sp_infield_{{location}}_src_inst_1
+      externalId: {{location}}_root_all_resources
+    - space: sp_infield_{{location}}_src_inst_1
+      externalId: {{location}}_root_files
+  nodeSource:
+    type: view
+    space: cdf_cdm
+    externalId: CogniteFile
+    version: v1
+  mimeType: image/png

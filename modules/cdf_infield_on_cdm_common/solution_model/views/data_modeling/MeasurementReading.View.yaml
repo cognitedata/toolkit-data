@@ -1,0 +1,99 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: MeasurementReading
+version: v1
+name: MeasurementReading
+filter:
+  hasData:
+    - type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: MeasurementReading
+implements:
+  - type: view
+    space: cdf_apps_shared
+    externalId: Creatable
+    version: v1
+properties:
+  title:
+    name: title
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
+    containerPropertyIdentifier: name
+    description: Name of the instance
+  description:
+    name: description
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
+    containerPropertyIdentifier: description
+    description: Description of the instance
+  labels:
+    name: labels
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
+    containerPropertyIdentifier: tags
+    description: Text based labels for generic use, limited to 1000
+  type:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: MeasurementReading
+    containerPropertyIdentifier: type
+  order:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: MeasurementReading
+    containerPropertyIdentifier: order
+  timeseries:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: MeasurementReading
+    containerPropertyIdentifier: timeseries
+    source:
+      type: view
+      space: cdf_cdm
+      externalId: CogniteTimeSeries
+      version: v1
+  min:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: MeasurementReading
+    containerPropertyIdentifier: min
+  max:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: MeasurementReading
+    containerPropertyIdentifier: max
+  options:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: MeasurementReading
+    containerPropertyIdentifier: options
+  measuredAt:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: MeasurementReading
+    containerPropertyIdentifier: measuredAt
+  numericReading:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: MeasurementReading
+    containerPropertyIdentifier: numericReading
+  stringReading:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: MeasurementReading
+    containerPropertyIdentifier: stringReading
+

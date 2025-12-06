@@ -1,0 +1,72 @@
+# Role has additional write permissions to app data dataset and spaces and is the Normal InField user that can execute on checklists.
+# Typical Technician user
+name: "gp_infield_{{location}}_template_admin_users"
+#sourceId: "{{infield_location_normal_users_source_id}}" # used to external managed groups
+members: "allUserAccounts"
+#members:
+#  - "Eq-f6akkTS_7CM-9B8X1DA"
+metadata:
+  origin: "cognite-toolkit"
+  module_version: "{{module_version}}"
+capabilities:
+  # Groups - View user groups
+  - groupsAcl:
+      actions:
+        - READ
+        - LIST
+      scope:
+        currentuserscope: {}
+
+  # Data models - View and analyze the data created in InField
+  - dataModelsAcl:
+      actions:
+        - READ
+      scope:
+        spaceIdScope:
+          spaceIds:
+            - cdf_cdm
+            - cdf_idm
+            - cdf_infield
+            - cdf_apps_shared
+            - infield_cdm_source_desc_sche_asset_file_ts # REMOVE WHEN MOVED TO CDF_INFIELD
+            # add any other spaces that are used for extention of core resources
+
+  # Data model instances - View and analyze the data created in InField
+  - dataModelInstancesAcl:
+      actions:
+        - READ
+      scope:
+        spaceIdScope:
+          spaceIds:
+            - cognite_app_data
+            - infield_cdm_source_desc_sche_asset_file_ts # to be replaced with CDF_INFIELD. Needed for global nodes.
+            - sp_infield_{{location}}_cfg_inst
+            - sp_infield_{{location}}_src_inst_1
+            - sp_infield_{{location}}_src_inst_2
+            - sp_infield_{{location}}_app_inst
+            - cdf_cdm_units
+
+  # Data model instances - Access and edit data organized in data models and spaces
+  - dataModelInstancesAcl:
+      actions:
+        - WRITE
+      scope:
+        spaceIdScope:
+          spaceIds:
+            - cognite_app_data # used to store user preferences
+            - sp_infield_{{location}}_app_inst # used for uploading images from infield
+
+  # - filesAcl:
+  #     actions:
+  #       - READ
+  #       - WRITE
+  #     scope:
+  #       all: {}
+
+  - locationFiltersAcl:
+      actions:
+        - READ
+      scope:
+        idScope:
+          ids:
+            - loc_fltr_{{location}} # toolkit will automatically replace this with an internalId

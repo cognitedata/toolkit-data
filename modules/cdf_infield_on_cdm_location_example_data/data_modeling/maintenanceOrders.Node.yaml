@@ -1,0 +1,61 @@
+# Maintenance Order 1 - Source Space 1 (Preventive Maintenance)
+- space: sp_infield_{{location}}_src_inst_1
+  externalId: {{location}}_maintenance_order_src1
+  sources:
+    - source:
+        type: view
+        space: cdf_idm
+        externalId: CogniteMaintenanceOrder
+        version: v1
+      properties:
+        name: {{location_name}} - Maintenance Order 1 (Src1)
+        description: Preventive Maintenance order for {{location_name}} in Src1
+        tags:
+          - maintenance-order
+          - preventive maintenance
+          - src1
+        type: PM01
+        status: In Progress
+        priority: 2
+        priorityDescription: Medium
+        scheduledStartTime: "2025-11-23T14:01:03.095+00:00"
+        scheduledEndTime: "2025-11-26T14:01:03.095+00:00"
+        mainAsset:
+          space: sp_infield_{{location}}_src_inst_1
+          externalId: {{location}}_root_all_resources
+        assets:
+          - space: sp_infield_{{location}}_src_inst_1
+            externalId: {{location}}_root_all_resources
+          - space: sp_infield_{{location}}_src_inst_1
+            externalId: {{location}}_root_maintenance_orders
+
+# Maintenance Order 1 - Source Space 2 (Preventive Maintenance)
+- space: sp_infield_{{location}}_src_inst_2
+  externalId: {{location}}_maintenance_order_src2
+  sources:
+    - source:
+        type: view
+        space: cdf_idm
+        externalId: CogniteMaintenanceOrder
+        version: v1
+      properties:
+        name: {{location_name}} - Maintenance Order 1 (Src2)
+        description: Preventive Maintenance order for {{location_name}} in Src2
+        tags:
+          - maintenance-order
+          - preventive maintenance
+          - src1
+        type: PM01
+        status: In Progress
+        priority: 2
+        priorityDescription: Medium
+        scheduledStartTime: "2025-11-23T14:01:03.095+00:00"
+        scheduledEndTime: "2025-11-26T14:01:03.095+00:00"
+        mainAsset:
+          space: sp_infield_{{location}}_src_inst_1
+          externalId: {{location}}_root_all_resources
+        assets:
+          - space: sp_infield_{{location}}_src_inst_1
+            externalId: {{location}}_root_all_resources
+          - space: sp_infield_{{location}}_src_inst_1
+            externalId: {{location}}_root_maintenance_orders
