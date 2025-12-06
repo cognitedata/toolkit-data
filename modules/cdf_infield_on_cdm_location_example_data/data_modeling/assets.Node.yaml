@@ -1,5 +1,5 @@
 # Root Asset Node
-- space: sp_infield_{{location}}_src_inst_1
+- space: sp_infield_{{location}}_assets
   externalId: {{location}}_root
   sources:
     - source:
@@ -8,7 +8,7 @@
         externalId: CogniteAsset
         version: v1
       properties:
-        name: Root Asset - {{location_name}} (src 1)
+        name: Root Asset - {{location_name}}
         description: Root asset for {{location_name}}
         tags:
           - root
@@ -16,7 +16,7 @@
           - {{location}}
 
 # All Resources Category Asset
-- space: sp_infield_{{location}}_src_inst_1
+- space: sp_infield_{{location}}_assets
   externalId: {{location}}_root_all_resources
   sources:
     - source:
@@ -25,17 +25,17 @@
         externalId: CogniteAsset
         version: v1
       properties:
-        name: {{location_name}} - All Resources (src 1)
+        name: {{location_name}} - All Resources
         description: All resources for {{location_name}}
         tags:
           - all-resources
           - test-data
         parent:
-          space: sp_infield_{{location}}_src_inst_1
+          space: sp_infield_{{location}}_assets
           externalId: {{location}}_root
 
 # Files Category Asset
-- space: sp_infield_{{location}}_src_inst_1
+- space: sp_infield_{{location}}_assets
   externalId: {{location}}_root_files
   sources:
     - source:
@@ -44,17 +44,17 @@
         externalId: CogniteAsset
         version: v1
       properties:
-        name: {{location_name}} - Files (src 1)
+        name: {{location_name}} - Files
         description: File resources for {{location_name}}
         tags:
           - files
           - test-data
         parent:
-          space: sp_infield_{{location}}_src_inst_1
+          space: sp_infield_{{location}}_assets
           externalId: {{location}}_root
 
 # Maintenance Orders Category Asset
-- space: sp_infield_{{location}}_src_inst_1
+- space: sp_infield_{{location}}_assets
   externalId: {{location}}_root_maintenance_orders
   sources:
     - source:
@@ -63,17 +63,17 @@
         externalId: CogniteAsset
         version: v1
       properties:
-        name: {{location_name}} - Maintenance Orders (src 1)
+        name: {{location_name}} - Maintenance Orders
         description: Maintenance orders for {{location_name}}
         tags:
           - maintenance-orders
           - test-data
         parent:
-          space: sp_infield_{{location}}_src_inst_1
+          space: sp_infield_{{location}}_assets
           externalId: {{location}}_root
 
 # TimeSeries Category Asset
-- space: sp_infield_{{location}}_src_inst_1
+- space: sp_infield_{{location}}_assets
   externalId: {{location}}_root_timeseries
   sources:
     - source:
@@ -82,30 +82,11 @@
         externalId: CogniteAsset
         version: v1
       properties:
-        name: {{location_name}} - TimeSeries (src 1)
+        name: {{location_name}} - TimeSeries
         description: TimeSeries resources for {{location_name}}
         tags:
           - timeseries
           - test-data
         parent:
-          space: sp_infield_{{location}}_src_inst_1
-          externalId: {{location}}_root
-
-# TimeSeries Category Asset
-- space: sp_infield_{{location}}_src_inst_2
-  externalId: {{location}}_child_source_2
-  sources:
-    - source:
-        type: view
-        space: cdf_cdm
-        externalId: CogniteAsset
-        version: v1
-      properties:
-        name: {{location_name}} - Child (src 2)
-        description: Child resources for {{location_name}} in space 2
-        tags:
-          - timeseries
-          - test-data
-        parent:
-          space: sp_infield_{{location}}_src_inst_1
+          space: sp_infield_{{location}}_assets
           externalId: {{location}}_root

@@ -1,15 +1,15 @@
-# File 1 - Demo Document
-- space: sp_infield_{{location}}_src_inst_1
-  externalId: {{location}}_src1_file_1
+# File 1 - Demo Document (Files Space 1)
+- space: sp_infield_{{location}}_files_1
+  externalId: {{location}}_file_1
   name: demo_document.pdf
-  description: {{location_name}} - Demo document ( src 1 )
+  description: {{location_name}} - Demo document
   tags:
     - file
-    - src1
+    - document
   assets:
-    - space: sp_infield_{{location}}_src_inst_1
+    - space: sp_infield_{{location}}_assets
       externalId: {{location}}_root_all_resources
-    - space: sp_infield_{{location}}_src_inst_1
+    - space: sp_infield_{{location}}_assets
       externalId: {{location}}_root_files
   nodeSource:
     type: view
@@ -18,18 +18,18 @@
     version: v1
   mimeType: application/pdf
 
-# File 2 - Demo Document
-- space: sp_infield_{{location}}_src_inst_2
-  externalId: {{location}}_src1_file_2
+# File 2 - Demo Document (Files Space 2)
+- space: sp_infield_{{location}}_files_2
+  externalId: {{location}}_file_2
   name: demo_document.pdf
-  description: {{location_name}} - Demo document ( src 2 )
+  description: {{location_name}} - Demo document
   tags:
     - file
-    - src1
+    - document
   assets:
-    - space: sp_infield_{{location}}_src_inst_1
+    - space: sp_infield_{{location}}_assets
       externalId: {{location}}_root_all_resources
-    - space: sp_infield_{{location}}_src_inst_1
+    - space: sp_infield_{{location}}_assets
       externalId: {{location}}_root_files
   nodeSource:
     type: view
@@ -38,18 +38,18 @@
     version: v1
   mimeType: application/pdf
 
-# File 3 - image
+# File 3 - Image (App Space)
 - space: sp_infield_{{location}}_app_inst
   externalId: {{location}}_app_file
   name: image.png
-  description: {{location_name}} - Image ( app )
+  description: {{location_name}} - Image
   tags:
     - file
-    - src1
+    - image
   assets:
-    - space: sp_infield_{{location}}_src_inst_1
+    - space: sp_infield_{{location}}_assets
       externalId: {{location}}_root_all_resources
-    - space: sp_infield_{{location}}_src_inst_1
+    - space: sp_infield_{{location}}_assets
       externalId: {{location}}_root_files
   nodeSource:
     type: view

@@ -1,6 +1,6 @@
 # Operation 1 - Maintenance Order 1 (Inspection)
-- space: sp_infield_{{location}}_src_inst_1
-  externalId: {{location}}_maintenance_order_src1_operation_1
+- space: sp_infield_{{location}}_maintenance
+  externalId: {{location}}_maintenance_order_1_operation_1
   sources:
     - source:
         type: view
@@ -8,12 +8,11 @@
         externalId: CogniteOperation
         version: v1
       properties:
-        name: {{location_name}} - Inspection (Src1)
+        name: {{location_name}} - Inspection
         description: Inspection operation for {{location_name}}
         tags:
           - operation
           - inspection
-          - src1
         phase: Inspection
         status: In Progress
         sequence: 1
@@ -23,20 +22,20 @@
         scheduledStartTime: "2025-11-23T14:01:03.095+00:00"
         scheduledEndTime: "2025-11-24T14:01:03.095+00:00"
         maintenanceOrder:
-          space: sp_infield_{{location}}_src_inst_1
-          externalId: {{location}}_maintenance_order_src1
+          space: sp_infield_{{location}}_maintenance
+          externalId: {{location}}_maintenance_order_1
         mainAsset:
-          space: sp_infield_{{location}}_src_inst_1
+          space: sp_infield_{{location}}_assets
           externalId: {{location}}_root_all_resources
         assets:
-          - space: sp_infield_{{location}}_src_inst_1
+          - space: sp_infield_{{location}}_assets
             externalId: {{location}}_root_all_resources
-          - space: sp_infield_{{location}}_src_inst_1
+          - space: sp_infield_{{location}}_assets
             externalId: {{location}}_root_maintenance_orders
 
 # Operation 2 - Maintenance Order 1 (Repair)
-- space: sp_infield_{{location}}_src_inst_1
-  externalId: {{location}}_maintenance_order_src1_operation_2
+- space: sp_infield_{{location}}_maintenance
+  externalId: {{location}}_maintenance_order_1_operation_2
   sources:
     - source:
         type: view
@@ -44,12 +43,11 @@
         externalId: CogniteOperation
         version: v1
       properties:
-        name: {{location_name}} - Repair (Src1)
+        name: {{location_name}} - Repair
         description: Repair operation for {{location_name}}
         tags:
           - operation
           - repair
-          - src1
         phase: Repair
         status: Scheduled
         sequence: 2
@@ -59,85 +57,13 @@
         scheduledStartTime: "2025-11-24T14:01:03.095+00:00"
         scheduledEndTime: "2025-11-26T14:01:03.095+00:00"
         maintenanceOrder:
-          space: sp_infield_{{location}}_src_inst_1
-          externalId: {{location}}_maintenance_order_src1
+          space: sp_infield_{{location}}_maintenance
+          externalId: {{location}}_maintenance_order_1
         mainAsset:
-          space: sp_infield_{{location}}_src_inst_1
+          space: sp_infield_{{location}}_assets
           externalId: {{location}}_root_all_resources
         assets:
-          - space: sp_infield_{{location}}_src_inst_1
+          - space: sp_infield_{{location}}_assets
             externalId: {{location}}_root_all_resources
-          - space: sp_infield_{{location}}_src_inst_1
-            externalId: {{location}}_root_maintenance_orders
-
-# Operation 1 - Maintenance Order 1 (Inspection)
-- space: sp_infield_{{location}}_src_inst_2
-  externalId: {{location}}_maintenance_order_src2_operation_1
-  sources:
-    - source:
-        type: view
-        space: cdf_idm
-        externalId: CogniteOperation
-        version: v1
-      properties:
-        name: {{location_name}} - Inspection (Src2)
-        description: Inspection operation for {{location_name}}
-        tags:
-          - operation
-          - inspection
-          - src2
-        phase: Inspection
-        status: In Progress
-        sequence: 1
-        mainDiscipline: Mechanical
-        numberOfMainDiscipline: 2
-        personHours: 4
-        scheduledStartTime: "2025-11-23T14:01:03.095+00:00"
-        scheduledEndTime: "2025-11-24T14:01:03.095+00:00"
-        maintenanceOrder:
-          space: sp_infield_{{location}}_src_inst_1
-          externalId: {{location}}_maintenance_order_src1
-        mainAsset:
-          space: sp_infield_{{location}}_src_inst_1
-          externalId: {{location}}_root_all_resources
-        assets:
-          - space: sp_infield_{{location}}_src_inst_1
-            externalId: {{location}}_root_all_resources
-          - space: sp_infield_{{location}}_src_inst_1
-            externalId: {{location}}_root_maintenance_orders
-
-# Operation 2 - Maintenance Order 1 (Repair)
-- space: sp_infield_{{location}}_src_inst_2
-  externalId: {{location}}_maintenance_order_src1_operation_2
-  sources:
-    - source:
-        type: view
-        space: cdf_idm
-        externalId: CogniteOperation
-        version: v1
-      properties:
-        name: {{location_name}} - Repair (Src2)
-        description: Repair operation for {{location_name}}
-        tags:
-          - operation
-          - repair
-          - src2
-        phase: Repair
-        status: Scheduled
-        sequence: 2
-        mainDiscipline: Electrical
-        numberOfMainDiscipline: 1
-        personHours: 6
-        scheduledStartTime: "2025-11-24T14:01:03.095+00:00"
-        scheduledEndTime: "2025-11-26T14:01:03.095+00:00"
-        maintenanceOrder:
-          space: sp_infield_{{location}}_src_inst_2
-          externalId: {{location}}_maintenance_order_src2
-        mainAsset:
-          space: sp_infield_{{location}}_src_inst_1
-          externalId: {{location}}_root_all_resources
-        assets:
-          - space: sp_infield_{{location}}_src_inst_1
-            externalId: {{location}}_root_all_resources
-          - space: sp_infield_{{location}}_src_inst_1
+          - space: sp_infield_{{location}}_assets
             externalId: {{location}}_root_maintenance_orders

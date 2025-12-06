@@ -11,54 +11,49 @@ featureToggles:
   media: true
   templateChecklistFlow: true
 dataFilters:
-  files:
-    path: # pointing to an asset that we do subtree filtering on from the .path field
-      space: sp_infield_{{location}}_src_inst_1
-      externalId: {{location}}_root
-    instanceSpaces:
-      - sp_infield_{{location}}_src_inst_1
-      - sp_infield_{{location}}_src_inst_2
   assets:
     path:
-      space: sp_infield_{{location}}_src_inst_1
+      space: sp_infield_{{location}}_assets
       externalId: {{location}}_root
     instanceSpaces:
-      - sp_infield_{{location}}_src_inst_1
-      - sp_infield_{{location}}_src_inst_2
-  operations:
+      - sp_infield_{{location}}_assets
+  files:
     path:
-      space: sp_infield_{{location}}_src_inst_1
+      space: sp_infield_{{location}}_assets
       externalId: {{location}}_root
     instanceSpaces:
-      - sp_infield_{{location}}_src_inst_1
-      - sp_infield_{{location}}_src_inst_2
+      - sp_infield_{{location}}_files_1
+      - sp_infield_{{location}}_files_2
   timeSeries:
     path:
-      space: sp_infield_{{location}}_src_inst_1
+      space: sp_infield_{{location}}_assets
       externalId: {{location}}_root
     instanceSpaces:
-      - sp_infield_{{location}}_src_inst_1
-      - sp_infield_{{location}}_src_inst_2
-  notifications:
-    path:
-      space: sp_infield_{{location}}_src_inst_1
-      externalId: {{location}}_root
-    instanceSpaces:
-      - sp_infield_{{location}}_src_inst_1
-      - sp_infield_{{location}}_src_inst_2
+      - sp_infield_{{location}}_timeseries
   maintenanceOrders:
     path:
-      space: sp_infield_{{location}}_src_inst_1
+      space: sp_infield_{{location}}_assets
       externalId: {{location}}_root
     instanceSpaces:
-      - sp_infield_{{location}}_src_inst_1
-      - sp_infield_{{location}}_src_inst_2
+      - sp_infield_{{location}}_maintenance
+  operations:
+    path:
+      space: sp_infield_{{location}}_assets
+      externalId: {{location}}_root
+    instanceSpaces:
+      - sp_infield_{{location}}_maintenance
+  notifications:
+    path:
+      space: sp_infield_{{location}}_assets
+      externalId: {{location}}_root
+    instanceSpaces:
+      - sp_infield_{{location}}_maintenance
 dataStorage:
-  rootLocation: # default template & checklist contextualization
-    space: sp_infield_{{location}}_src_inst_1
+  rootLocation:
+    space: sp_infield_{{location}}_assets
     externalId: {{location}}_root
   appInstanceSpace: sp_infield_{{location}}_app_inst
-viewMappings: # replace with customer extention views or use CDM / IDM defaults
+viewMappings:
   asset:
     space: cdf_cdm
     version: v1
@@ -75,12 +70,12 @@ viewMappings: # replace with customer extention views or use CDM / IDM defaults
     space: cdf_idm
     version: v1
     externalId: CogniteMaintenanceOrder
-accessManagement: # list groups that will have template and checklist admin access
+accessManagement:
   templateAdmins:
   - gp_infield_{{location}}_template_admin_users
   checklistAdmins:
   - gp_infield_{{location}}_checklist_admin_users
-disciplines: # could be declared as a re-usable discipline list somewhere?
+disciplines:
   - name: Automation
     externalId: f84cf669-9e64-4aa4-972a-4f497359880f
   - name: Electrical
