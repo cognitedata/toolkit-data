@@ -1,0 +1,22 @@
+space: customer_idm_extention
+externalId: ExtendedAsset
+usedFor: node
+properties:
+  sapPlantCode:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  sapEquipmentNumber:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  customClassification:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text

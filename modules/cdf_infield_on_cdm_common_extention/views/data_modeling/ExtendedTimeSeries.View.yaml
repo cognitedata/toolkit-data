@@ -1,0 +1,59 @@
+space: customer_idm_extention
+externalId: ExtendedTimeSeries
+version: v1
+name: Extended TimeSeries
+description: Extended TimeSeries view with SAP-specific properties
+implements:
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteTimeSeries
+    version: v1
+properties:
+  sapTagName:
+    name: SAP Tag Name
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedTimeSeries
+    containerPropertyIdentifier: sapTagName
+    description: SAP tag name for the timeseries
+  measurementPoint:
+    name: Measurement Point
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedTimeSeries
+    containerPropertyIdentifier: measurementPoint
+    description: Measurement point identifier
+  calibrationDate:
+    name: Calibration Date
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedTimeSeries
+    containerPropertyIdentifier: calibrationDate
+    description: Last calibration date
+  min:
+    name: Minimum Value
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedTimeSeries
+    containerPropertyIdentifier: min
+    description: Minimum value for the timeseries
+  max:
+    name: Maximum Value
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedTimeSeries
+    containerPropertyIdentifier: max
+    description: Maximum value for the timeseries
+  isHighlighted:
+    name: Is Highlighted
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedTimeSeries
+    containerPropertyIdentifier: isHighlighted
+    description: Whether this timeseries should be highlighted

@@ -1,0 +1,115 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: InFieldLocationConfig
+version: v1
+name: InFieldLocationConfig
+implements: []
+filter:
+  hasData:
+    - type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InFieldLocationConfig
+properties:
+  rootLocationExternalId:
+    name: rootLocationExternalId
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InFieldLocationConfig
+    containerPropertyIdentifier: rootLocationExternalId
+    description: ExternalId for the location this config is related too
+  featureToggles:
+    name: featureToggles
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InFieldLocationConfig
+    containerPropertyIdentifier: featureToggles
+    description: For a location, you can enable or disable features like observation, checklist, workorders etc.
+  classicAssetExternalId:
+    name: classicAssetExternalId
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InFieldLocationConfig
+    containerPropertyIdentifier: classicAssetExternalId
+    description: Legacy asset that is associated with this location.
+  rootAsset:
+    name: Root asset the location is configured for
+    description: Objects like templates & observations are default contextualized to this asset when created in this location
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InFieldLocationConfig
+    containerPropertyIdentifier: rootAsset
+    source:
+      type: view
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Asset
+      version: v1
+  appInstanceSpace:
+    name: appInstanceSpace
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InFieldLocationConfig
+    containerPropertyIdentifier: appInstanceSpace
+    description: Space to store application config for this location
+  appDataSet:
+    name: appDataSet
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InFieldLocationConfig
+    containerPropertyIdentifier: appDataSet
+    description: Data set to store application config for this location
+  accessManagement:
+    name: accessManagement
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InFieldLocationConfig
+    containerPropertyIdentifier: accessManagement
+    description: Access management for this location
+  disciplines:
+    name: disciplines
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InFieldLocationConfig
+    containerPropertyIdentifier: disciplines
+    description: List of disciplines for this location
+  dataFilters:
+    name: dataFilters
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InFieldLocationConfig
+    containerPropertyIdentifier: dataFilters
+    description: Additional filters to apply to data queries for this location.
+  observationConfig:
+    name: observationConfig
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InFieldLocationConfig
+    containerPropertyIdentifier: observationConfig
+    source:
+      type: view
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: ObservationConfig
+      version: v1
+    description: Observation configuration for this location.
+  dataExplorationConfig:
+    name: dataExplorationConfig
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InFieldLocationConfig
+    containerPropertyIdentifier: dataExplorationConfig
+    source:
+      type: view
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: DataExplorationConfig
+      version: v1
+    description: Data exploration configuration for this location.
+

@@ -1,0 +1,59 @@
+# Extended File 1 - Demo Document (Files Space 1)
+- space: sp_infield_{{location}}_files_1
+  externalId: {{location}}_file_1
+  sources:
+    - source:
+        type: view
+        space: customer_idm_extention
+        externalId: ExtendedFile
+        version: v1
+      properties:
+        name: {{location_name}} - Demo document
+        description: {{location_name}} - Demo document
+        tags:
+          - file
+          - document
+          - extended
+        sapDocumentNumber: "DOC-001"
+        documentCategory: "Technical Manual"
+        revisionNumber: 1
+
+# Extended File 2 - Demo Document (Files Space 2)
+- space: sp_infield_{{location}}_files_2
+  externalId: {{location}}_file_2
+  sources:
+    - source:
+        type: view
+        space: customer_idm_extention
+        externalId: ExtendedFile
+        version: v1
+      properties:
+        name: {{location_name}} - Demo document
+        description: {{location_name}} - Demo document
+        tags:
+          - file
+          - document
+          - extended
+        sapDocumentNumber: "DOC-002"
+        documentCategory: "Procedure"
+        revisionNumber: 2
+
+# Extended File 3 - Image (App Space)
+- space: sp_infield_{{location}}_app_inst
+  externalId: {{location}}_app_file
+  sources:
+    - source:
+        type: view
+        space: customer_idm_extention
+        externalId: ExtendedFile
+        version: v1
+      properties:
+        name: {{location_name}} - Image
+        description: {{location_name}} - Image
+        tags:
+          - file
+          - image
+          - extended
+        sapDocumentNumber: "DOC-IMG-001"
+        documentCategory: "Diagram"
+        revisionNumber: 1

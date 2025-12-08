@@ -1,0 +1,35 @@
+space: customer_idm_extention
+externalId: ExtendedMaintenanceOrder
+version: v1
+name: Extended Maintenance Order
+description: Extended Maintenance Order view with SAP-specific properties
+implements:
+  - type: view
+    space: cdf_idm
+    externalId: CogniteMaintenanceOrder
+    version: v1
+properties:
+  sapOrderNumber:
+    name: SAP Order Number
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedMaintenanceOrder
+    containerPropertyIdentifier: sapOrderNumber
+    description: SAP maintenance order number
+  workCenter:
+    name: Work Center
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedMaintenanceOrder
+    containerPropertyIdentifier: workCenter
+    description: SAP work center
+  plannerGroup:
+    name: Planner Group
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedMaintenanceOrder
+    containerPropertyIdentifier: plannerGroup
+    description: SAP planner group

@@ -39,6 +39,27 @@ modules = [
     "infield_quickstart/cdf_infield_location",
 ]
 
+[packages.infield_on_cdm]
+title = "InField on CDM"
+id = "tk:infield_on_cdm"
+description = "Put real-time data into the hands of every field worker."
+modules = [
+    "cdf_infield_on_cdm_common",
+    "cdf_infield_on_cdm_location",
+    "cdf_infield_on_cdm_location_example_data",
+]
+
+[packages.infield_on_cdm_extention]
+title = "InField on CDM extention"
+id = "tk:infield_on_cdm_extention"
+description = "Put real-time data into the hands of every field worker."
+modules = [
+    "cdf_infield_on_cdm_common",
+    "cdf_infield_on_cdm_common_extention",
+    "cdf_infield_on_cdm_location_extention",
+    "cdf_infield_on_cdm_location_example_data_extention",
+]
+
 [packages.inrobot]
 title = "InRobot"
 id = "tk:inrobot"

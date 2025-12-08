@@ -1,0 +1,40 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: ChecklistItem
+usedFor: node
+properties:
+  order:
+    nullable: true
+    type:
+      list: false
+      type: int32
+  status:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  note:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  asset:
+    nullable: true
+    type:
+      type: direct
+      container:
+        type: container
+        space: cdf_cdm
+        externalId: CogniteAsset
+      list: false
+  files:
+    nullable: true
+    type:
+      type: direct
+      container:
+        type: container
+        space: cdf_cdm
+        externalId: CogniteFile
+      list: true
+

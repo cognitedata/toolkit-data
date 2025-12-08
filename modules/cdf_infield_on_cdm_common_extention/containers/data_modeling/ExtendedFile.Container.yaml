@@ -1,0 +1,21 @@
+space: customer_idm_extention
+externalId: ExtendedFile
+usedFor: node
+properties:
+  sapDocumentNumber:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  documentCategory:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  revisionNumber:
+    nullable: true
+    type:
+      list: false
+      type: int32
