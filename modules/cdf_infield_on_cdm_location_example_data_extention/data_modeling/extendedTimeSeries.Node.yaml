@@ -1,0 +1,93 @@
+# Extended TimeSeries 1 - Pressure
+- space: sp_infield_{{location}}_timeseries
+  externalId: {{location}}_pressure
+  sources:
+    - source:
+        type: view
+        space: customer_idm_extention
+        externalId: ExtendedTimeSeries
+        version: v1
+      properties:
+        name: {{location_name}} - Pressure
+        description: Pressure sensor for {{location_name}}
+        sourceUnit: bar
+        isStep: false
+        tags:
+          - pressure
+          - sensor
+          - monitoring
+        type: numeric
+        assets:
+          - space: sp_infield_{{location}}_assets
+            externalId: {{location}}_root_all_resources
+          - space: sp_infield_{{location}}_assets
+            externalId: {{location}}_root_timeseries
+        sapTagName: "TAG-PRESSURE-001"
+        measurementPoint: "MP-001"
+        calibrationDate: "2025-01-15T00:00:00Z"
+        min: 0.0
+        max: 100.0
+        isHighlighted: true
+
+# Extended TimeSeries 2 - Flow Rate
+- space: sp_infield_{{location}}_timeseries
+  externalId: {{location}}_flow_rate
+  sources:
+    - source:
+        type: view
+        space: customer_idm_extention
+        externalId: ExtendedTimeSeries
+        version: v1
+      properties:
+        name: {{location_name}} - Flow Rate
+        description: Flow rate sensor for {{location_name}}
+        sourceUnit: m3/h
+        isStep: false
+        tags:
+          - flow-rate
+          - sensor
+          - monitoring
+        type: numeric
+        assets:
+          - space: sp_infield_{{location}}_assets
+            externalId: {{location}}_root_all_resources
+          - space: sp_infield_{{location}}_assets
+            externalId: {{location}}_root_timeseries
+        sapTagName: "TAG-FLOW-002"
+        measurementPoint: "MP-002"
+        calibrationDate: "2025-01-20T00:00:00Z"
+        min: 10.5
+        max: 250.75
+        isHighlighted: false
+
+# Extended TimeSeries 3 - Temperature (App Space)
+- space: sp_infield_{{location}}_app_inst
+  externalId: {{location}}_temperature_app
+  sources:
+    - source:
+        type: view
+        space: customer_idm_extention
+        externalId: ExtendedTimeSeries
+        version: v1
+      properties:
+        name: {{location_name}} - Temperature (App)
+        description: Temperature sensor for {{location_name}} in app data space
+        sourceUnit: "°C"
+        isStep: false
+        tags:
+          - temperature
+          - sensor
+          - monitoring
+          - app-data
+        type: numeric
+        assets:
+          - space: sp_infield_{{location}}_assets
+            externalId: {{location}}_root_all_resources
+          - space: sp_infield_{{location}}_assets
+            externalId: {{location}}_root_timeseries
+        sapTagName: "TAG-TEMP-003"
+        measurementPoint: "MP-003"
+        calibrationDate: "2025-01-25T00:00:00Z"
+        min: -10.0
+        max: 50.0
+        isHighlighted: false

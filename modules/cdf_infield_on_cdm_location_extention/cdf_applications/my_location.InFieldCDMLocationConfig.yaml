@@ -55,29 +55,29 @@ dataStorage:
   appInstanceSpace: sp_infield_{{location}}_app_inst
 viewMappings:
   asset:
-    space: cdf_cdm
+    space: customer_idm_extention
     version: v1
-    externalId: CogniteAsset
-  file:
-    space: cdf_cdm
-    version: v1
-    externalId: CogniteFile
-  timeseries:
-    space: cdf_cdm
-    version: v1
-    externalId: CogniteTimeSeries
+    externalId: ExtendedAsset
   operation:
-    space: cdf_idm
+    space: customer_idm_extention
     version: v1
-    externalId: CogniteOperation
+    externalId: ExtendedOperation
   notification:
-    space: cdf_idm
+    space: customer_idm_extention
     version: v1
-    externalId: CogniteNotification
+    externalId: ExtendedNotification
   maintenanceOrder:
-    space: cdf_idm
+    space: customer_idm_extention
     version: v1
-    externalId: CogniteMaintenanceOrder
+    externalId: ExtendedMaintenanceOrder
+  file:
+    space: customer_idm_extention
+    version: v1
+    externalId: ExtendedFile
+  timeSeries:
+    space: customer_idm_extention
+    version: v1
+    externalId: ExtendedTimeSeries
 accessManagement:
   templateAdmins:
   - gp_infield_{{location}}_template_admin_users

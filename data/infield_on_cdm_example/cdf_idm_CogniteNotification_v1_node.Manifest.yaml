@@ -1,8 +1,0 @@
-type: instanceSpace
-kind: Instances
-instanceSpace: sp_infield_oslo_refinery_src_inst_1
-instanceType: node
-view:
-  space: cdf_idm
-  externalId: CogniteNotification
-  version: v1
