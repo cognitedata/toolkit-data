@@ -1,0 +1,5 @@
+[module]
+title = "InField Function"
+is_selected_by_default = false
+id = "cdf_infield_function"
+package_id = "tk:infield_quickstart"
