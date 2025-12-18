@@ -1,6 +1,0 @@
-[module]
-title = "cdf_infield_on_cdm_location"
-is_selected_by_default = true
-id = "cdf_infield_on_cdm_location"
-package_id = "tk:infield_on_cdm"
-

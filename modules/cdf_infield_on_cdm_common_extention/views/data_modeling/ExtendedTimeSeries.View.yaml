@@ -5,8 +5,8 @@ name: Extended TimeSeries
 description: Extended TimeSeries view with SAP-specific properties
 implements:
   - type: view
-    space: cdf_cdm
-    externalId: CogniteTimeSeries
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: InfieldTimeSeries
     version: v1
 properties:
   sapTagName:
@@ -33,27 +33,3 @@ properties:
       externalId: ExtendedTimeSeries
     containerPropertyIdentifier: calibrationDate
     description: Last calibration date
-  min:
-    name: Minimum Value
-    container:
-      type: container
-      space: customer_idm_extention
-      externalId: ExtendedTimeSeries
-    containerPropertyIdentifier: min
-    description: Minimum value for the timeseries
-  max:
-    name: Maximum Value
-    container:
-      type: container
-      space: customer_idm_extention
-      externalId: ExtendedTimeSeries
-    containerPropertyIdentifier: max
-    description: Maximum value for the timeseries
-  isHighlighted:
-    name: Is Highlighted
-    container:
-      type: container
-      space: customer_idm_extention
-      externalId: ExtendedTimeSeries
-    containerPropertyIdentifier: isHighlighted
-    description: Whether this timeseries should be highlighted

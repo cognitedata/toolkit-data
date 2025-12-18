@@ -1,0 +1,27 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: InfieldTimeSeries
+usedFor: node
+properties:
+  is_highlighted:
+    nullable: true
+    type:
+      list: false
+      type: boolean
+  minVal:
+    nullable: true
+    type:
+      list: false
+      type: float64
+  maxVal:
+    nullable: true
+    type:
+      list: false
+      type: float64
+# indexes:
+#   isHighlighted:
+#     properties:
+#       - name: is_highlighted
+#         type: boolean
+#     indexType: btree
+#     cursorable: false
+#     bySpace: false

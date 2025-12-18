@@ -11,6 +11,10 @@ views:
     version: v1
   - type: view
     space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: InfieldTimeSeries
+    version: v1
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
     externalId: Template
     version: v1
   - type: view
@@ -238,4 +242,3 @@ views:
     space: cdf_idm
     externalId: CogniteNotification
     version: v1
-

@@ -1,5 +1,0 @@
-- space: sp_infield_{{location}}_assets
-- space: sp_infield_{{location}}_maintenance
-- space: sp_infield_{{location}}_timeseries
-- space: sp_infield_{{location}}_files_1
-- space: sp_infield_{{location}}_files_2
