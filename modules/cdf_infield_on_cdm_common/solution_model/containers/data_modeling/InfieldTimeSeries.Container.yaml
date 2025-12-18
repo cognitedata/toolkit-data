@@ -1,6 +1,13 @@
 space: infield_cdm_source_desc_sche_asset_file_ts
 externalId: InfieldTimeSeries
 usedFor: node
+constraints:
+  cogniteTimeseriesPresent:
+    constraintType: requires
+    require:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteTimeSeries
 properties:
   is_highlighted:
     nullable: true
@@ -17,11 +24,8 @@ properties:
     type:
       list: false
       type: float64
-# indexes:
-#   isHighlighted:
-#     properties:
-#       - name: is_highlighted
-#         type: boolean
-#     indexType: btree
-#     cursorable: false
-#     bySpace: false
+indexes:
+  is_highlighted:
+    properties:
+      - is_highlighted
+    indexType: btree

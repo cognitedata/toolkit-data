@@ -13,4 +13,8 @@ properties:
     type:
       type: direct
       list: false
-
+indexes:
+  parentObject:
+    properties:
+      - parentObject
+    indexType: btree

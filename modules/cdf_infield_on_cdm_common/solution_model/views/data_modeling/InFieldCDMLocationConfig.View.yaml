@@ -3,11 +3,6 @@ externalId: InFieldCDMLocationConfig
 version: v1
 name: InFieldCDMLocationConfig
 implements: []
-filter:
-  hasData:
-    - type: container
-      space: infield_cdm_source_desc_sche_asset_file_ts
-      externalId: InFieldCDMLocationConfig
 properties:
   name:
     name: name
@@ -81,4 +76,3 @@ properties:
       externalId: InFieldCDMLocationConfig
     containerPropertyIdentifier: dataExplorationConfig
     description: Data exploration configuration for the location
-

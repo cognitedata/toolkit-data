@@ -33,4 +33,20 @@ properties:
     type:
       list: false
       type: json
-
+indexes:
+  conditionalAction:
+    properties:
+      - conditionalAction
+    indexType: btree
+  target:
+    properties:
+      - target
+    indexType: btree
+  targetView:
+    properties:
+      - targetView
+    indexType: btree
+  actionType:
+    properties:
+      - actionType
+    indexType: btree

@@ -3,11 +3,6 @@ externalId: InFieldLocationConfig
 version: v1
 name: InFieldLocationConfig
 implements: []
-filter:
-  hasData:
-    - type: container
-      space: infield_cdm_source_desc_sche_asset_file_ts
-      externalId: InFieldLocationConfig
 properties:
   rootLocationExternalId:
     name: rootLocationExternalId
@@ -112,4 +107,3 @@ properties:
       externalId: DataExplorationConfig
       version: v1
     description: Data exploration configuration for this location.
-

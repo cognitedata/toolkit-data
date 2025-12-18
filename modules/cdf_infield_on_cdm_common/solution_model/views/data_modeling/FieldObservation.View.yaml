@@ -3,6 +3,11 @@ externalId: FieldObservation
 version: v1
 name: FieldObservation
 implements: []
+filter:
+  hasData:
+    - type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: FieldObservation
 properties:
   files:
     name: Files
@@ -147,4 +152,3 @@ properties:
       externalId: CogniteSourceable
     containerPropertyIdentifier: sourceUpdatedUser
     description: User identifier from the source system on who last updated the source data. This identifier is not guaranteed to match the user identifiers in CDF
-

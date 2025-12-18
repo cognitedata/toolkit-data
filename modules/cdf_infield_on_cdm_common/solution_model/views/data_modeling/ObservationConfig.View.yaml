@@ -3,11 +3,6 @@ externalId: ObservationConfig
 version: v1
 name: ObservationConfig
 implements: []
-filter:
-  hasData:
-    - type: container
-      space: infield_cdm_source_desc_sche_asset_file_ts
-      externalId: ObservationConfig
 properties:
   rootLocationExternalIds:
     name: rootLocationExternalIds
@@ -25,4 +20,3 @@ properties:
       externalId: ObservationConfig
     containerPropertyIdentifier: fieldConfigurations
     description: For each field in observation, you can configure display name, description and value options for preset dropdown selections
-

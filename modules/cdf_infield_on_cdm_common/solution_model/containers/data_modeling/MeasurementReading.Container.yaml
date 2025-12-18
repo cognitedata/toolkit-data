@@ -1,6 +1,13 @@
 space: infield_cdm_source_desc_sche_asset_file_ts
 externalId: MeasurementReading
 usedFor: node
+constraints:
+  describablePresent:
+    constraintType: requires
+    require:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
 properties:
   type:
     nullable: true
@@ -53,4 +60,13 @@ properties:
       list: false
       collation: ucs_basic
       type: text
-
+indexes:
+  type:
+    properties:
+      - type
+    indexType: btree
+  order:
+    properties:
+      - order
+    indexType: btree
+    cursorable: true

@@ -3,11 +3,6 @@ externalId: DataExplorationConfig
 version: v1
 name: DataExplorationConfig
 implements: []
-filter:
-  hasData:
-    - type: container
-      space: infield_cdm_source_desc_sche_asset_file_ts
-      externalId: DataExplorationConfig
 properties:
   observations:
     name: observations
@@ -49,4 +44,3 @@ properties:
       externalId: DataExplorationConfig
     containerPropertyIdentifier: assets
     description: Asset (and asset page) configuration
-

@@ -1,6 +1,19 @@
 space: infield_cdm_source_desc_sche_asset_file_ts
 externalId: Checklist
 usedFor: node
+constraints:
+  describablePresent:
+    constraintType: requires
+    require:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
+  schedulablePresent:
+    constraintType: requires
+    require:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSchedulable
 properties:
   type:
     nullable: true
@@ -38,4 +51,24 @@ properties:
         space: cdf_apps_shared
         externalId: CogniteSolutionTag
       list: true
-
+indexes:
+  type:
+    properties:
+      - type
+    indexType: btree
+  status:
+    properties:
+      - status
+    indexType: btree
+  rootLocation:
+    properties:
+      - rootLocation
+    indexType: btree
+  assignedTo:
+    properties:
+      - assignedTo
+    indexType: inverted
+  solutionTags:
+    properties:
+      - solutionTags
+    indexType: inverted

@@ -1,6 +1,13 @@
 space: infield_cdm_source_desc_sche_asset_file_ts
 externalId: Template
 usedFor: node
+constraints:
+  describablePresent:
+    constraintType: requires
+    require:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
 properties:
   status:
     nullable: true
@@ -32,4 +39,20 @@ properties:
         space: cdf_apps_shared
         externalId: CogniteSolutionTag
       list: true
-
+indexes:
+  status:
+    properties:
+      - status
+    indexType: btree
+  rootLocation:
+    properties:
+      - rootLocation
+    indexType: btree
+  assignedTo:
+    properties:
+      - assignedTo
+    indexType: inverted
+  solutionTags:
+    properties:
+      - solutionTags
+    indexType: inverted

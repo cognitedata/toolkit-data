@@ -40,4 +40,16 @@ properties:
       list: false
       collation: ucs_basic
       type: text
-
+indexes:
+  conditionalAction:
+    properties:
+      - conditionalAction
+    indexType: btree
+  source:
+    properties:
+      - source
+    indexType: btree
+  sourceView:
+    properties:
+      - sourceView
+    indexType: btree
