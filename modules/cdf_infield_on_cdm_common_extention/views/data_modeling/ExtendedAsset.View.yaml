@@ -1,0 +1,35 @@
+space: customer_idm_extention
+externalId: ExtendedAsset
+version: v1
+name: Extended Asset
+description: Extended Asset view with SAP-specific properties
+implements:
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteAsset
+    version: v1
+properties:
+  sapPlantCode:
+    name: SAP Plant Code
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedAsset
+    containerPropertyIdentifier: sapPlantCode
+    description: SAP plant code for the asset
+  sapEquipmentNumber:
+    name: SAP Equipment Number
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedAsset
+    containerPropertyIdentifier: sapEquipmentNumber
+    description: SAP equipment number
+  customClassification:
+    name: Custom Classification
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedAsset
+    containerPropertyIdentifier: customClassification
+    description: Custom classification for the asset

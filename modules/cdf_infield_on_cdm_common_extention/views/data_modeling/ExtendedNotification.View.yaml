@@ -1,0 +1,35 @@
+space: customer_idm_extention
+externalId: ExtendedNotification
+version: v1
+name: Extended Notification
+description: Extended Notification view with SAP-specific properties
+implements:
+  - type: view
+    space: cdf_idm
+    externalId: CogniteNotification
+    version: v1
+properties:
+  sapNotificationNumber:
+    name: SAP Notification Number
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedNotification
+    containerPropertyIdentifier: sapNotificationNumber
+    description: SAP notification number
+  notificationType:
+    name: Notification Type
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedNotification
+    containerPropertyIdentifier: notificationType
+    description: Type of notification in SAP
+  priorityCode:
+    name: Priority Code
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedNotification
+    containerPropertyIdentifier: priorityCode
+    description: SAP priority code

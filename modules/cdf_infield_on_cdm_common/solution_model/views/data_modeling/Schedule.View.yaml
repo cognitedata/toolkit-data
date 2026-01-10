@@ -1,0 +1,80 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: Schedule
+version: v1
+name: Schedule
+filter:
+  hasData:
+    - type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Schedule
+implements:
+  - type: view
+    space: cdf_apps_shared
+    externalId: Creatable
+    version: v1
+properties:
+  startTime:
+    name: startTime
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSchedulable
+    containerPropertyIdentifier: scheduledStartTime
+    description: The planned start time of an activity (or similar that extends this)
+  endTime:
+    name: endTime
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSchedulable
+    containerPropertyIdentifier: scheduledEndTime
+    description: The planned end time of an activity (or similar that extends this)
+  status:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Schedule
+    containerPropertyIdentifier: status
+  timezone:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Schedule
+    containerPropertyIdentifier: timezone
+  exceptionDates:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Schedule
+    containerPropertyIdentifier: exceptionDates
+  freq:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Schedule
+    containerPropertyIdentifier: freq
+  interval:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Schedule
+    containerPropertyIdentifier: interval
+  byDay:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Schedule
+    containerPropertyIdentifier: byDay
+  byMonth:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Schedule
+    containerPropertyIdentifier: byMonth
+  until:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Schedule
+    containerPropertyIdentifier: until
+

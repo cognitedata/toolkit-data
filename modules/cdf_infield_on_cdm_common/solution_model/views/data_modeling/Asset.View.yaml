@@ -1,0 +1,83 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: Asset
+version: v1
+name: Asset
+filter:
+  hasData:
+    - type: container
+      space: cdf_cdm
+      externalId: CogniteAsset
+implements:
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteVisualizable
+    version: v1
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteSourceable
+    version: v1
+properties:
+  title:
+    name: title
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
+    containerPropertyIdentifier: name
+    description: Name of the instance
+  description:
+    name: description
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
+    containerPropertyIdentifier: description
+    description: Description of the instance
+  labels:
+    name: labels
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
+    containerPropertyIdentifier: tags
+    description: Text based labels for generic use, limited to 1000
+  path:
+    name: path
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteAsset
+    containerPropertyIdentifier: assetHierarchy_path
+    source:
+      type: view
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Asset
+      version: v1
+    description: List of external ids representing the breadcrumb path of this asset within a tree
+  parent:
+    name: parent
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteAsset
+    containerPropertyIdentifier: assetHierarchy_parent
+    source:
+      type: view
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Asset
+      version: v1
+    description: Parent of this asset
+  root:
+    name: root
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteAsset
+    containerPropertyIdentifier: assetHierarchy_root
+    source:
+      type: view
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Asset
+      version: v1
+    description: Root location - asset at the top of the hierarchy.
+

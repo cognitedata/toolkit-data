@@ -1,0 +1,22 @@
+space: customer_idm_extention
+externalId: ExtendedNotification
+usedFor: node
+properties:
+  sapNotificationNumber:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  notificationType:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  priorityCode:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text

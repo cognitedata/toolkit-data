@@ -1,0 +1,71 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: Schedule
+usedFor: node
+constraints:
+  schedulablePresent:
+    constraintType: requires
+    require:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSchedulable
+properties:
+  status:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  timezone:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  exceptionDates:
+    nullable: true
+    type:
+      list: true
+      type: timestamp
+      maxListSize: 300
+  freq:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  interval:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  byDay:
+    nullable: true
+    type:
+      list: true
+      collation: ucs_basic
+      type: text
+  until:
+    nullable: true
+    type:
+      list: false
+      type: timestamp
+  byMonth:
+    nullable: true
+    type:
+      list: true
+      collation: ucs_basic
+      type: text
+indexes:
+  until:
+    properties:
+      - until
+    indexType: btree
+  exceptionDates:
+    properties:
+      - exceptionDates
+    indexType: btree
+  status:
+    properties:
+      - status
+    indexType: btree

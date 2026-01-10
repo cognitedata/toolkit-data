@@ -1,0 +1,35 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: TemplateItem
+usedFor: node
+constraints:
+  describablePresent:
+    constraintType: requires
+    require:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
+properties:
+  order:
+    nullable: true
+    type:
+      list: false
+      type: int32
+  asset:
+    nullable: true
+    type:
+      type: direct
+      container:
+        type: container
+        space: cdf_cdm
+        externalId: CogniteAsset
+      list: false
+indexes:
+  order:
+    properties:
+      - order
+    indexType: btree
+    cursorable: true
+  asset:
+    properties:
+      - asset
+    indexType: btree

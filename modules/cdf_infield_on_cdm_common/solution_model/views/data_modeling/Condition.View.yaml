@@ -1,0 +1,63 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: Condition
+version: v1
+name: Condition
+filter:
+  hasData:
+    - type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Condition
+implements:
+  - type: view
+    space: cdf_apps_shared
+    externalId: Creatable
+    version: v1
+properties:
+  conditionalAction:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Condition
+    containerPropertyIdentifier: conditionalAction
+    source:
+      type: view
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: ConditionalAction
+      version: v1
+    name: Conditional Action
+  source:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Condition
+    containerPropertyIdentifier: source
+    name: Source
+  sourceView:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Condition
+    containerPropertyIdentifier: sourceView
+    name: Source View
+  field:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Condition
+    containerPropertyIdentifier: field
+    name: Field
+  operator:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Condition
+    containerPropertyIdentifier: operator
+    name: Operator
+  value:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Condition
+    containerPropertyIdentifier: value
+    name: Value
+

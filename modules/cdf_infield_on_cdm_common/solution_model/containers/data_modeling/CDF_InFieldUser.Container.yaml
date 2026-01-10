@@ -1,0 +1,14 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: CDF_InFieldUser
+usedFor: node
+properties:
+  preferences:
+    nullable: true
+    type:
+      type: direct
+      container:
+        type: container
+        space: infield_cdm_source_desc_sche_asset_file_ts
+        externalId: CDF_InFieldUserPreferences
+      list: false
+

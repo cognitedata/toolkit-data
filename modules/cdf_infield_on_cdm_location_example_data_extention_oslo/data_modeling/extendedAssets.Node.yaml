@@ -1,0 +1,107 @@
+# Extended Root Asset Node
+- space: sp_infield_{{location}}_assets
+  externalId: {{location}}_root
+  sources:
+    - source:
+        type: view
+        space: customer_idm_extention
+        externalId: ExtendedAsset
+        version: v1
+      properties:
+        name: Root Asset - {{location_name}}
+        description: Root asset for {{location_name}}
+        tags:
+          - root
+          - test-data
+          - {{location}}
+        sapPlantCode: "PLANT001"
+        sapEquipmentNumber: "EQ-ROOT-001"
+        customClassification: "Root Asset"
+
+# Extended All Resources Category Asset
+- space: sp_infield_{{location}}_assets
+  externalId: {{location}}_root_all_resources
+  sources:
+    - source:
+        type: view
+        space: customer_idm_extention
+        externalId: ExtendedAsset
+        version: v1
+      properties:
+        name: {{location_name}} - All Resources
+        description: All resources for {{location_name}}
+        tags:
+          - all-resources
+          - test-data
+        parent:
+          space: sp_infield_{{location}}_assets
+          externalId: {{location}}_root
+        sapPlantCode: "PLANT001"
+        sapEquipmentNumber: "EQ-ALL-001"
+        customClassification: "Category Asset"
+
+# Extended Files Category Asset
+- space: sp_infield_{{location}}_assets
+  externalId: {{location}}_root_files
+  sources:
+    - source:
+        type: view
+        space: customer_idm_extention
+        externalId: ExtendedAsset
+        version: v1
+      properties:
+        name: {{location_name}} - Files
+        description: File resources for {{location_name}}
+        tags:
+          - files
+          - test-data
+        parent:
+          space: sp_infield_{{location}}_assets
+          externalId: {{location}}_root
+        sapPlantCode: "PLANT001"
+        sapEquipmentNumber: "EQ-FILES-001"
+        customClassification: "Category Asset"
+
+# Extended Maintenance Orders Category Asset
+- space: sp_infield_{{location}}_assets
+  externalId: {{location}}_root_maintenance_orders
+  sources:
+    - source:
+        type: view
+        space: customer_idm_extention
+        externalId: ExtendedAsset
+        version: v1
+      properties:
+        name: {{location_name}} - Maintenance Orders
+        description: Maintenance orders for {{location_name}}
+        tags:
+          - maintenance-orders
+          - test-data
+        parent:
+          space: sp_infield_{{location}}_assets
+          externalId: {{location}}_root
+        sapPlantCode: "PLANT001"
+        sapEquipmentNumber: "EQ-MO-001"
+        customClassification: "Category Asset"
+
+# Extended TimeSeries Category Asset
+- space: sp_infield_{{location}}_assets
+  externalId: {{location}}_root_timeseries
+  sources:
+    - source:
+        type: view
+        space: customer_idm_extention
+        externalId: ExtendedAsset
+        version: v1
+      properties:
+        name: {{location_name}} - TimeSeries
+        description: TimeSeries resources for {{location_name}}
+        tags:
+          - timeseries
+          - test-data
+        parent:
+          space: sp_infield_{{location}}_assets
+          externalId: {{location}}_root
+        sapPlantCode: "PLANT001"
+        sapEquipmentNumber: "EQ-TS-001"
+        customClassification: "Category Asset"

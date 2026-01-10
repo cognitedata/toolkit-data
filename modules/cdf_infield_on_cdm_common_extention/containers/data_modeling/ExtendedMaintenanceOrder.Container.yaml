@@ -1,0 +1,22 @@
+space: customer_idm_extention
+externalId: ExtendedMaintenanceOrder
+usedFor: node
+properties:
+  sapOrderNumber:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  workCenter:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  plannerGroup:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text

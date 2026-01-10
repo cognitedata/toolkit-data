@@ -1,0 +1,30 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: ConditionalAction
+version: v1
+name: ConditionalAction
+filter:
+  hasData:
+    - type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: ConditionalAction
+implements:
+  - type: view
+    space: cdf_apps_shared
+    externalId: Creatable
+    version: v1
+properties:
+  logic:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: ConditionalAction
+    containerPropertyIdentifier: logic
+    name: Logic
+  parentObject:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: ConditionalAction
+    containerPropertyIdentifier: parentObject
+    name: Parent Object
+

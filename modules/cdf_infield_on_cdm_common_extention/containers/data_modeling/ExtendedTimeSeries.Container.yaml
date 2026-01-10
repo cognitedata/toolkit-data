@@ -1,0 +1,36 @@
+space: customer_idm_extention
+externalId: ExtendedTimeSeries
+usedFor: node
+properties:
+  sapTagName:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  measurementPoint:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  calibrationDate:
+    nullable: true
+    type:
+      list: false
+      type: timestamp
+  min:
+    nullable: true
+    type:
+      list: false
+      type: float64
+  max:
+    nullable: true
+    type:
+      list: false
+      type: float64
+  isHighlighted:
+    nullable: true
+    type:
+      list: false
+      type: boolean

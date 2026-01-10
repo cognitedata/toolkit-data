@@ -1,0 +1,6 @@
+[module]
+title = "cdf_infield_on_cdm_common_extention"
+is_selected_by_default = true
+id = "cdf_infield_on_cdm_common_extention"
+package_id = "tk:infield_on_cdm_extention"
+

@@ -1,0 +1,22 @@
+space: customer_idm_extention
+externalId: ExtendedOperation
+usedFor: node
+properties:
+  sapOperationNumber:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  workCenter:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+  standardValueKey:
+    nullable: true
+    type:
+      list: false
+      collation: ucs_basic
+      type: text

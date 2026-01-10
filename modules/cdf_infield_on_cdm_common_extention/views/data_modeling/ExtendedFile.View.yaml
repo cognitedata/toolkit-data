@@ -1,0 +1,35 @@
+space: customer_idm_extention
+externalId: ExtendedFile
+version: v1
+name: Extended File
+description: Extended File view with SAP-specific properties
+implements:
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteFile
+    version: v1
+properties:
+  sapDocumentNumber:
+    name: SAP Document Number
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedFile
+    containerPropertyIdentifier: sapDocumentNumber
+    description: SAP document number
+  documentCategory:
+    name: Document Category
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedFile
+    containerPropertyIdentifier: documentCategory
+    description: Category of the document
+  revisionNumber:
+    name: Revision Number
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedFile
+    containerPropertyIdentifier: revisionNumber
+    description: Revision number of the document

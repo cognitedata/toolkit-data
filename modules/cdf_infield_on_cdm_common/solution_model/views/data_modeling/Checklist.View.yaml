@@ -1,0 +1,141 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: Checklist
+version: v1
+name: Checklist
+filter:
+  hasData:
+    - type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Checklist
+implements:
+  - type: view
+    space: cdf_apps_shared
+    externalId: Creatable
+    version: v1
+properties:
+  sourceId:
+    name: sourceId
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSourceable
+    containerPropertyIdentifier: sourceId
+    description: Identifier from the source system
+  source:
+    name: source
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSourceable
+    containerPropertyIdentifier: sourceContext
+    description: Context of the source id. For systems where the sourceId is globally unique, the sourceContext is expected to not be set.
+  sourceCreatedTime:
+    name: sourceCreatedTime
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSourceable
+    containerPropertyIdentifier: sourceCreatedTime
+    description: When the instance was created in source system (if available)
+  sourceUpdatedTime:
+    name: sourceUpdatedTime
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSourceable
+    containerPropertyIdentifier: sourceUpdatedTime
+    description: When the instance was last updated in the source system (if available)
+  title:
+    name: title
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
+    containerPropertyIdentifier: name
+    description: Name of the instance
+  description:
+    name: description
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
+    containerPropertyIdentifier: description
+    description: Description of the instance
+  labels:
+    name: labels
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteDescribable
+    containerPropertyIdentifier: tags
+    description: Text based labels for generic use, limited to 1000
+  startTime:
+    name: startTime
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSchedulable
+    containerPropertyIdentifier: scheduledStartTime
+    description: The planned start time of an activity (or similar that extends this)
+  endTime:
+    name: endTime
+    container:
+      type: container
+      space: cdf_cdm
+      externalId: CogniteSchedulable
+    containerPropertyIdentifier: scheduledEndTime
+    description: The planned end time of an activity (or similar that extends this)
+  type:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Checklist
+    containerPropertyIdentifier: type
+  status:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Checklist
+    containerPropertyIdentifier: status
+  rootLocation:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Checklist
+    containerPropertyIdentifier: rootLocation
+    source:
+      type: view
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Asset
+      version: v1
+  assignedTo:
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Checklist
+    containerPropertyIdentifier: assignedTo
+  checklistItems:
+    type:
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: referenceChecklistItems
+    source:
+      type: view
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: ChecklistItem
+      version: v1
+    connectionType: multi_edge_connection
+    direction: outwards
+  solutionTags:
+    name: solutionTags
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: Checklist
+    containerPropertyIdentifier: solutionTags
+    source:
+      type: view
+      space: cdf_apps_shared
+      externalId: CogniteSolutionTag
+      version: v1
+    description: The list of solution tags associated with the checklist.
+

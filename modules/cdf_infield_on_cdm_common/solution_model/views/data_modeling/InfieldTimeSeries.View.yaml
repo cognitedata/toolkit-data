@@ -1,0 +1,40 @@
+space: infield_cdm_source_desc_sche_asset_file_ts
+externalId: InfieldTimeSeries
+version: v1
+name: Infield TimeSeries
+description: Infield TimeSeries view
+filter:
+  hasData:
+    - type: container
+      space: cdf_cdm
+      externalId: CogniteTimeSeries # as properties in the infield timeseries container is optional, we only care about data being present in CogniteTimeSeries
+implements:
+  - type: view
+    space: cdf_cdm
+    externalId: CogniteTimeSeries
+    version: v1
+properties:
+  is_highlighted:
+    name: Is Highlighted
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InfieldTimeSeries
+    containerPropertyIdentifier: is_highlighted
+    description: Whether this timeseries should be highlighted
+  minVal:
+    name: Minimum Evaluation Value
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InfieldTimeSeries
+    containerPropertyIdentifier: minVal
+    description: Minimum evaluation value for the timeseries
+  maxVal:
+    name: Maximum Evaluation Value
+    container:
+      type: container
+      space: infield_cdm_source_desc_sche_asset_file_ts
+      externalId: InfieldTimeSeries
+    containerPropertyIdentifier: maxVal
+    description: Maximum evaluation value for the timeseries

@@ -1,0 +1,35 @@
+space: customer_idm_extention
+externalId: ExtendedOperation
+version: v1
+name: Extended Operation
+description: Extended Operation view with SAP-specific properties
+implements:
+  - type: view
+    space: cdf_idm
+    externalId: CogniteOperation
+    version: v1
+properties:
+  sapOperationNumber:
+    name: SAP Operation Number
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedOperation
+    containerPropertyIdentifier: sapOperationNumber
+    description: SAP operation number
+  workCenter:
+    name: Work Center
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedOperation
+    containerPropertyIdentifier: workCenter
+    description: SAP work center for the operation
+  standardValueKey:
+    name: Standard Value Key
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedOperation
+    containerPropertyIdentifier: standardValueKey
+    description: SAP standard value key

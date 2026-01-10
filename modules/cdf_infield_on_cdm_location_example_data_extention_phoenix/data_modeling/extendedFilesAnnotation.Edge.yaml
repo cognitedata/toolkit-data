@@ -1,0 +1,52 @@
+# Extended File 1 Annotation - Demo Document (Files Space 1)
+- space: sp_infield_{{location}}_files_1
+  externalId: {{location}}_file_1_annotation
+  type:
+    space: cdf_cdm
+    externalId: diagrams.AssetLink
+  endNode:
+    externalId: {{location}}_root
+    space: sp_infield_{{location}}_assets
+  startNode:
+    externalId: {{location}}_file_1
+    space: sp_infield_{{location}}_files_1
+  sources:
+    - source:
+        type: view
+        space: cdf_cdm
+        externalId: CogniteDiagramAnnotation
+        version: v1
+      properties:
+        startNodeXMax: 0.5277148640355016
+        startNodeXMin: 0.27201824831056004
+        startNodeYMax: 0.3014057335015994
+        startNodeYMin: 0.237920681096373
+        startNodePageNumber: 1
+        status: "Approved"
+        endNodePageNumber: 1
+
+- space: sp_infield_{{location}}_files_2
+  externalId: {{location}}_file_2_annotation
+  type:
+    space: cdf_cdm
+    externalId: diagrams.AssetLink
+  endNode:
+    externalId: {{location}}_root
+    space: sp_infield_{{location}}_assets
+  startNode:
+    externalId: {{location}}_file_2
+    space: sp_infield_{{location}}_files_2
+  sources:
+    - source:
+        type: view
+        space: cdf_cdm
+        externalId: CogniteDiagramAnnotation
+        version: v1
+      properties:
+        startNodeXMax: 0.5277148640355016
+        startNodeXMin: 0.27201824831056004
+        startNodeYMax: 0.3014057335015994
+        startNodeYMin: 0.237920681096373
+        startNodePageNumber: 1
+        status: Approved
+        endNodePageNumber: 1

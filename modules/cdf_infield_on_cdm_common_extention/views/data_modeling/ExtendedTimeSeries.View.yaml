@@ -1,0 +1,35 @@
+space: customer_idm_extention
+externalId: ExtendedTimeSeries
+version: v1
+name: Extended TimeSeries
+description: Extended TimeSeries view with SAP-specific properties
+implements:
+  - type: view
+    space: infield_cdm_source_desc_sche_asset_file_ts
+    externalId: InfieldTimeSeries
+    version: v1
+properties:
+  sapTagName:
+    name: SAP Tag Name
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedTimeSeries
+    containerPropertyIdentifier: sapTagName
+    description: SAP tag name for the timeseries
+  measurementPoint:
+    name: Measurement Point
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedTimeSeries
+    containerPropertyIdentifier: measurementPoint
+    description: Measurement point identifier
+  calibrationDate:
+    name: Calibration Date
+    container:
+      type: container
+      space: customer_idm_extention
+      externalId: ExtendedTimeSeries
+    containerPropertyIdentifier: calibrationDate
+    description: Last calibration date

@@ -1,0 +1,3 @@
+- externalId: ds_notebook_{{location}}
+  name: Notebook dataset.
+  description: To store notebook for ingesting datapoints
