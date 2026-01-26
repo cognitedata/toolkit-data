@@ -37,6 +37,7 @@ description = "Put real-time data into the hands of every field worker."
 modules = [
     "infield_quickstart/cdf_infield_common",
     "infield_quickstart/cdf_infield_location",
+    "infield_quickstart/cdf_infield_function",
 ]
 
 [packages.inrobot]
