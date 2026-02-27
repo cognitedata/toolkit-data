@@ -1,0 +1,48 @@
+space: "{{ monitoring_space }}"
+externalId: Equipment
+name: Equipment
+version: "1.0"
+description: Equipment class grouping assets of the same type
+properties:
+  name:
+    container:
+      space: "{{ monitoring_space }}"
+      externalId: Equipment
+      type: container
+    containerPropertyIdentifier: name
+  description:
+    container:
+      space: "{{ monitoring_space }}"
+      externalId: Equipment
+      type: container
+    containerPropertyIdentifier: description
+  assets:
+    source:
+      space: "{{ monitoring_space }}"
+      externalId: Asset
+      version: "1.0"
+      type: view
+    through:
+      source:
+        space: "{{ monitoring_space }}"
+        externalId: Asset
+        version: "1.0"
+        type: view
+      identifier: equipment
+    connectionType: multi_reverse_direct_relation
+    description: Assets that belong to this equipment class
+  monitoringRules:
+    source:
+      space: "{{ monitoring_space }}"
+      externalId: MonitoringRule
+      version: "1.0"
+      type: view
+    through:
+      source:
+        space: "{{ monitoring_space }}"
+        externalId: MonitoringRule
+        version: "1.0"
+        type: view
+      identifier: equipment
+    connectionType: multi_reverse_direct_relation
+    description: Monitoring rules that apply to this equipment class

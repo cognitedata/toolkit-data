@@ -1,0 +1,41 @@
+space: "{{ monitoring_space }}"
+externalId: MonitoringRule
+name: MonitoringRule
+version: "1.0"
+description: Defines what to monitor — which time series and at what interval
+properties:
+  name:
+    container:
+      space: "{{ monitoring_space }}"
+      externalId: MonitoringRule
+      type: container
+    containerPropertyIdentifier: name
+  description:
+    container:
+      space: "{{ monitoring_space }}"
+      externalId: MonitoringRule
+      type: container
+    containerPropertyIdentifier: description
+  time_series_external_id:
+    container:
+      space: "{{ monitoring_space }}"
+      externalId: MonitoringRule
+      type: container
+    containerPropertyIdentifier: time_series_external_id
+  interval_minutes:
+    container:
+      space: "{{ monitoring_space }}"
+      externalId: MonitoringRule
+      type: container
+    containerPropertyIdentifier: interval_minutes
+  equipment:
+    container:
+      space: "{{ monitoring_space }}"
+      externalId: MonitoringRule
+      type: container
+    containerPropertyIdentifier: equipment
+    source:
+      space: "{{ monitoring_space }}"
+      externalId: Equipment
+      version: "1.0"
+      type: view

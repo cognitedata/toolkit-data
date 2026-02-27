@@ -1,0 +1,3 @@
+space: "{{ monitoring_space }}"
+name: Equipment Monitoring
+description: Self-contained space for the equipment monitoring training module

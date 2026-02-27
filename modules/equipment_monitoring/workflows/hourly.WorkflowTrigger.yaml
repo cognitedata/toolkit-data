@@ -1,0 +1,11 @@
+externalId: monitoring_hourly_trigger
+triggerRule:
+  triggerType: schedule
+  cronExpression: "0 * * * *"
+workflowExternalId: "{{ workflow_external_id }}"
+workflowVersion: "v1"
+authentication:
+  clientId: "{{ functions_clientId }}"
+  clientSecret: "{{ functions_clientSecret }}"
+input:
+  interval_minutes: 60

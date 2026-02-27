@@ -1,0 +1,48 @@
+space: "{{ monitoring_space }}"
+externalId: MonitoringRule
+name: MonitoringRule
+description: Defines what to monitor — which time series and at what interval
+properties:
+  name:
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+    nullable: true
+    name: name
+    description: Human-readable name of the monitoring rule
+  description:
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+    nullable: true
+    name: description
+    description: Description of what this rule checks
+  time_series_external_id:
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+    nullable: true
+    name: time_series_external_id
+    description: External ID of the CDF time series to monitor (e.g., "comp_lp_flow")
+  interval_minutes:
+    type:
+      list: false
+      type: int64
+    nullable: true
+    name: interval_minutes
+    description: How often this rule should run, in minutes (e.g., 15, 60)
+  equipment:
+    type:
+      list: false
+      type: direct
+    nullable: true
+    name: equipment
+    description: Equipment class this monitoring rule applies to
+indexes:
+  interval_minutes:
+    properties: [interval_minutes]
+    cursorable: true
+    indexType: btree

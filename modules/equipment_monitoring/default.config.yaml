@@ -1,0 +1,8 @@
+monitoring_space: sp_equipment_monitoring
+orchestrator_external_id: fn_monitoring_orchestrator
+worker_external_id: fn_monitoring_worker
+seeder_external_id: fn_monitoring_seeder
+workflow_external_id: equipment_monitoring_workflow
+dataset: equipment_monitoring
+functions_clientId: ${IDP_CLIENT_ID}
+functions_clientSecret: ${IDP_CLIENT_SECRET}

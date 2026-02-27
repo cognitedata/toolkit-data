@@ -1,0 +1,9 @@
+externalId: "{{ seeder_external_id }}"
+name: Monitoring Seeder
+description: Generates synthetic compressor time series data — backfills on first run, ticks on subsequent runs
+functionPath: handler.py
+runtime: py311
+cpu: 0.1
+memory: 0.5
+envVars: {}
+secrets: {}

@@ -1,0 +1,4 @@
+cognite-sdk>=7.87.0
+pydantic>=2.0.0
+cognite-function-apps>=0.1.0
+numpy>=1.26.0
