@@ -2,23 +2,6 @@
 title = "Built-in Cognite packages"
 description = "Built-in Cognite packages"
 
-[packages.quickstart]
-title = "Quickstart"
-id = "tk:quickstart"
-description = "Get started with Cognite Data Fusion in minutes."
-canCherryPick = false
-modules = [
-    "cdf_ingestion",
-    "sourcesystem/cdf_pi",
-    "sourcesystem/cdf_sap_assets",
-    "sourcesystem/cdf_sap_events",
-    "sourcesystem/cdf_sharepoint",
-    "models/cdf_process_industry_extension",
-    "contextualization/cdf_connection_sql",
-    "contextualization/cdf_p_and_id_parser",
-    "industrial_tools/cdf_search"
-]
-
 [packages.infield]
 title = "InField"
 id = "tk:infield"
@@ -28,15 +11,6 @@ modules = [
     "infield/cdf_infield_second_location",
     "infield/cdf_infield_common",
     "common/cdf_apm_base"
-]
-
-[packages.infield_quickstart]
-title = "InField Quickstart"
-id = "tk:infield_quickstart"
-description = "Put real-time data into the hands of every field worker."
-modules = [
-    "infield_quickstart/cdf_infield_common",
-    "infield_quickstart/cdf_infield_location",
 ]
 
 [packages.inrobot]
@@ -69,34 +43,12 @@ modules = [
     "bootcamp/use_cases/oee"
 ]
 
-[packages.sourcesystem]
-title = "SourceSystem"
-id = "tk:sourcesystem"
-description = "Module templates for setting up a data pipeline from a source system"
-modules = [
-    "sourcesystem/cdf_pi",
-    "sourcesystem/cdf_sap_assets",
-    "sourcesystem/cdf_sap_events",
-    "sourcesystem/cdf_sharepoint"
-]
-
-[packages.contextualization]
-title = "Contextualization"
-id = "tk:contextualization"
-description = "Module templates for data contextualization"
-modules = [
-    "contextualization/cdf_p_and_id_parser",
-    "contextualization/cdf_connection_sql",
-    "contextualization/cdf_entity_matching"
-]
-
 [packages.models]
 title = "Models"
 id = "tk:models"
 description = "Module templates for data models"
 modules = [
     "models/cdf_cdm_extension",
-    "models/cdf_process_industry_extension",
     "models/cdf_cdm_extension_full",
     "models/cdf_scene",
     "models/cdf_process_industry_extension_full"
@@ -116,7 +68,6 @@ title = "Common"
 id = "tk:common"
 description = "Common modules used by other packages"
 modules = [
-    "cdf_common",
     "common/cdf_apm_base",
     "common/cdf_auth_readwrite_all"
 ] 
