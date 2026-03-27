@@ -1,0 +1,5 @@
+[module]
+title = "Equipment Monitoring"
+is_selected_by_default = true
+id = "equipment_monitoring"
+package_id = "tk:training"

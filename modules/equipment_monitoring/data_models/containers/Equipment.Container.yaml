@@ -1,0 +1,21 @@
+space: "{{ monitoring_space }}"
+externalId: Equipment
+name: Equipment
+description: Equipment class grouping assets of the same type (e.g., Centrifugal Pump, Pressure Transmitter)
+properties:
+  name:
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+    nullable: true
+    name: name
+    description: Name of the equipment class
+  description:
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+    nullable: true
+    name: description
+    description: Description of the equipment class

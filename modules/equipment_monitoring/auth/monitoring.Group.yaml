@@ -1,0 +1,46 @@
+name: monitoring_group
+capabilities:
+  - dataModelsAcl:
+      actions:
+        - READ
+        - WRITE
+      scope:
+        spaceIdScope:
+          spaceIds:
+            - "{{ monitoring_space }}"
+  - dataModelInstancesAcl:
+      actions:
+        - READ
+        - WRITE
+      scope:
+        spaceIdScope:
+          spaceIds:
+            - "{{ monitoring_space }}"
+  - timeSeriesAcl:
+      actions:
+        - READ
+      scope:
+        all: {}
+  - datasetsAcl:
+      actions:
+        - READ
+      scope:
+        all: {}
+  - functionsAcl:
+      actions:
+        - READ
+        - WRITE
+      scope:
+        all: {}
+  - workflowOrchestrationAcl:
+      actions:
+        - READ
+        - WRITE
+      scope:
+        all: {}
+  - streamsAcl:
+      actions:
+        - READ
+        - WRITE
+      scope:
+        all: {}

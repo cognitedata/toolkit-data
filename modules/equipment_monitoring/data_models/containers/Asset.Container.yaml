@@ -1,0 +1,33 @@
+space: "{{ monitoring_space }}"
+externalId: Asset
+name: Asset
+description: A monitored industrial asset (e.g., pump, valve, sensor)
+properties:
+  name:
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+    nullable: true
+    name: name
+    description: Human-readable name of the asset
+  description:
+    type:
+      list: false
+      collation: ucs_basic
+      type: text
+    nullable: true
+    name: description
+    description: Description of the asset
+  equipment:
+    type:
+      list: false
+      type: direct
+    nullable: true
+    name: equipment
+    description: The equipment class this asset belongs to
+indexes:
+  equipment:
+    properties: [equipment]
+    cursorable: true
+    indexType: btree

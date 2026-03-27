@@ -1,0 +1,29 @@
+space: "{{ monitoring_space }}"
+externalId: Asset
+name: Asset
+version: "1.0"
+description: A monitored industrial asset (e.g., pump, valve, sensor)
+properties:
+  name:
+    container:
+      space: "{{ monitoring_space }}"
+      externalId: Asset
+      type: container
+    containerPropertyIdentifier: name
+  description:
+    container:
+      space: "{{ monitoring_space }}"
+      externalId: Asset
+      type: container
+    containerPropertyIdentifier: description
+  equipment:
+    container:
+      space: "{{ monitoring_space }}"
+      externalId: Asset
+      type: container
+    containerPropertyIdentifier: equipment
+    source:
+      space: "{{ monitoring_space }}"
+      externalId: Equipment
+      version: "1.0"
+      type: view

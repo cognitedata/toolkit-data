@@ -1,0 +1,18 @@
+space: "{{ monitoring_space }}"
+externalId: monitoring_solution
+name: Monitoring Solution
+description: Data model for configuring and running condition-based monitoring of industrial assets
+version: "1.0"
+views:
+  - space: "{{ monitoring_space }}"
+    externalId: Asset
+    version: "1.0"
+    type: view
+  - space: "{{ monitoring_space }}"
+    externalId: Equipment
+    version: "1.0"
+    type: view
+  - space: "{{ monitoring_space }}"
+    externalId: MonitoringRule
+    version: "1.0"
+    type: view

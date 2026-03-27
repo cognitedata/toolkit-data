@@ -70,4 +70,11 @@ description = "Common modules used by other packages"
 modules = [
     "common/cdf_apm_base",
     "common/cdf_auth_readwrite_all"
-] 
+]
+
+[packages.training]
+title = "Training"
+id = "tk:training"
+description = "Hands-on training modules demonstrating CDF patterns with Open Industrial Data."
+modules = ["equipment_monitoring"]
+

@@ -1,0 +1,58 @@
+workflowExternalId: "{{ workflow_external_id }}"
+version: "v1"
+workflowDefinition:
+  tasks:
+    # Task 0: Seeder — backfill or tick synthetic compressor time series
+    - externalId: seed-data
+      type: functionApp
+      name: Seed Compressor Data
+      onFailure: abortWorkflow
+      input:
+        functionApp:
+          externalId: "{{ seeder_external_id }}"
+          method: POST
+          path: /seed_tick
+
+    # Task 1: Orchestrator reads MonitoringRules for this interval and returns
+    # a list of batched dynamic worker task definitions + a batch_id
+    - externalId: dispatch-workers
+      type: functionApp
+      name: Dispatch Monitoring Workers
+      onFailure: abortWorkflow
+      dependsOn:
+        - externalId: seed-data
+      input:
+        functionApp:
+          externalId: "{{ orchestrator_external_id }}"
+          method: POST
+          path: /dispatch_workers
+          body:
+            interval_minutes: "${workflow.input.interval_minutes}"
+
+    # Task 2: Dynamic fan-out — one parallel functionApp task per batch of rules
+    # Each worker makes ONE batched CDF aggregation call (server-side stats)
+    - externalId: run-monitoring-rules
+      type: dynamic
+      name: Run Monitoring Rules in Parallel
+      onFailure: skipTask
+      dependsOn:
+        - externalId: dispatch-workers
+      input:
+        dynamic:
+          tasks: "${dispatch-workers.output.tasks}"
+
+    # Task 3: Orchestrator flattens worker outputs and writes breached alerts to Stream
+    - externalId: collect-results
+      type: functionApp
+      name: Collect Results
+      onFailure: abortWorkflow
+      dependsOn:
+        - externalId: run-monitoring-rules
+      input:
+        functionApp:
+          externalId: "{{ orchestrator_external_id }}"
+          method: POST
+          path: /collect
+          body:
+            batch_id: "${dispatch-workers.output.batch_id}"
+            worker_results: "${run-monitoring-rules.output}"

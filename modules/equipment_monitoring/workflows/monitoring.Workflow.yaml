@@ -1,0 +1,3 @@
+externalId: "{{ workflow_external_id }}"
+description: Equipment monitoring workflow — orchestrates parallel threshold checks via dynamic workers
+dataSetExternalId: "{{ dataset }}"

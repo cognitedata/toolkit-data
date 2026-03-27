@@ -1,0 +1,38 @@
+- space: "{{ monitoring_space }}"
+  externalId: rule_lp_flow_spike
+  sources:
+    - source:
+        space: "{{ monitoring_space }}"
+        externalId: MonitoringRule
+        version: "1.0"
+        type: view
+      properties:
+        name: LP Flow Spike Rule
+        time_series_external_id: comp_lp_flow
+        interval_minutes: 15
+
+- space: "{{ monitoring_space }}"
+  externalId: rule_hp_flow_spike
+  sources:
+    - source:
+        space: "{{ monitoring_space }}"
+        externalId: MonitoringRule
+        version: "1.0"
+        type: view
+      properties:
+        name: HP Flow Spike Rule
+        time_series_external_id: comp_hp_flow
+        interval_minutes: 15
+
+- space: "{{ monitoring_space }}"
+  externalId: rule_recirc_flow_spike
+  sources:
+    - source:
+        space: "{{ monitoring_space }}"
+        externalId: MonitoringRule
+        version: "1.0"
+        type: view
+      properties:
+        name: Recirculation Flow Spike Rule
+        time_series_external_id: comp_recirculation_flow
+        interval_minutes: 15

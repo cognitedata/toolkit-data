@@ -1,0 +1,9 @@
+externalId: "{{ worker_external_id }}"
+name: Monitoring Worker
+description: Fetches a time series aggregate from OID and compares it to a configured threshold
+functionPath: handler.py
+runtime: py311
+cpu: 0.25
+memory: 1.0
+envVars: {}
+secrets: {}

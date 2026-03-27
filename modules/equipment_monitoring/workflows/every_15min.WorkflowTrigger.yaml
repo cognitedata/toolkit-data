@@ -1,0 +1,11 @@
+externalId: monitoring_every_15min_trigger
+triggerRule:
+  triggerType: schedule
+  cronExpression: "*/15 * * * *"
+workflowExternalId: "{{ workflow_external_id }}"
+workflowVersion: "v1"
+authentication:
+  clientId: "{{ functions_clientId }}"
+  clientSecret: "{{ functions_clientSecret }}"
+input:
+  interval_minutes: 15

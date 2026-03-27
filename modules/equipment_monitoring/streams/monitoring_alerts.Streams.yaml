@@ -1,0 +1,4 @@
+externalId: equipment_monitoring_alerts
+settings:
+  template:
+    name: BasicLiveData
