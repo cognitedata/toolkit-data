@@ -17,21 +17,7 @@ capabilities:
       - LIST
       scope:
         all: {}
-  - annotationsAcl:
-      actions:
-      - WRITE
-      - REVIEW
-      - READ
-      - SUGGEST
-      scope:
-        all: {}
   - appConfigAcl:
-      actions:
-      - WRITE
-      - READ
-      scope:
-        all: {}
-  - assetsAcl:
       actions:
       - WRITE
       - READ
@@ -201,12 +187,6 @@ capabilities:
   - rawAcl:
       actions:
       - LIST
-      - WRITE
-      - READ
-      scope:
-        all: {}
-  - relationshipsAcl:
-      actions:
       - WRITE
       - READ
       scope:
