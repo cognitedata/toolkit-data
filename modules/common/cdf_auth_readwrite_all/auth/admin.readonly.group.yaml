@@ -15,17 +15,7 @@ capabilities:
       - LIST
       scope:
         all: {}
-  - annotationsAcl:
-      actions:
-      - READ
-      scope:
-        all: {}
   - appConfigAcl:
-      actions:
-      - READ
-      scope:
-        all: {}
-  - assetsAcl:
       actions:
       - READ
       scope:
@@ -165,11 +155,6 @@ capabilities:
       actions:
       - READ
       - LIST
-      scope:
-        all: {}
-  - relationshipsAcl:
-      actions:
-      - READ
       scope:
         all: {}
   - roboticsAcl:
